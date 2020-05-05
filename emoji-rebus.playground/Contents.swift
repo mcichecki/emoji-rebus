@@ -2,13 +2,17 @@
 
 import AppKit
 import PlaygroundSupport
+import SpriteKit
 
-let nibFile = NSNib.Name("MyView")
-var topLevelObjects : NSArray?
+//let viewController = MainViewController()
 
-Bundle.main.loadNibNamed(nibFile, owner:nil, topLevelObjects: &topLevelObjects)
-let views = (topLevelObjects as! Array<Any>).filter { $0 is NSView }
-
+//print(viewController.view)
 // Present the view in Playground
-PlaygroundPage.current.liveView = views[0] as! NSView
 
+let scene = MainScene()
+let viewRect = CGRect(origin: .zero, size: scene.sceneSize)
+let view = SKView(frame: viewRect)
+view.presentScene(scene)
+
+PlaygroundPage.current.liveView = view
+PlaygroundPage.current.needsIndefiniteExecution = true
