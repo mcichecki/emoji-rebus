@@ -2,9 +2,13 @@ import Foundation
 
 struct Rebus {
     var components: [RebusComponent]
+    var answer: String
     
-    public init(_ components: [RebusComponent]) {
+    var numberOfLetters: Int { answer.count }
+    
+    public init(_ components: [RebusComponent], ans: String) {
         self.components = components
+        answer = ans
     }
 }
 
@@ -16,10 +20,10 @@ enum RebusComponent {
 }
 
 enum RebusStorage {
-    static let rebuses: [(rebus: Rebus, answer: String)] = [
-        (.init([.emoji("🐺"), .minus("olf"), .plus, .minus("ki"), .emoji("🥝"), .minus("i"), .plus, .emoji("🎲"), .minus("ie")]), "wwdc"),
-        (.init([.emoji("🧺"), .plus, .emoji("🏐")]), "basketball"),
-        (.init([.emoji("🍏"), .minus("le")]), "app"),
-        (.init([.text("re"), .plus, .emoji("🚌")]), "rebus"),
+    static let rebuses: [Rebus] = [
+        (.init([.emoji("🐺"), .minus("olf"), .plus, .minus("ki"), .emoji("🥝"), .minus("i"), .plus, .emoji("🎲"), .minus("ie")], ans: "wwdc")),
+//        (.init([.emoji("🧺"), .plus, .emoji("🏐")], ans: "basketball")),
+        (.init([.emoji("🍏"), .minus("le")], ans: "app")),
+        (.init([.text("re"), .plus, .emoji("🚌")], ans: "rebus")),
     ]
 }

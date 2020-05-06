@@ -2,7 +2,8 @@ import AppKit
 import Foundation
 
 protocol InputViewDelegate: AnyObject {
-    func didUpdateInput(_ input: String)
+    func didUpdateInput(_ input: String) // TODO: Remove?
+    func didUpdateInputArr(_ input: [Character?])
 }
 
 final public class InputView: NSStackView {
@@ -32,6 +33,13 @@ final public class InputView: NSStackView {
     }
     
     required init?(coder: NSCoder) { fatalError() }
+    
+    func highlight(indexes: [Int]) {
+        textFields.enumerated().forEach {
+            let borderColor = indexes.contains($0.offset) ? NSColor.green.cgColor : NSColor.darkGray.cgColor
+            $0.element.layer?.borderColor = borderColor
+        }
+    }
     
     private func setUp() {
         orientation = .horizontal
@@ -72,9 +80,14 @@ final public class InputView: NSStackView {
     
     private func updateInput() {
         input = textFields.map { $0.stringValue }.reduce("", +)
+        
+        let arr: [Character?] = textFields.map { $0.stringValue.first }
+        
+        inputDelegate?.didUpdateInputArr(arr)
     }
 }
 
+// TODO: move to next textfield when space is typed?
 extension InputView: NSTextFieldDelegate {
     public func controlTextDidChange(_ obj: Notification) {
         guard let textField = obj.object as? NSTextField else { return }

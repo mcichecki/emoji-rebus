@@ -12,14 +12,12 @@ public final class MainScene: SKScene {
     
     private var currentRebus = RebusStorage.rebuses[0] {
         didSet {
-            rebusLabel.rebus = currentRebus.rebus
-            inputView.numberOfLetters = currentRebus.answer.count
+            rebusView.updateRebus(currentRebus)
         }
     }
     
-    private let rebusLabel = RebusLabel()
+    private lazy var rebusView = RebusView()
     
-    private let inputView = InputView()
     
     public override init() {
         super.init(size: sceneSize)
@@ -33,39 +31,27 @@ public final class MainScene: SKScene {
         scene?.backgroundColor = .darkGray
         currentIndex = 0
         
-        inputView.inputDelegate = self
-        [rebusLabel, inputView].forEach {
-            view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        rebusView.delegate = self
+        rebusView.updateRebus(currentRebus)
+        rebusView.translatesAutoresizingMaskIntoConstraints = false
         
-        let rebusLabelConstraints = [
-            rebusLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            rebusLabel.topAnchor.constraint(equalTo: view.topAnchor),
-            rebusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            rebusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            rebusLabel.heightAnchor.constraint(equalToConstant: 100.0)
+        view.addSubview(rebusView)
+        
+        let rebusViewConstraints = [
+            rebusView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            rebusView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            rebusView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            rebusView.heightAnchor.constraint(equalToConstant: 300.0)
         ]
         
-        let inputViewConstraints = [
-            inputView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            inputView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            inputView.heightAnchor.constraint(equalToConstant: 200.0)
-        ]
-        
-        [rebusLabelConstraints, inputViewConstraints].forEach(NSLayoutConstraint.activate(_:))
+        NSLayoutConstraint.activate(rebusViewConstraints)
     }
 }
 
-// MARK: - InputViewDelegate
+// MARK: -
 
-extension MainScene: InputViewDelegate {
-    func didUpdateInput(_ input: String) {
-        if input.lowercased() == currentRebus.answer.lowercased() {
-            print("--- Success ✅")
-            currentIndex += 1
-        } else {
-            print("--- No match ‼️")
-        }
+extension MainScene: RebusViewDelegate {
+    func didComplete() {
+        currentIndex += 1
     }
 }

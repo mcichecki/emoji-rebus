@@ -16,11 +16,12 @@ final class RebusLabel: NSTextField {
     required init?(coder: NSCoder) { fatalError() }
     
     private func setUp() {
-        stringValue = "My awesome label"
         backgroundColor = .white
         isBezeled = false
         isEditable = false
         alignment = .center
+        wantsLayer = true
+        
         sizeToFit()
     }
     
@@ -33,7 +34,7 @@ final class RebusLabel: NSTextField {
         
         let commonAttrs: [NSAttributedString.Key: Any] = [
             .foregroundColor: NSColor.black,
-            .font: NSFont.systemFont(ofSize: 30.0),
+            .font: NSFont.systemFont(ofSize: 34.0),
             .paragraphStyle: paragraphStyle
         ]
         
