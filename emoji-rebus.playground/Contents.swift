@@ -8,4 +8,3 @@ let view = SKView(frame: viewRect)
 view.presentScene(scene)
 
 PlaygroundPage.current.liveView = view
-PlaygroundPage.current.needsIndefiniteExecution = true

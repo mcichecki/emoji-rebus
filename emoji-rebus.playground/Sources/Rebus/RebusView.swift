@@ -31,13 +31,13 @@ final class RebusView: NSView {
         
         addSubviews()
         setUpConstraints()
-        
     }
     
     required init?(coder: NSCoder) { fatalError() }
     
     func updateRebus(_ rebus: Rebus) {
         self.rebus = rebus
+        inputView.focus()
     }
     
     private func addSubviews() {
@@ -56,7 +56,7 @@ final class RebusView: NSView {
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ]
         
-        NSLayoutConstraint.activate(stackViewConstraints)
+        [stackViewConstraints].activate()
     }
 }
 
@@ -64,8 +64,10 @@ final class RebusView: NSView {
 
 extension RebusView: InputViewDelegate {
     func didUpdateInput(_ input: String) {
-        if input.lowercased() == rebus?.answer.lowercased() {
+        guard let rebus = rebus else { return }
+        if rebus.valid(input: input) {
             delegate?.didComplete()
+            inputView.unfocus()
         } else {
             // print("--- No match ‼️")
         }

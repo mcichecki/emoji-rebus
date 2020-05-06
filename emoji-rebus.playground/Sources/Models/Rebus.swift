@@ -6,9 +6,14 @@ struct Rebus {
     
     var numberOfLetters: Int { answer.count }
     
-    public init(_ components: [RebusComponent], ans: String) {
+    init(_ components: [RebusComponent], ans: String) {
         self.components = components
         answer = ans
+    }
+    
+    func valid(input: String) -> Bool {
+        if input.lowercased() == answer.lowercased() { return true}
+        return false
     }
 }
 

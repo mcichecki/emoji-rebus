@@ -14,6 +14,8 @@ public final class MainScene: SKScene {
     
     private lazy var rebusView = RebusView()
     
+    private lazy var answerView = AnswerView()
+    
     public override init() {
         super.init(size: sceneSize)
     }
@@ -30,16 +32,40 @@ public final class MainScene: SKScene {
         rebusView.updateRebus(currentRebus)
         rebusView.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(rebusView)
-        
-        let rebusViewConstraints = [
-            rebusView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            rebusView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            rebusView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            rebusView.heightAnchor.constraint(equalToConstant: 300.0)
+//        view.addSubview(rebusView)
+//
+//        let rebusViewConstraints = [
+//            rebusView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            rebusView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+//            rebusView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+//            rebusView.heightAnchor.constraint(equalToConstant: 300.0)
+//        ]
+//
+//        [rebusViewConstraints].activate()
+        view.addSubview(answerView)
+        answerView.translatesAutoresizingMaskIntoConstraints = false
+        let constraints = [
+            answerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            answerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            answerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            answerView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
         ]
         
-        NSLayoutConstraint.activate(rebusViewConstraints)
+        [constraints].activate()
+    }
+    
+    private func presentAnswer() {
+        guard let view = view else { return }
+        print("--- presentAnswer")
+//        view.addSubview(answerView)
+//        let constraints = [
+//            answerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+//            answerView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+//            answerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            answerView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+//        ]
+//
+//        [constraints].activate()
     }
 }
 
@@ -47,6 +73,10 @@ public final class MainScene: SKScene {
 
 extension MainScene: RebusViewDelegate {
     func didComplete() {
-        currentIndex += 1
+        presentAnswer()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+            self.currentIndex += 1
+        }
     }
 }
+

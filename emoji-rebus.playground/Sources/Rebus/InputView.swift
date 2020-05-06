@@ -64,6 +64,14 @@ final public class InputView: NSStackView {
         handleKey(key)
     }
     
+    func focus() {
+        _ = textFields.first?.becomeFirstResponder()
+    }
+    
+    func unfocus() {
+        window?.makeFirstResponder(nil)
+    }
+    
     private func setUp() {
         orientation = .horizontal
         spacing = 3.0
@@ -94,7 +102,7 @@ final public class InputView: NSStackView {
                     letterInputTextField.widthAnchor.constraint(equalTo: inputView.widthAnchor, multiplier: 1.0)
                 ]
                 
-                [inputViewConstraints, textFieldConstraints].forEach(NSLayoutConstraint.activate(_:))
+                [inputViewConstraints, textFieldConstraints].activate()
                 
                 letterInputTextField.delegate = self
                 addArrangedSubview(inputView)
@@ -122,7 +130,7 @@ final public class InputView: NSStackView {
     }
     
     private func switchTextField(direction: Direction, currentIndex: Int) {
-        let notLast = currentIndex != lastIndex//numberOfLetters - 1
+        let notLast = currentIndex != lastIndex
         let notFirst = currentIndex != 0
         switch direction {
         case .previous:
