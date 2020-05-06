@@ -67,7 +67,7 @@ extension RebusView: InputViewDelegate {
         if input.lowercased() == rebus?.answer.lowercased() {
             delegate?.didComplete()
         } else {
-            print("--- No match ‼️")
+            // print("--- No match ‼️")
         }
     }
     
@@ -76,12 +76,10 @@ extension RebusView: InputViewDelegate {
         
         guard input.count == answerChars.count else { fatalError("Number of chars of input and answer don't match") }
         
-        let highlightedIndexes: [Int] = input
-            .compactMap { $0 }
-            .enumerated()
-            .filter { $0.element.lowercased() == answerChars[$0.offset].lowercased() }
-            .map { $0.offset }
-        
+        var highlightedIndexes: [Int] = []
+        for (index, answerChar) in answerChars.enumerated() where answerChar == input[index] {
+            highlightedIndexes.append(index)
+        }
         inputView.highlight(indexes: highlightedIndexes)
     }
 }

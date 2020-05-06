@@ -6,6 +6,16 @@ protocol InputViewDelegate: AnyObject {
     func didUpdateInputArr(_ input: [Character?])
 }
 
+// TODO: Handle top bottom keys + backspace
+private enum Key: UInt16 {
+    case left = 123
+    case right = 124
+}
+
+private enum Direction {
+    case previous, next
+}
+
 final public class InputView: NSStackView {
     weak var inputDelegate: InputViewDelegate?
     
@@ -22,8 +32,9 @@ final public class InputView: NSStackView {
         }
     }
     
-    private var textFields: [NSTextField] { arrangedSubviews.compactMap { $0.subviews.first as? NSTextField } }
+    private var textFields: [LetterInputTextField] { arrangedSubviews.compactMap { $0.subviews.first as? LetterInputTextField } }
     
+    private var lastIndex: Int { textFields.map { $0.tag }.max() ?? 0 }
     
     init() {
         super.init(frame: .zero)
@@ -34,11 +45,23 @@ final public class InputView: NSStackView {
     
     required init?(coder: NSCoder) { fatalError() }
     
+    // TODO: Bug with same letters
     func highlight(indexes: [Int]) {
-        textFields.enumerated().forEach {
-            let borderColor = indexes.contains($0.offset) ? NSColor.green.cgColor : NSColor.darkGray.cgColor
-            $0.element.layer?.borderColor = borderColor
+        textFields.enumerated().forEach { offset, textField in
+            NSAnimationContext.runAnimationGroup { context in
+                context.duration = 0.5
+                context.allowsImplicitAnimation = true
+                
+                let borderColor = indexes.contains(offset) ? NSColor.confirmationGreen.cgColor : NSColor.darkGray.cgColor
+                textField.layer?.borderColor = borderColor
+            }
+            
         }
+    }
+    
+    public override func keyUp(with event: NSEvent) {
+        guard let key = Key(rawValue: event.keyCode) else { return }
+        handleKey(key)
     }
     
     private func setUp() {
@@ -85,6 +108,29 @@ final public class InputView: NSStackView {
         
         inputDelegate?.didUpdateInputArr(arr)
     }
+    
+    private func handleKey(_ key: Key) {
+        guard let currentIndex = textFields.firstIndex(where: { $0.focused }) else { return }
+        
+        var direction: Direction
+        switch key {
+        case .left: direction = .previous
+        case .right: direction = .next
+        }
+        
+        switchTextField(direction: direction, currentIndex: currentIndex)
+    }
+    
+    private func switchTextField(direction: Direction, currentIndex: Int) {
+        let notLast = currentIndex != lastIndex//numberOfLetters - 1
+        let notFirst = currentIndex != 0
+        switch direction {
+        case .previous:
+            if notFirst { _ = textFields.first(where: { $0.tag == currentIndex - 1 })?.becomeFirstResponder() }
+        case .next:
+            if notLast { _ = textFields.first(where: { $0.tag == currentIndex + 1 })?.becomeFirstResponder() }
+        }
+    }
 }
 
 // TODO: move to next textfield when space is typed?
@@ -108,17 +154,15 @@ extension InputView: NSTextFieldDelegate {
             }
         }
         
-        let notLast = textField.tag != numberOfLetters - 1
+        let notLast = textField.tag != lastIndex
         let notFirst = textField.tag != 0
         
         if notFirst && textField.stringValue.isEmpty {
-            let previousTextField = textFields.first(where: { $0.tag == textField.tag - 1 })
-            previousTextField?.becomeFirstResponder()
+            _ = textFields.first(where: { $0.tag == textField.tag - 1 })?.becomeFirstResponder()
         }
         
         if notLast && !textField.stringValue.isEmpty {
-            let nextTextField = textFields.first(where: { $0.tag == textField.tag + 1 })
-            nextTextField?.becomeFirstResponder()
+            _ = textFields.first(where: { $0.tag == textField.tag + 1 })?.becomeFirstResponder()
         }
         
         updateInput()

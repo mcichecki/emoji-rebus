@@ -16,13 +16,17 @@ final class RebusLabel: NSTextField {
     required init?(coder: NSCoder) { fatalError() }
     
     private func setUp() {
-        backgroundColor = .white
-        isBezeled = false
         isEditable = false
         alignment = .center
         wantsLayer = true
-        
+        layer?.cornerRadius = 5.0
+        layer?.masksToBounds = true
+        layer?.backgroundColor = NSColor.white.cgColor
         sizeToFit()
+        usesSingleLineMode = false
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        heightAnchor.constraint(equalToConstant: 50.0).isActive = true
     }
     
     private func configure() {

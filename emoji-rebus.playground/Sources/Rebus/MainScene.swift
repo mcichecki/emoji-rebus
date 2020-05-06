@@ -5,19 +5,14 @@ public final class MainScene: SKScene {
     public let sceneSize = CGSize(width: 400, height: 560)
     
     private var currentIndex = 0 {
-        didSet {
-            currentRebus = RebusStorage.rebuses[currentIndex]
-        }
+        didSet { currentRebus = RebusStorage.rebuses[currentIndex] }
     }
     
     private var currentRebus = RebusStorage.rebuses[0] {
-        didSet {
-            rebusView.updateRebus(currentRebus)
-        }
+        didSet { rebusView.updateRebus(currentRebus) }
     }
     
     private lazy var rebusView = RebusView()
-    
     
     public override init() {
         super.init(size: sceneSize)
@@ -48,7 +43,7 @@ public final class MainScene: SKScene {
     }
 }
 
-// MARK: -
+// MARK: - RebusViewDelegate
 
 extension MainScene: RebusViewDelegate {
     func didComplete() {

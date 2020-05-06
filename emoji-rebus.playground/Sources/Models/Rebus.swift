@@ -21,9 +21,9 @@ enum RebusComponent {
 
 enum RebusStorage {
     static let rebuses: [Rebus] = [
+        (.init([.emoji("🍏"), .minus("le")], ans: "app")),
         (.init([.emoji("🐺"), .minus("olf"), .plus, .minus("ki"), .emoji("🥝"), .minus("i"), .plus, .emoji("🎲"), .minus("ie")], ans: "wwdc")),
 //        (.init([.emoji("🧺"), .plus, .emoji("🏐")], ans: "basketball")),
-        (.init([.emoji("🍏"), .minus("le")], ans: "app")),
         (.init([.text("re"), .plus, .emoji("🚌")], ans: "rebus")),
     ]
 }
