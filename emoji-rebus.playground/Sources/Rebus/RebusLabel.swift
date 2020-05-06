@@ -25,8 +25,9 @@ final class RebusLabel: NSTextField {
         sizeToFit()
         usesSingleLineMode = false
         
-        translatesAutoresizingMaskIntoConstraints = false
-        heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        activateConstraints {
+            [$0.heightAnchor.constraint(equalToConstant: 50.0)]
+        }
     }
     
     private func configure() {

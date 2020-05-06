@@ -81,28 +81,28 @@ final public class InputView: NSStackView {
     private func setUpTextFields() {
         (0..<numberOfLetters)
             .forEach { index in
-                let inputView = NSView()
-                inputView.translatesAutoresizingMaskIntoConstraints = false
-                inputView.wantsLayer = true
-                inputView.layer?.backgroundColor = inputView.layer?.backgroundColor
-                let letterInputTextField = LetterInputTextField()
-                letterInputTextField.tag = index
+                let inputView = configure { view in
+                    view.wantsLayer = true
+                    view.layer?.backgroundColor = view.layer?.backgroundColor // TODO: needed?
+                }
                 
-                inputView.addSubview(letterInputTextField)
+                let letterInputTextField: LetterInputTextField = configure { view in
+                    view.tag = index
+                }
                 
-                let inputViewConstraints = [
-                    inputView.widthAnchor.constraint(equalToConstant: 35.0),
-                    inputView.heightAnchor.constraint(equalToConstant: 90.0)
-                ]
+                inputView.addSubviews(letterInputTextField)
                 
-                let textFieldConstraints = [
-                    letterInputTextField.centerXAnchor.constraint(equalTo: inputView.centerXAnchor),
-                    letterInputTextField.centerYAnchor.constraint(equalTo: inputView.centerYAnchor),
-                    letterInputTextField.heightAnchor.constraint(equalTo: inputView.heightAnchor, multiplier: 0.5),
-                    letterInputTextField.widthAnchor.constraint(equalTo: inputView.widthAnchor, multiplier: 1.0)
-                ]
+                inputView.activateConstraints {
+                    [$0.widthAnchor.constraint(equalToConstant: 35.0),
+                     $0.heightAnchor.constraint(equalToConstant: 90.0)]
+                }
                 
-                [inputViewConstraints, textFieldConstraints].activate()
+                letterInputTextField.activateConstraints {
+                    [$0.centerXAnchor.constraint(equalTo: inputView.centerXAnchor),
+                     $0.centerYAnchor.constraint(equalTo: inputView.centerYAnchor),
+                     $0.heightAnchor.constraint(equalTo: inputView.heightAnchor, multiplier: 0.5),
+                     $0.widthAnchor.constraint(equalTo: inputView.widthAnchor, multiplier: 1.0)]
+                }
                 
                 letterInputTextField.delegate = self
                 addArrangedSubview(inputView)

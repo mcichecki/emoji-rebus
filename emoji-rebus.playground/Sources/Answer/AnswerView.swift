@@ -34,21 +34,19 @@ final class AnswerView: NSView {
     }
     
     private func setUpConstraints() {
-        let titleTextFieldConstraints = [
-            titleTextField.topAnchor.constraint(equalTo: topAnchor, constant: 20.0),
-            titleTextField.centerXAnchor.constraint(equalTo: centerXAnchor),
-            titleTextField.heightAnchor.constraint(equalToConstant: 30.0),
-            titleTextField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
-        ]
+        titleTextField.activateConstraints {
+            [$0.topAnchor.constraint(equalTo: topAnchor, constant: 20.0),
+             $0.centerXAnchor.constraint(equalTo: centerXAnchor),
+             $0.heightAnchor.constraint(equalToConstant: 30.0),
+             $0.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)]
+        }
         
-        let descriptionTextFieldConstraints = [
-            descriptionTextField.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 20.0),
-            descriptionTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
-            descriptionTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20.0),
-            descriptionTextField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20.0)
-        ]
-        
-        [titleTextFieldConstraints, descriptionTextFieldConstraints].activate()
+        descriptionTextField.activateConstraints {
+            [$0.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 20.0),
+             $0.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
+             $0.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20.0),
+             $0.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20.0)]
+        }
     }
     
     private func setUpViews() {

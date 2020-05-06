@@ -7,9 +7,14 @@ protocol RebusViewDelegate: AnyObject {
 final class RebusView: NSView {
     weak var delegate: RebusViewDelegate?
     
-    lazy var rebusLabel = RebusLabel()
+    lazy var rebusLabel: RebusLabel = configure()
     
-    lazy var inputView = InputView()
+    lazy var inputView: InputView = configure()
+    
+    private lazy var stackView: NSStackView = configure { view in
+        view.orientation = .vertical
+        view.spacing = 50.0
+    }
     
     private(set) var rebus: Rebus! {
         didSet {
@@ -17,14 +22,6 @@ final class RebusView: NSView {
             inputView.numberOfLetters = rebus.numberOfLetters
         }
     }
-    
-    private lazy var stackView: NSStackView = {
-        let stackView = NSStackView()
-        stackView.orientation = .vertical
-        stackView.spacing = 50.0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
     
     init() {
         super.init(frame: .zero)
@@ -41,22 +38,19 @@ final class RebusView: NSView {
     }
     
     private func addSubviews() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(stackView)
+        addSubviews(stackView)
         
         [rebusLabel, inputView].forEach(stackView.addArrangedSubview(_:))
         inputView.inputDelegate = self
     }
     
     private func setUpConstraints() {
-        let stackViewConstraints = [
-            stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ]
-        
-        [stackViewConstraints].activate()
+        stackView.activateConstraints {
+            [$0.topAnchor.constraint(equalTo: topAnchor),
+             $0.leadingAnchor.constraint(equalTo: leadingAnchor),
+             $0.trailingAnchor.constraint(equalTo: trailingAnchor),
+             $0.bottomAnchor.constraint(equalTo: bottomAnchor)]
+        }
     }
 }
 
