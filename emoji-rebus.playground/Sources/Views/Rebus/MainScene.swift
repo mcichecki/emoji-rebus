@@ -1,7 +1,8 @@
 import AppKit
 import SpriteKit
+import Foundation
 
-public final class MainScene: SKScene {
+public final class MainScene: SKScene, SizeableScene {
     public let sceneSize = CGSize(width: 400, height: 560)
     
     private var currentIndex = 0 {
@@ -31,26 +32,34 @@ public final class MainScene: SKScene {
         rebusView.delegate = self
         rebusView.updateRebus(currentRebus)
         
-        view.addSubviews(rebusView)
-        rebusView.activateConstraints {
+        //        view.addSubviews(rebusView)
+        //        rebusView.activateConstraints {
+        //            [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        //             $0.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        //             $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+        //             $0.heightAnchor.constraint(equalToConstant: 300.0)]
+        //        }
+        
+        //        view.addSubviews(answerView)
+        //        answerView.activateConstraints {
+        //            [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        //             $0.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        //             $0.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+        //             $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)]
+        //        }
+        
+        view.addSubviews(answerView)
+        answerView.activateConstraints {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
              $0.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-             $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-             $0.heightAnchor.constraint(equalToConstant: 300.0)]
+             $0.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+             $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)]
         }
-        
-//        view.addSubviews(answerView)
-//        answerView.activateConstraints {
-//            [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//             $0.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-//             $0.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
-//             $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)]
-//        }
     }
     
     private func presentAnswer() {
-        guard let view = view else { return }
-        print("--- presentAnswer")
+        //        guard let view = view else { return }
+        //        print("--- presentAnswer")
         //        view.addSubview(answerView)
         //        let constraints = [
         //            answerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
