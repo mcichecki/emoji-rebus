@@ -32,7 +32,12 @@ final class RebusView: NSView {
     
     required init?(coder: NSCoder) { fatalError() }
     
-    func updateRebus(_ rebus: Rebus) {
+    func updateRebus(_ rebus: Rebus?) {
+        guard let rebus = rebus else {
+            print("--- no new rebus")
+            return
+        }
+        
         self.rebus = rebus
         inputView.focus()
     }
@@ -68,7 +73,7 @@ extension RebusView: InputViewDelegate {
     }
     
     func didUpdateInputArr(_ input: [Character?]) {
-        let answerChars = Array(rebus.answer) as [Character]
+        let answerChars = Array(rebus.answer.title) as [Character]
         
         guard input.count == answerChars.count else { fatalError("Number of chars of input and answer don't match") }
         

@@ -6,11 +6,20 @@ public final class MainScene: SKScene, SizeableScene {
     public let sceneSize = CGSize(width: 400, height: 560)
     
     private var currentIndex = 0 {
-        didSet { currentRebus = RebusStorage.rebuses[currentIndex] }
+        didSet { currentRebus = Parser.shared.getRebus(at: currentIndex) }
     }
     
-    private var currentRebus = RebusStorage.rebuses[0] {
-        didSet { rebusView.updateRebus(currentRebus) }
+//    private var currentRebus = RebusStorage.rebuses[0] {
+//        didSet { rebusView.updateRebus(currentRebus) }
+//    }
+        
+    private var currentRebus: Rebus? = Parser.shared.getRebus(at: 0) {
+        didSet {
+            rebusView.updateRebus(currentRebus)
+            if let answer = currentRebus?.answer {
+                answerView.answer = answer
+            }
+        }
     }
     
     private lazy var rebusView = RebusView()
@@ -32,7 +41,9 @@ public final class MainScene: SKScene, SizeableScene {
         currentIndex = 0
         
         rebusView.delegate = self
-        rebusView.updateRebus(currentRebus)
+        if let rebus = currentRebus {
+            rebusView.updateRebus(rebus)
+        }
         
         view.addSubviews(rebusView, answerView)
         rebusView.activateConstraints {

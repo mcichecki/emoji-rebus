@@ -91,6 +91,7 @@ final class AnswerView: NSView {
     }
     
     private func updateAnswer(_ answer: Answer) {
-        
+        titleTextField.stringValue = answer.title
+        descriptionTextField.stringValue = answer.description
     }
 }

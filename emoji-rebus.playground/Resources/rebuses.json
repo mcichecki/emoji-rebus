@@ -1,0 +1,60 @@
+[
+  {
+    "components": [
+      {
+        "type": "emoji",
+        "value": "🐺"
+      },
+      {
+        "type": "minus",
+        "value": "olf"
+      },
+      {
+        "type": "plus"
+      },
+      {
+        "type": "minus",
+        "value": "ki"
+      },
+      {
+        "type": "emoji",
+        "value": "🥝"
+      },
+      {
+        "type": "minus",
+        "value": "i"
+      },
+      {
+        "type": "plus"
+      },
+      {
+        "type": "emoji",
+        "value": "🎲"
+      },
+      {
+        "type": "minus",
+        "value": "ie"
+      }
+    ],
+    "answer": {
+      "title": "wwdc",
+      "description": "Worldwide Developers Conference"
+    }
+  },
+  {
+    "components": [
+      {
+        "type": "emoji",
+        "value": "🍏"
+      },
+      {
+        "type": "minus",
+        "value": "le"
+      }
+    ],
+    "answer": {
+      "title": "app",
+      "description": "Mobile app"
+    }
+  }
+]
