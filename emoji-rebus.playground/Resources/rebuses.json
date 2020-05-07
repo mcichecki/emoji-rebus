@@ -1,60 +1,191 @@
 [
-  {
-    "components": [
-      {
-        "type": "emoji",
-        "value": "🐺"
+   {
+      "answer":{
+         "title":"plastic",
+         "description":"..."
       },
-      {
-        "type": "minus",
-        "value": "olf"
+      "components":[
+         {
+            "value":"pla",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"🚉",
+            "type":"emoji"
+         },
+         {
+            "value":"ation",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"🧊",
+            "type":"emoji"
+         },
+         {
+            "value":"e",
+            "type":"minus"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"forest",
+         "description":"..."
       },
-      {
-        "type": "plus"
+      "components":[
+         {
+            "value":"⛲️",
+            "type":"emoji"
+         },
+         {
+            "value":"untain",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"🚻",
+            "type":"emoji"
+         },
+         {
+            "value":"room",
+            "type":"minus"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"water",
+         "description":"..."
       },
-      {
-        "type": "minus",
-        "value": "ki"
+      "components":[
+         {
+            "value":"w",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"🏧",
+            "type":"emoji"
+         },
+         {
+            "value":"m",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"er",
+            "type":"text"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"waste",
+         "description":"..."
       },
-      {
-        "type": "emoji",
-        "value": "🥝"
+      "components":[
+         {
+            "value":"⌚️",
+            "type":"emoji"
+         },
+         {
+            "value":"tch",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"⭐️",
+            "type":"emoji"
+         },
+         {
+            "value":"ar",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"e",
+            "type":"text"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"animal",
+         "description":"..."
       },
-      {
-        "type": "minus",
-        "value": "i"
+      "components":[
+         {
+            "value":"a",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"9️⃣",
+            "type":"emoji"
+         },
+         {
+            "value":"ne",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"🍅",
+            "type":"emoji"
+         },
+         {
+            "value":"toto",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"l",
+            "type":"text"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"co2",
+         "description":"..."
       },
-      {
-        "type": "plus"
-      },
-      {
-        "type": "emoji",
-        "value": "🎲"
-      },
-      {
-        "type": "minus",
-        "value": "ie"
-      }
-    ],
-    "answer": {
-      "title": "wwdc",
-      "description": "Worldwide Developers Conference"
-    }
-  },
-  {
-    "components": [
-      {
-        "type": "emoji",
-        "value": "🍏"
-      },
-      {
-        "type": "minus",
-        "value": "le"
-      }
-    ],
-    "answer": {
-      "title": "app",
-      "description": "Mobile app"
-    }
-  }
+      "components":[
+         {
+            "value":"🌮",
+            "type":"emoji"
+         },
+         {
+            "value":"co",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"2️⃣",
+            "type":"emoji"
+         }
+      ]
+   }
 ]

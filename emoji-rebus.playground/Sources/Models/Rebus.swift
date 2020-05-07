@@ -1,36 +1,15 @@
 import Foundation
 
-/*
- [
- {
- "components": [
- {
- "type": "emoji",
- "value": "🐺"
- },
- {
- "type": "minus",
- "value": "olf"
- }
- ],
- "answer": {
- "title": "test title",
- "description": "test description"
- }
- }
- ]
- */
-
-struct Rebus: Decodable {
+public struct Rebus: Codable {
     var components: [RebusComponent]
     //    var answer: String
     var answer: Answer
     
     var numberOfLetters: Int { answer.title.count }
     
-    init(_ components: [RebusComponent], ans: String) {
+    init(_ components: [RebusComponent], ans: String, description: String = "") {
         self.components = components
-        self.answer = Answer(title: ans, description: "empty description")
+        self.answer = Answer(title: ans, description: description)
     }
     
     func valid(input: String) -> Bool {
@@ -39,7 +18,7 @@ struct Rebus: Decodable {
     }
 }
 
-enum RebusComponent: Decodable {
+enum RebusComponent: Codable {
     case text(String)
     case emoji(Character)
     case plus
@@ -69,13 +48,69 @@ enum RebusComponent: Decodable {
             fatalError("Unrecognized type")
         }
     }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        let value: String?
+        let type: String
+        switch self {
+        case .text(let text):
+            value = text
+            type = "text"
+        case .emoji(let emoji):
+            value = String(emoji)
+            type = "emoji"
+        case .plus:
+            value = nil
+            type = "plus"
+        case .minus(let text):
+            value = text
+            type = "minus"
+        }
+        try container.encodeIfPresent(value, forKey: .value)
+        try container.encode(type, forKey: .type)
+    }
 }
 
-enum RebusStorage {
-    static let rebuses: [Rebus] = [
+public enum RebusStorage {
+    // https://gist.github.com/rxaviers/7360908 (Google Chrome search)
+    public static let rebuses: [Rebus] = [
+        // TODO: Ice Cube emoji: https://emojipedia.org/ice-cube/
+        // TODO: SHould we have:
+        // 🍈 - melon
+        // minus me + 🍈 + minus on = l
+        // or
+        // 🍈 + minus meon = l
+        .init([.text("pla"), .plus, .emoji("🚉"), .minus("ation"), .plus, .emoji("🧊"), .minus("e")],
+              ans: "plastic", description: "..."),
+        .init([.emoji("⛲️"), .minus("untain"), .plus, .emoji("🚻"), .minus("room")],
+              ans: "forest", description: "..."),
+        .init([.text("w"), .plus, .emoji("🏧"), .minus("m"), .plus, .text("er")],
+              ans: "water", description: "..."),
+        .init([.emoji("⌚️"), .minus("tch"), .plus, .emoji("⭐️"), .minus("ar"), .plus, .text("e")],
+              ans: "waste", description: "..."),
+        .init([.text("a"), .plus, .emoji("9️⃣"), .minus("ne"), .plus, .emoji("🍅"), .minus("toto"), .plus, .text("l")],
+              ans: "animal", description: "..."),
+        .init([.minus("ta"), .emoji("🌮"), .plus, .emoji("2️⃣")],
+              ans: "co2", description: "...")
+    ]
+    
+    public static let testRebuses: [Rebus] = [
         (.init([.emoji("🍏"), .minus("le")], ans: "app")),
         (.init([.emoji("🐺"), .minus("olf"), .plus, .minus("ki"), .emoji("🥝"), .minus("i"), .plus, .emoji("🎲"), .minus("ie")], ans: "wwdc")),
         //        (.init([.emoji("🧺"), .plus, .emoji("🏐")], ans: "basketball")),
         (.init([.text("re"), .plus, .emoji("🚌")], ans: "rebus")),
     ]
 }
+
+/*
+ List of rebuses
+ - plastic ✅
+ - forest ✅
+ - contamination
+ - water ✅
+ - waste ✅
+ - animal ✅
+ - co2 ✅
+ */

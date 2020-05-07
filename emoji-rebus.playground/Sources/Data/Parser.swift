@@ -42,3 +42,16 @@ final class Parser {
         try decoder.decode([Rebus].self, from: data)
     }
 }
+
+public final class RebusEncoder {
+    public static let shared = RebusEncoder()
+    
+    private lazy var encoder = JSONEncoder()
+    
+    public func encode(rebuses: [Rebus]) -> String {
+        guard let data = try? encoder.encode(rebuses),
+            let text = String(data: data, encoding: .utf8) else { return "" }
+        
+        return text
+    }
+}

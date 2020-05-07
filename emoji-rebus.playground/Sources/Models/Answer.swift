@@ -1,6 +1,6 @@
 import Foundation
 
-struct Answer: Decodable {
+struct Answer: Codable {
     let title: String
     let description: String
 }
