@@ -16,7 +16,7 @@ public final class MainScene: SKScene, SizeableScene {
     private lazy var rebusView = RebusView()
     
     private lazy var answerView = AnswerView()
-        
+    
     private var centerYConstraint: NSLayoutConstraint!
     
     public override init() {
@@ -95,10 +95,6 @@ public final class MainScene: SKScene, SizeableScene {
 extension MainScene: RebusViewDelegate {
     func didComplete() {
         presentAnswer()
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-            //            self.hideAnswer()
-            //            self.currentIndex += 1
-        }
     }
 }
 
@@ -107,5 +103,6 @@ extension MainScene: RebusViewDelegate {
 extension MainScene: AnswerViewDelegate {
     func didTapClose() {
         hideAnswer()
+        currentIndex += 1
     }
 }

@@ -7,6 +7,12 @@ protocol AnswerViewDelegate: AnyObject {
 final class AnswerView: NSView {
     weak var delegate: AnswerViewDelegate?
     
+    var answer: Answer! {
+        didSet {
+            updateAnswer(answer)
+        }
+    }
+    
     lazy var titleTextField: NSTextField = configure { textField in
         textFieldConfig(textField)
         textField.font = NSFont.systemFont(ofSize: 30.0)
@@ -82,5 +88,9 @@ final class AnswerView: NSView {
     
     @objc private func closeButtonTapped() {
         delegate?.didTapClose()
+    }
+    
+    private func updateAnswer(_ answer: Answer) {
+        
     }
 }
