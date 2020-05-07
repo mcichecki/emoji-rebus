@@ -1,12 +1,19 @@
 import Foundation
 
 public struct Rebus: Codable {
+    enum Difficulty: String, CaseIterable {
+        case easy, medium, hard
+    }
+    
     var components: [RebusComponent]
-    //    var answer: String
+
     var answer: Answer
     
     var numberOfLetters: Int { answer.title.count }
     
+    var difficultyLevel: Difficulty { Difficulty.allCases.randomElement() ?? .easy } // TODO: add some "algorithm"
+    
+    // TODO: Add init with args...
     init(_ components: [RebusComponent], ans: String, description: String = "") {
         self.components = components
         self.answer = Answer(title: ans, description: description)

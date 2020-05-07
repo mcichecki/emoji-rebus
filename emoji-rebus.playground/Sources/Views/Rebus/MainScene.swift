@@ -9,15 +9,16 @@ public final class MainScene: SKScene, SizeableScene {
         didSet { currentRebus = Parser.shared.getRebus(at: currentIndex) }
     }
     
-//    private var currentRebus = RebusStorage.rebuses[0] {
-//        didSet { rebusView.updateRebus(currentRebus) }
-//    }
-        
+    //    private var currentRebus = RebusStorage.rebuses[0] {
+    //        didSet { rebusView.updateRebus(currentRebus) }
+    //    }
+    
     private var currentRebus: Rebus? = Parser.shared.getRebus(at: 0) {
         didSet {
             rebusView.updateRebus(currentRebus)
-            if let answer = currentRebus?.answer {
-                answerView.answer = answer
+            if let rebus = currentRebus {
+                answerView.answer = rebus.answer
+                difficultyView.difficulty = rebus.difficultyLevel
             }
         }
     }
@@ -25,6 +26,8 @@ public final class MainScene: SKScene, SizeableScene {
     private lazy var rebusView = RebusView()
     
     private lazy var answerView = AnswerView()
+    
+    private lazy var difficultyView = DifficultyView()
     
     private var centerYConstraint: NSLayoutConstraint!
     
@@ -45,7 +48,7 @@ public final class MainScene: SKScene, SizeableScene {
             rebusView.updateRebus(rebus)
         }
         
-        view.addSubviews(rebusView, answerView)
+        view.addSubviews(rebusView, answerView, difficultyView)
         rebusView.activateConstraints {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
              $0.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -60,6 +63,13 @@ public final class MainScene: SKScene, SizeableScene {
              centerYConstraint,
              $0.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
              $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)]
+        }
+        
+        difficultyView.activateConstraints {
+            [$0.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+             $0.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+             $0.heightAnchor.constraint(equalToConstant: 40.0),
+             $0.widthAnchor.constraint(equalToConstant: 200.0)]
         }
         answerView.alphaValue = 0.0
         
