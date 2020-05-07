@@ -16,9 +16,7 @@ public final class MainScene: SKScene, SizeableScene {
     private lazy var rebusView = RebusView()
     
     private lazy var answerView = AnswerView()
-    
-    private let animationDuration: TimeInterval = 0.6
-    
+        
     private var centerYConstraint: NSLayoutConstraint!
     
     public override init() {
@@ -53,13 +51,15 @@ public final class MainScene: SKScene, SizeableScene {
              $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)]
         }
         answerView.alphaValue = 0.0
+        
+        answerView.delegate = self
     }
     
     private func presentAnswer() {
         answerView.alphaValue = 1.0
         
         let animations: (NSAnimationContext) -> Void = { context in
-            context.duration = self.animationDuration
+            context.duration = 0.5
             context.allowsImplicitAnimation = true
             context.timingFunction = CAMediaTimingFunction(name: .easeOut)
             
@@ -73,7 +73,7 @@ public final class MainScene: SKScene, SizeableScene {
     
     private func hideAnswer() {
         let animations: (NSAnimationContext) -> Void = { context in
-            context.duration = self.animationDuration
+            context.duration = 0.3
             context.allowsImplicitAnimation = true
             context.timingFunction = CAMediaTimingFunction(name: .easeIn)
             
@@ -96,8 +96,16 @@ extension MainScene: RebusViewDelegate {
     func didComplete() {
         presentAnswer()
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-            self.hideAnswer()
+            //            self.hideAnswer()
             //            self.currentIndex += 1
         }
+    }
+}
+
+// MARK: - AnswerViewDelegate
+
+extension MainScene: AnswerViewDelegate {
+    func didTapClose() {
+        hideAnswer()
     }
 }

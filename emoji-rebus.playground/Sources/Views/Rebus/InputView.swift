@@ -52,7 +52,7 @@ final public class InputView: NSStackView {
                 context.duration = 0.5
                 context.allowsImplicitAnimation = true
                 
-                let borderColor = (indexes.contains(offset) ? ColorStyle.confirmationGreen : ColorStyle.gray).cgColor
+                let borderColor = (indexes.contains(offset) ? ColorStyle.green : ColorStyle.gray).cgColor
                 textField.layer?.borderColor = borderColor
             }
             
