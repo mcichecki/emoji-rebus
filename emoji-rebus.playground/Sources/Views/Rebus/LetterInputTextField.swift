@@ -30,7 +30,7 @@ final class LetterInputTextField: NSTextField {
         wantsLayer = true
         layer?.cornerRadius = 5.0
         layer?.borderWidth = 3.0
-        layer?.borderColor = NSColor.darkGray.cgColor
+        layer?.borderColor = ColorStyle.gray.cgColor
         focusRingType = .none
         font = NSFont.systemFont(ofSize: 30.0)
     }

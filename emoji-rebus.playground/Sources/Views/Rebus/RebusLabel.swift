@@ -21,7 +21,7 @@ final class RebusLabel: NSTextField {
         wantsLayer = true
         layer?.cornerRadius = 5.0
         layer?.masksToBounds = true
-        layer?.backgroundColor = NSColor.white.cgColor
+        layer?.backgroundColor = ColorStyle.white.cgColor
         sizeToFit()
         usesSingleLineMode = false
         
@@ -38,7 +38,7 @@ final class RebusLabel: NSTextField {
         paragraphStyle.alignment = NSTextAlignment.center
         
         let commonAttrs: [NSAttributedString.Key: Any] = [
-            .foregroundColor: NSColor.black,
+            .foregroundColor: ColorStyle.black,
             .font: NSFont.systemFont(ofSize: 34.0),
             .paragraphStyle: paragraphStyle
         ]
@@ -55,7 +55,7 @@ final class RebusLabel: NSTextField {
             case .minus(let removedText):
                 componentAttributedString = .init(string: removedText, attributes: [
                     .strikethroughStyle: NSUnderlineStyle.single.rawValue,
-                    .strikethroughColor: NSColor.red.withAlphaComponent(0.5)
+                    .strikethroughColor: ColorStyle.red.withAlphaComponent(0.5)
                 ])
             }
             

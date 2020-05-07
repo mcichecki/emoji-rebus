@@ -12,11 +12,11 @@ final class AnswerView: NSView {
     }
     
     private let textFieldConfig: (NSTextField) -> Void = { textField in
-        textField.isEditable = false
-        textField.wantsLayer = true
-        textField.layer?.backgroundColor = NSColor.red.cgColor
         textField.alignment = .center
-        textField.layer?.cornerRadius = 5.0
+        textField.isEditable = false
+        textField.isBezeled = false
+        textField.textColor = ColorStyle.white
+        textField.backgroundColor = ColorStyle.green
     }
     
     init() {
@@ -35,9 +35,9 @@ final class AnswerView: NSView {
     
     private func setUpConstraints() {
         titleTextField.activateConstraints {
-            [$0.topAnchor.constraint(equalTo: topAnchor, constant: 20.0),
+            [$0.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
              $0.centerXAnchor.constraint(equalTo: centerXAnchor),
-             $0.heightAnchor.constraint(equalToConstant: 30.0),
+             $0.heightAnchor.constraint(equalToConstant: 40.0),
              $0.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)]
         }
         
@@ -51,7 +51,7 @@ final class AnswerView: NSView {
     
     private func setUpViews() {
         wantsLayer = true
-        layer?.backgroundColor = NSColor.blue.cgColor
+        layer?.backgroundColor = ColorStyle.green.cgColor
         layer?.cornerRadius = 5.0
         titleTextField.stringValue = "Answer"
         descriptionTextField.stringValue = "Some longer, multiline description..."

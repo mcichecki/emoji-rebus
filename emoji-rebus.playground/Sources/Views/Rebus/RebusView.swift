@@ -73,7 +73,7 @@ extension RebusView: InputViewDelegate {
         guard input.count == answerChars.count else { fatalError("Number of chars of input and answer don't match") }
         
         var highlightedIndexes: [Int] = []
-        for (index, answerChar) in answerChars.enumerated() where answerChar == input[index] {
+        for (index, answerChar) in answerChars.enumerated() where answerChar.lowercased() == input[index]?.lowercased() {
             highlightedIndexes.append(index)
         }
         inputView.highlight(indexes: highlightedIndexes)

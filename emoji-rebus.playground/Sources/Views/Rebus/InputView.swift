@@ -52,7 +52,7 @@ final public class InputView: NSStackView {
                 context.duration = 0.5
                 context.allowsImplicitAnimation = true
                 
-                let borderColor = indexes.contains(offset) ? NSColor.confirmationGreen.cgColor : NSColor.darkGray.cgColor
+                let borderColor = (indexes.contains(offset) ? ColorStyle.confirmationGreen : ColorStyle.gray).cgColor
                 textField.layer?.borderColor = borderColor
             }
             
@@ -83,7 +83,7 @@ final public class InputView: NSStackView {
             .forEach { index in
                 let inputView = configure { view in
                     view.wantsLayer = true
-                    view.layer?.backgroundColor = view.layer?.backgroundColor // TODO: needed?
+//                    view.layer?.backgroundColor = view.layer?.backgroundColor // TODO: needed?
                 }
                 
                 let letterInputTextField: LetterInputTextField = configure { view in
