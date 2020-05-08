@@ -10,4 +10,16 @@ enum ColorStyle {
     static let lightGreen: NSColor = .rgb(85, 239, 196)
     static let white: NSColor = .white
     static let black: NSColor = .black
+    
+    static let backgroundColors: [NSColor] = [
+        Background.ocean,
+        Background.blue
+    ]
+    
+    // MARK: - Background colors
+    
+    enum Background {
+        static let ocean: NSColor = .rgb(0, 206, 201)
+        static let blue: NSColor = .rgb(9, 132, 227)
+    }
 }

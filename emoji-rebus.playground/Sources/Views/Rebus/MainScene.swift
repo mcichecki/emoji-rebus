@@ -24,11 +24,10 @@ public final class MainScene: SKScene, SizeableScene {
     }
     
     private lazy var rebusView = RebusView()
-    
     private lazy var answerView = AnswerView()
-    
     private lazy var difficultyView = DifficultyView()
-    
+    private lazy var leftArrow = ArrowButton(direction: .left)
+    private lazy var rightArrow = ArrowButton(direction: .right)
     private var centerYConstraint: NSLayoutConstraint!
     
     public override init() {
@@ -49,7 +48,8 @@ public final class MainScene: SKScene, SizeableScene {
             rebusView.updateRebus(rebus)
         }
         
-        view.addSubviews(rebusView, answerView, difficultyView)
+        view.addSubviews(rebusView, answerView, difficultyView, leftArrow, rightArrow)
+        
         rebusView.activateConstraints {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
              $0.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -72,6 +72,27 @@ public final class MainScene: SKScene, SizeableScene {
              $0.heightAnchor.constraint(equalToConstant: 40.0),
              $0.widthAnchor.constraint(equalToConstant: 210.0)]
         }
+        
+        let buttonSize: CGFloat = 30.0
+        leftArrow.activateConstraints {
+            [$0.trailingAnchor.constraint(equalTo: rebusView.leadingAnchor, constant: -10.0),
+             $0.centerYAnchor.constraint(equalTo: rebusView.centerYAnchor),
+             $0.heightAnchor.constraint(equalToConstant: buttonSize),
+             $0.widthAnchor.constraint(equalToConstant: buttonSize)
+            ]
+        }
+        
+        rightArrow.activateConstraints {
+            [$0.leadingAnchor.constraint(equalTo: rebusView.trailingAnchor, constant: -10.0),
+             $0.centerYAnchor.constraint(equalTo: rebusView.centerYAnchor),
+             $0.heightAnchor.constraint(equalToConstant: buttonSize),
+             $0.widthAnchor.constraint(equalToConstant: buttonSize)]
+        }
+        
+        leftArrow.isHidden = true
+        
+        [leftArrow, rightArrow].forEach { $0.delegate = self }
+        
         answerView.alphaValue = 0.0
         
         answerView.delegate = self
@@ -126,5 +147,19 @@ extension MainScene: AnswerViewDelegate {
     func didTapClose() {
         hideAnswer()
         currentIndex += 1
+    }
+}
+
+// MARK: - ArrowButtonDelegate
+
+extension MainScene: ArrowButtonDelegate {
+    func didTapArrowButton(direction: ArrowDirection) {
+        switch direction {
+        case .left: currentIndex -= 1
+        case .right: currentIndex += 1
+        }
+        
+        leftArrow.isHidden = currentIndex == 0
+        rightArrow.isHidden = currentIndex == Parser.shared.numberOfRebuses - 1
     }
 }

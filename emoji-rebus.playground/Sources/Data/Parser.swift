@@ -7,8 +7,9 @@ enum ParserError: Error {
 final class Parser {
     static let shared = Parser()
     
+    var numberOfRebuses: Int { rebuses.count }
     private var rebuses: [Rebus] = []
-    
+        
     private init() {
         getRebuses()
     }
