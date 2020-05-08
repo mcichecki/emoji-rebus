@@ -40,6 +40,7 @@ public final class MainScene: SKScene, SizeableScene {
     public override func didMove(to view: SKView) {
         super.didMove(to: view)
         
+        // TODO: randomize colors
         scene?.backgroundColor = ColorStyle.darkGray
         currentIndex = 0
         
@@ -53,7 +54,7 @@ public final class MainScene: SKScene, SizeableScene {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
              $0.centerYAnchor.constraint(equalTo: view.centerYAnchor),
              $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-             $0.heightAnchor.constraint(equalToConstant: 300.0)]
+             $0.heightAnchor.constraint(equalToConstant: 200.0)]
         }
         
         centerYConstraint = answerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: sceneSize.height)
@@ -69,7 +70,7 @@ public final class MainScene: SKScene, SizeableScene {
             [$0.trailingAnchor.constraint(equalTo: view.trailingAnchor),
              $0.bottomAnchor.constraint(equalTo: view.bottomAnchor),
              $0.heightAnchor.constraint(equalToConstant: 40.0),
-             $0.widthAnchor.constraint(equalToConstant: 200.0)]
+             $0.widthAnchor.constraint(equalToConstant: 210.0)]
         }
         answerView.alphaValue = 0.0
         

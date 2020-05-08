@@ -84,8 +84,9 @@ final public class InputView: NSStackView {
         (0..<numberOfLetters)
             .forEach { index in
                 let inputView = configure { view in
-                    view.wantsLayer = true
+//                    view.wantsLayer = true
 //                    view.layer?.backgroundColor = view.layer?.backgroundColor // TODO: needed?
+                    
                 }
                 
                 let letterInputTextField: LetterInputTextField = configure { view in

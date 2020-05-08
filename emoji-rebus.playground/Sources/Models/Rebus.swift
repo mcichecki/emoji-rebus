@@ -1,8 +1,9 @@
 import Foundation
 
 public struct Rebus: Codable {
+    // TODO: change raw value to int and generate number of stars
     enum Difficulty: String, CaseIterable {
-        case easy, medium, hard
+        case easy = "⭐️", medium = "⭐️⭐️", hard = "⭐️⭐️⭐️"
     }
     
     var components: [RebusComponent]

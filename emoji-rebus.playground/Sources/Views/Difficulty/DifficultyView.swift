@@ -1,27 +1,51 @@
 import AppKit
 
-final public class DifficultyView: NSTextField {
-    var difficulty: Rebus.Difficulty? {
-        didSet {
-            configure()
-        }
+final public class DifficultyView: NSView {
+    enum FontSize {
+        static let regular: CGFloat = 20.0
     }
+    
+    var difficulty: Rebus.Difficulty? {
+        didSet { configure() }
+    }
+    
+    private lazy var textField = NSTextField()
+    
+    
+    private let fontSize: CGFloat = 24.0
     
     init() {
         super.init(frame: .zero)
         
         setUp()
+        addSubviews(textField)
+        setUpConstraints()
+        setUpTextField()
     }
     
     required init?(coder: NSCoder) { fatalError() }
     
     private func setUp() {
-        isEditable = false
-        alignment = .center
         wantsLayer = true
-        layer?.backgroundColor = ColorStyle.darkGray.cgColor
-        sizeToFit()
-        usesSingleLineMode = false
+        layer?.backgroundColor = ColorStyle.darkGray.cgColor // TODO: Update
+    }
+    
+    private func setUpConstraints() {
+        textField.activateConstraints {
+            [$0.centerXAnchor.constraint(equalTo: centerXAnchor),
+             $0.centerYAnchor.constraint(equalTo: centerYAnchor),
+             $0.heightAnchor.constraint(equalToConstant: FontSize.regular * 1.2),
+             $0.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1.0)]
+        }
+    }
+    
+    private func setUpTextField() {
+        textField.isEditable = false
+        textField.isBezeled = false
+        textField.alignment = .center
+        textField.drawsBackground = false
+        textField.sizeToFit()
+        textField.usesSingleLineMode = false
     }
     
     private func configure() {
@@ -37,7 +61,7 @@ final public class DifficultyView: NSTextField {
         
         let commonAttrs: [NSAttributedString.Key: Any] = [
             .foregroundColor: ColorStyle.white,
-            .font: NSFont.systemFont(ofSize: 18.0),
+            .font: NSFont.systemFont(ofSize: FontSize.regular),
             .paragraphStyle: paragraphStyle
         ]
         
@@ -55,8 +79,8 @@ final public class DifficultyView: NSTextField {
         
         attributedString.append(.init(string: difficulty.rawValue, attributes: [
             .foregroundColor: difficultyColor,
-            .font: NSFont.systemFont(ofSize: 22.0),
+            .font: NSFont.systemFont(ofSize: FontSize.regular),
         ]))
-        attributedStringValue = attributedString
+        textField.attributedStringValue = attributedString
     }
 }

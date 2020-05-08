@@ -8,13 +8,7 @@ final class RebusView: NSView {
     weak var delegate: RebusViewDelegate?
     
     lazy var rebusLabel: RebusLabel = configure()
-    
     lazy var inputView: InputView = configure()
-    
-    private lazy var stackView: NSStackView = configure { view in
-        view.orientation = .vertical
-        view.spacing = 50.0
-    }
     
     private(set) var rebus: Rebus! {
         didSet {
@@ -28,6 +22,7 @@ final class RebusView: NSView {
         
         addSubviews()
         setUpConstraints()
+        setUpStyling()
     }
     
     required init?(coder: NSCoder) { fatalError() }
@@ -43,19 +38,29 @@ final class RebusView: NSView {
     }
     
     private func addSubviews() {
-        addSubviews(stackView)
+        addSubviews(rebusLabel, inputView)
         
-        [rebusLabel, inputView].forEach(stackView.addArrangedSubview(_:))
         inputView.inputDelegate = self
     }
     
     private func setUpConstraints() {
-        stackView.activateConstraints {
-            [$0.topAnchor.constraint(equalTo: topAnchor),
-             $0.leadingAnchor.constraint(equalTo: leadingAnchor),
-             $0.trailingAnchor.constraint(equalTo: trailingAnchor),
-             $0.bottomAnchor.constraint(equalTo: bottomAnchor)]
+        let margin: CGFloat = 20.0
+        
+        rebusLabel.activateConstraints {
+            [$0.topAnchor.constraint(equalTo: topAnchor, constant: margin),
+             $0.centerXAnchor.constraint(equalTo: centerXAnchor)]
         }
+        
+        inputView.activateConstraints {
+            [$0.topAnchor.constraint(greaterThanOrEqualTo: rebusLabel.bottomAnchor, constant: 20.0),
+             $0.centerXAnchor.constraint(equalTo: centerXAnchor),
+             $0.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin)]
+        }
+    }
+    
+    private func setUpStyling() {
+//        setBackgroundColor(.red)
+//        layer?.cornerRadius = 8.0
     }
 }
 
