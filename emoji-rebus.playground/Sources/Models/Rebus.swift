@@ -6,15 +6,14 @@ public struct Rebus: Codable {
     }
     
     var components: [RebusComponent]
-
+    
     var answer: Answer
     
     var numberOfLetters: Int { answer.title.count }
     
     var difficultyLevel: Difficulty { Difficulty.allCases.randomElement() ?? .easy } // TODO: add some "algorithm"
     
-    // TODO: Add init with args...
-    init(_ components: [RebusComponent], ans: String, description: String = "") {
+    init(_ components: RebusComponent..., ans: String, description: String = "") {
         self.components = components
         self.answer = Answer(title: ans, description: description)
     }
@@ -89,25 +88,25 @@ public enum RebusStorage {
         // minus me + 🍈 + minus on = l
         // or
         // 🍈 + minus meon = l
-        .init([.text("pla"), .plus, .emoji("🚉"), .minus("ation"), .plus, .emoji("🧊"), .minus("e")],
+        .init(.text("pla"), .plus, .emoji("🚉"), .minus("ation"), .plus, .emoji("🧊"), .minus("e"),
               ans: "plastic", description: "..."),
-        .init([.emoji("⛲️"), .minus("untain"), .plus, .emoji("🚻"), .minus("room")],
+        .init(.emoji("⛲️"), .minus("untain"), .plus, .emoji("🚻"), .minus("room"),
               ans: "forest", description: "..."),
-        .init([.text("w"), .plus, .emoji("🏧"), .minus("m"), .plus, .text("er")],
+        .init(.text("w"), .plus, .emoji("🏧"), .minus("m"), .plus, .text("er"),
               ans: "water", description: "..."),
-        .init([.emoji("⌚️"), .minus("tch"), .plus, .emoji("⭐️"), .minus("ar"), .plus, .text("e")],
+        .init(.emoji("⌚️"), .minus("tch"), .plus, .emoji("⭐️"), .minus("ar"), .plus, .text("e"),
               ans: "waste", description: "..."),
-        .init([.text("a"), .plus, .emoji("9️⃣"), .minus("ne"), .plus, .emoji("🍅"), .minus("toto"), .plus, .text("l")],
+        .init(.text("a"), .plus, .emoji("9️⃣"), .minus("ne"), .plus, .emoji("🍅"), .minus("toto"), .plus, .text("l"),
               ans: "animal", description: "..."),
-        .init([.minus("ta"), .emoji("🌮"), .plus, .emoji("2️⃣")],
+        .init(.minus("ta"), .emoji("🌮"), .plus, .emoji("2️⃣"),
               ans: "co2", description: "...")
     ]
     
     public static let testRebuses: [Rebus] = [
-        (.init([.emoji("🍏"), .minus("le")], ans: "app")),
-        (.init([.emoji("🐺"), .minus("olf"), .plus, .minus("ki"), .emoji("🥝"), .minus("i"), .plus, .emoji("🎲"), .minus("ie")], ans: "wwdc")),
-        //        (.init([.emoji("🧺"), .plus, .emoji("🏐")], ans: "basketball")),
-        (.init([.text("re"), .plus, .emoji("🚌")], ans: "rebus")),
+        (.init(.emoji("🍏"), .minus("le"), ans: "app")),
+        (.init(.emoji("🐺"), .minus("olf"), .plus, .minus("ki"), .emoji("🥝"), .minus("i"), .plus, .emoji("🎲"), .minus("ie"), ans: "wwdc")),
+        //        (.init(.emoji("🧺"), .plus, .emoji("🏐"), ans: "basketball")),
+        (.init(.text("re"), .plus, .emoji("🚌"), ans: "rebus")),
     ]
 }
 
