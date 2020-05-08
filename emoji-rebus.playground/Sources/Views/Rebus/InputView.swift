@@ -36,6 +36,8 @@ final public class InputView: NSStackView {
     
     private var lastIndex: Int { textFields.map { $0.tag }.max() ?? 0 }
     
+    private let regex: String = "^[a-zA-Z0-9]$"
+    
     init() {
         super.init(frame: .zero)
         
@@ -146,11 +148,11 @@ extension InputView: NSTextFieldDelegate {
     public func controlTextDidChange(_ obj: Notification) {
         guard let textField = obj.object as? NSTextField else { return }
         
-        if !(textField.stringValue.isEmpty || textField.stringValue.matches("^[a-zA-Z]$")) {
+        if !(textField.stringValue.isEmpty || textField.stringValue.matches(regex)) {
             if let lastChar = textField.stringValue.last {
-                if String(lastChar).matches("^[a-zA-Z]$") {
+                if String(lastChar).matches(regex) {
                     textField.stringValue = String(lastChar)
-                } else if let firstLetter = textField.stringValue.compactMap ({ String($0) }).first, firstLetter.matches("^[a-zA-Z]$") {
+                } else if let firstLetter = textField.stringValue.compactMap ({ String($0) }).first, firstLetter.matches(regex) {
                     textField.stringValue = firstLetter
                 } else {
                     textField.stringValue = ""

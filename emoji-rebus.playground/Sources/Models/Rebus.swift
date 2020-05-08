@@ -11,7 +11,14 @@ public struct Rebus: Codable {
     
     var numberOfLetters: Int { answer.title.count }
     
-    var difficultyLevel: Difficulty { Difficulty.allCases.randomElement() ?? .easy } // TODO: add some "algorithm"
+    var difficultyLevel: Difficulty {
+        let numberOfComponents = components.count
+        switch numberOfComponents {
+        case 0...6: return .easy
+        case 6...8: return .medium
+        default: return .hard
+        }
+    }
     
     init(_ components: RebusComponent..., ans: String, description: String = "") {
         self.components = components
@@ -40,7 +47,7 @@ enum RebusComponent: Codable {
         let type = try container.decode(String.self, forKey: .type)
         let value = try container.decodeIfPresent(String.self, forKey: .value) ?? ""
         
-        print("--- type: \(type), value: \(value)")
+        // print("--- type: \(type), value: \(value)")
         if type == "text" {
             self = .text(value)
         } else if type == "emoji" {
@@ -88,18 +95,33 @@ public enum RebusStorage {
         // minus me + 🍈 + minus on = l
         // or
         // 🍈 + minus meon = l
-        .init(.text("pla"), .plus, .emoji("🚉"), .minus("ation"), .plus, .emoji("🧊"), .minus("e"),
+        
+        .init(.text("a"), .plus, .minus("war"), .emoji("⚠️"), .minus("ng"), .plus, .minus("to"), .emoji("🍅"), .minus("to"), .plus, .text("l"),
+              ans: "animal", description: "..."),
+        .init(.minus("ta"), .emoji("🌮"), .plus, .emoji("2️⃣"),
+              ans: "co2", description: "..."),
+        .init(.text("pla"), .plus, .minus("ham"), .emoji("🐹"), .minus("er"), .plus, .emoji("🧊"), .minus("e"),
               ans: "plastic", description: "..."),
-        .init(.emoji("⛲️"), .minus("untain"), .plus, .emoji("🚻"), .minus("room"),
+        .init(.text("fo"), .plus, .minus("d"), .emoji("👗"), .minus("s"), .plus, .text("t"),
               ans: "forest", description: "..."),
         .init(.text("w"), .plus, .emoji("🏧"), .minus("m"), .plus, .text("er"),
               ans: "water", description: "..."),
         .init(.emoji("⌚️"), .minus("tch"), .plus, .emoji("⭐️"), .minus("ar"), .plus, .text("e"),
               ans: "waste", description: "..."),
-        .init(.text("a"), .plus, .emoji("9️⃣"), .minus("ne"), .plus, .emoji("🍅"), .minus("toto"), .plus, .text("l"),
-              ans: "animal", description: "..."),
-        .init(.minus("ta"), .emoji("🌮"), .plus, .emoji("2️⃣"),
-              ans: "co2", description: "...")
+        .init(.minus("gr"), .emoji("🍇"), .minus("es"), .plus, .text("p"), .plus, .minus("wha"), .emoji("🐋"),
+              ans: "apple", description: "..."),
+        .init(.emoji("✂️"), .minus("ssors"), .plus, .text("ence"),
+              ans: "apple", description: "..."),
+        .init(.emoji("☁️"), .minus("oud"), .plus, .text("im"), .plus, .minus("c"), .emoji("🐱"),
+              ans: "climate", description: "..."),
+        .init(.text("env"), .plus, .minus("f"), .emoji("🔥"), .minus("e"), .plus, .text("onm"), .plus, .minus("t"), .emoji("⛺️"),
+              ans: "environment", description: "..."),
+        .init(.text("e"), .plus, .emoji("🐄"), .minus("w"), .plus, .emoji("🔒"), .minus("ck"), .plus, .text("gy"),
+              ans: "ecology", description: "..."),
+        .init(.text("e"), .plus, .emoji("🌽"), .minus("rn"), .plus, .text("syst"), .plus, .minus("g"), .emoji("💎"),
+              ans: "ecosystem", description: "..."),
+        .init(.minus("fi"), .emoji("🔥"), .plus, .minus("motor"), .emoji("🏍"), .minus("le"), .plus, .minus("turt"), .emoji("🐢"),
+              ans: "recycle", description: "...")
     ]
     
     public static let testRebuses: [Rebus] = [
@@ -119,4 +141,11 @@ public enum RebusStorage {
  - waste ✅
  - animal ✅
  - co2 ✅
+ - apple ✅
+ - science ✅
+ - climate ✅
+ - environment ✅
+ - ecology ✅
+ - ecosystem ✅
+ - recycle ✅
  */

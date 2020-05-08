@@ -54,4 +54,15 @@ public final class RebusEncoder {
         
         return text
     }
+    
+    public func printStats(rebuses: [Rebus]) {
+        let count = rebuses.count
+        let sortedByNumberOfComponents = rebuses.sorted { r1, r2 in r1.components.count < r2.components.count }
+        let numberOfComponents = sortedByNumberOfComponents.map { $0.components.count }
+        let averageComponentsNumber = Double(numberOfComponents.reduce(0, +)) / Double(numberOfComponents.count)
+        
+        print("number of rebuses: \(count)")
+        print("components: \(numberOfComponents)")
+        print("average components number: \(averageComponentsNumber)")
+    }
 }

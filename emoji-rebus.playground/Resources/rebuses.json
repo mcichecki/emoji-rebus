@@ -1,6 +1,78 @@
 [
    {
       "answer":{
+         "title":"animal",
+         "description":"..."
+      },
+      "components":[
+         {
+            "value":"a",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"war",
+            "type":"minus"
+         },
+         {
+            "value":"⚠️",
+            "type":"emoji"
+         },
+         {
+            "value":"ng",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"to",
+            "type":"minus"
+         },
+         {
+            "value":"🍅",
+            "type":"emoji"
+         },
+         {
+            "value":"to",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"l",
+            "type":"text"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"co2",
+         "description":"..."
+      },
+      "components":[
+         {
+            "value":"ta",
+            "type":"minus"
+         },
+         {
+            "value":"🌮",
+            "type":"emoji"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"2️⃣",
+            "type":"emoji"
+         }
+      ]
+   },
+   {
+      "answer":{
          "title":"plastic",
          "description":"..."
       },
@@ -13,11 +85,15 @@
             "type":"plus"
          },
          {
-            "value":"🚉",
+            "value":"ham",
+            "type":"minus"
+         },
+         {
+            "value":"🐹",
             "type":"emoji"
          },
          {
-            "value":"ation",
+            "value":"er",
             "type":"minus"
          },
          {
@@ -40,23 +116,30 @@
       },
       "components":[
          {
-            "value":"⛲️",
+            "value":"fo",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"d",
+            "type":"minus"
+         },
+         {
+            "value":"👗",
             "type":"emoji"
          },
          {
-            "value":"untain",
+            "value":"s",
             "type":"minus"
          },
          {
             "type":"plus"
          },
          {
-            "value":"🚻",
-            "type":"emoji"
-         },
-         {
-            "value":"room",
-            "type":"minus"
+            "value":"t",
+            "type":"text"
          }
       ]
    },
@@ -126,64 +209,264 @@
    },
    {
       "answer":{
-         "title":"animal",
+         "title":"apple",
          "description":"..."
       },
       "components":[
          {
-            "value":"a",
+            "value":"gr",
+            "type":"minus"
+         },
+         {
+            "value":"🍇",
+            "type":"emoji"
+         },
+         {
+            "value":"es",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"p",
             "type":"text"
          },
          {
             "type":"plus"
          },
          {
-            "value":"9️⃣",
+            "value":"wha",
+            "type":"minus"
+         },
+         {
+            "value":"🐋",
+            "type":"emoji"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"apple",
+         "description":"..."
+      },
+      "components":[
+         {
+            "value":"✂️",
             "type":"emoji"
          },
          {
-            "value":"ne",
+            "value":"ssors",
             "type":"minus"
          },
          {
             "type":"plus"
          },
          {
-            "value":"🍅",
-            "type":"emoji"
-         },
-         {
-            "value":"toto",
-            "type":"minus"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"l",
+            "value":"ence",
             "type":"text"
          }
       ]
    },
    {
       "answer":{
-         "title":"co2",
+         "title":"climate",
          "description":"..."
       },
       "components":[
          {
-            "value":"🌮",
+            "value":"☁️",
             "type":"emoji"
          },
          {
-            "value":"co",
+            "value":"oud",
             "type":"minus"
          },
          {
             "type":"plus"
          },
          {
-            "value":"2️⃣",
+            "value":"im",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"c",
+            "type":"minus"
+         },
+         {
+            "value":"🐱",
+            "type":"emoji"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"environment",
+         "description":"..."
+      },
+      "components":[
+         {
+            "value":"env",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"f",
+            "type":"minus"
+         },
+         {
+            "value":"🔥",
+            "type":"emoji"
+         },
+         {
+            "value":"e",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"onm",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"t",
+            "type":"minus"
+         },
+         {
+            "value":"⛺️",
+            "type":"emoji"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"ecology",
+         "description":"..."
+      },
+      "components":[
+         {
+            "value":"e",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"🐄",
+            "type":"emoji"
+         },
+         {
+            "value":"w",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"🔒",
+            "type":"emoji"
+         },
+         {
+            "value":"ck",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"gy",
+            "type":"text"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"ecosystem",
+         "description":"..."
+      },
+      "components":[
+         {
+            "value":"e",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"🌽",
+            "type":"emoji"
+         },
+         {
+            "value":"rn",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"syst",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"g",
+            "type":"minus"
+         },
+         {
+            "value":"💎",
+            "type":"emoji"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"recycle",
+         "description":"..."
+      },
+      "components":[
+         {
+            "value":"fi",
+            "type":"minus"
+         },
+         {
+            "value":"🔥",
+            "type":"emoji"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"motor",
+            "type":"minus"
+         },
+         {
+            "value":"🏍",
+            "type":"emoji"
+         },
+         {
+            "value":"le",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"turt",
+            "type":"minus"
+         },
+         {
+            "value":"🐢",
             "type":"emoji"
          }
       ]

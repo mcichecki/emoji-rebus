@@ -3,7 +3,7 @@ import SpriteKit
 import Foundation
 
 public final class MainScene: SKScene, SizeableScene {
-    public let sceneSize = CGSize(width: 400, height: 560)
+    public let sceneSize = CGSize(width: 560, height: 500)
     
     private var currentIndex = 0 {
         didSet { currentRebus = Parser.shared.getRebus(at: currentIndex) }
