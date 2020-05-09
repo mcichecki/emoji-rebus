@@ -7,6 +7,7 @@ protocol RebusViewDelegate: AnyObject {
 final class RebusView: NSView {
     weak var delegate: RebusViewDelegate?
     
+    lazy var numberView: NumberView = configure()
     lazy var rebusLabel: RebusLabel = configure()
     lazy var inputView: InputView = configure()
     
@@ -44,21 +45,26 @@ final class RebusView: NSView {
     }
     
     private func addSubviews() {
-        addSubviews(rebusLabel, inputView)
+        addSubviews(numberView, rebusLabel, inputView)
         
         inputView.inputDelegate = self
     }
     
     private func setUpConstraints() {
-        let margin: CGFloat = 20.0
+        let margin: CGFloat = 7.0
+        
+        numberView.activateConstraints {
+            [$0.topAnchor.constraint(equalTo: topAnchor),
+             $0.widthAnchor.constraint(equalTo: widthAnchor)]
+        }
         
         rebusLabel.activateConstraints {
-            [$0.topAnchor.constraint(equalTo: topAnchor, constant: margin),
+            [$0.topAnchor.constraint(equalTo: numberView.bottomAnchor, constant: 15.0),
              $0.centerXAnchor.constraint(equalTo: centerXAnchor)]
         }
         
         inputView.activateConstraints {
-            [$0.topAnchor.constraint(greaterThanOrEqualTo: rebusLabel.bottomAnchor, constant: 20.0),
+            [$0.topAnchor.constraint(greaterThanOrEqualTo: rebusLabel.bottomAnchor, constant: margin),
              $0.centerXAnchor.constraint(equalTo: centerXAnchor),
              $0.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin)]
         }
@@ -66,7 +72,7 @@ final class RebusView: NSView {
     
     private func setUpStyling() {
         setBackgroundColor(ColorStyle.Background.blue)
-        layer?.cornerRadius = 8.0
+//        layer?.cornerRadius = 8.0
     }
 }
 

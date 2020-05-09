@@ -6,7 +6,10 @@ public final class MainScene: SKScene, SizeableScene {
     public let sceneSize = CGSize(width: 560, height: 500)
     
     private var currentIndex = 0 {
-        didSet { currentRebus = rebusProvider.getRebus(at: currentIndex) }
+        didSet {
+            rebusView.numberView.updateLabel(index: currentIndex + 1, numberOfItems: rebusProvider.rebuses.count)
+            currentRebus = rebusProvider.getRebus(at: currentIndex)
+        }
     }
     
     private var currentRebus: Rebus? {
@@ -54,7 +57,7 @@ public final class MainScene: SKScene, SizeableScene {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
              $0.centerYAnchor.constraint(equalTo: view.centerYAnchor),
              $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-             $0.heightAnchor.constraint(equalToConstant: 200.0)]
+             $0.heightAnchor.constraint(equalToConstant: 220.0)]
         }
         
         centerYConstraint = answerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: sceneSize.height)
