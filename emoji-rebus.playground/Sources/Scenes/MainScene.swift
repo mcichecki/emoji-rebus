@@ -83,7 +83,7 @@ public final class MainScene: SKScene, SizeableScene {
         }
         
         rightArrow.activateConstraints {
-            [$0.leadingAnchor.constraint(equalTo: rebusView.trailingAnchor, constant: -10.0),
+            [$0.leadingAnchor.constraint(equalTo: rebusView.trailingAnchor, constant: 10.0),
              $0.centerYAnchor.constraint(equalTo: rebusView.centerYAnchor),
              $0.heightAnchor.constraint(equalToConstant: buttonSize),
              $0.widthAnchor.constraint(equalToConstant: buttonSize)]

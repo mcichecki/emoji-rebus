@@ -5,7 +5,6 @@ final class LetterInputTextField: NSTextField {
     
     init() {
         super.init(frame: .zero)
-        
         setUp()
     }
     
@@ -24,14 +23,14 @@ final class LetterInputTextField: NSTextField {
     
     private func setUp() {
         alignment = .center
-        backgroundColor = .white
-        
+        textColor = .white
         translatesAutoresizingMaskIntoConstraints = false
         wantsLayer = true
         layer?.cornerRadius = 5.0
-        layer?.borderWidth = 3.0
-        layer?.borderColor = ColorStyle.gray.cgColor
+        layer?.borderWidth = 2.0
+        layer?.borderColor = ColorStyle.white.cgColor
+        layer?.backgroundColor = NSColor.rgb(83, 92, 104, alpha: 0.5).cgColor
         focusRingType = .none
-        font = NSFont.systemFont(ofSize: 30.0)
+        font = .systemFont(ofSize: 30.0)
     }
 }

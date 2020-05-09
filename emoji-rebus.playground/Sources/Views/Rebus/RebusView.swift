@@ -60,7 +60,8 @@ final class RebusView: NSView {
     
     private func setUpStyling() {
 //        setBackgroundColor(.red)
-//        layer?.cornerRadius = 8.0
+        setBackgroundColor(ColorStyle.Background.blue)
+        layer?.cornerRadius = 8.0
     }
 }
 
