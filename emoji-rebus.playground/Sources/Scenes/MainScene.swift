@@ -10,7 +10,7 @@ public final class MainScene: SKScene, SizeableScene {
             switch self {
             case .center: return -100.0
             case .bottom: return 20.0
-            case .hidden: return 200.0
+            case .hidden: return 300.0
             }
         }
     }
@@ -47,6 +47,10 @@ public final class MainScene: SKScene, SizeableScene {
     private lazy var difficultyView = DifficultyView()
     private lazy var leftArrow = ArrowButton(direction: .left)
     private lazy var rightArrow = ArrowButton(direction: .right)
+    private lazy var fadeView: NSView = configure { view in
+        view.alphaValue = 0.0
+        view.setBackgroundColor(ColorStyle.black)
+    }
     private var answerTopConstraint: NSLayoutConstraint!
     private let backgroundColors = ColorStyle.backgroundColors.shuffled()
     
@@ -70,11 +74,11 @@ public final class MainScene: SKScene, SizeableScene {
             rebusView.updateRebus(rebus)
         }
         
-        view.addSubviews(rebusView, answerView, difficultyView, leftArrow, rightArrow)
+        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, answerView)
         
         rebusView.activateConstraints {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-             $0.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -60.0),
+             $0.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -85.0),
              $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.85),
              $0.heightAnchor.constraint(equalToConstant: 220.0)]
         }
@@ -114,8 +118,16 @@ public final class MainScene: SKScene, SizeableScene {
             $0.isHidden = true
         }
         
+        fadeView.activateConstraints {
+            [$0.topAnchor.constraint(equalTo: view.topAnchor),
+             $0.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+             $0.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+             $0.bottomAnchor.constraint(equalTo: view.bottomAnchor)]
+        }
+                
         answerView.alphaValue = 0.0
-        answerView.layer?.zPosition = (difficultyView.layer?.zPosition ?? 0) + 1
+        fadeView.layer?.zPosition = (difficultyView.layer?.zPosition ?? 0) + 1
+        answerView.layer?.zPosition = (fadeView.layer?.zPosition ?? 0) + 1
         
         answerView.delegate = self
     }
@@ -128,7 +140,11 @@ public final class MainScene: SKScene, SizeableScene {
             context.timingFunction = CAMediaTimingFunction(name: .easeOut)
             
             self.answerTopConstraint.constant = state.offset
-            
+            if state == .center {
+                self.fadeView.alphaValue = 0.5
+            } else if state == .bottom {
+                self.answerView.closeButtonHidden = true
+            }
             self.view?.layoutSubtreeIfNeeded()
         }
         
@@ -137,17 +153,18 @@ public final class MainScene: SKScene, SizeableScene {
     
     private func hideAnswer(hideCompletion: (() -> Void)? = nil) {
         let animations: (NSAnimationContext) -> Void = { context in
-            context.duration = 0.2
+            context.duration = 0.3
             context.allowsImplicitAnimation = true
-            context.timingFunction = CAMediaTimingFunction(name: .easeIn)
+            context.timingFunction = CAMediaTimingFunction(name: .easeOut)
             
             self.answerTopConstraint.constant = AnswerState.hidden.offset
-            
+            self.fadeView.alphaValue = 0.0
             self.view?.layoutSubtreeIfNeeded()
         }
         
         let completion: () -> Void = {
             self.answerView.alphaValue = 0.0
+            self.answerView.closeButtonHidden = false
             hideCompletion?()
         }
         
@@ -159,6 +176,7 @@ public final class MainScene: SKScene, SizeableScene {
 
 extension MainScene: RebusViewDelegate {
     func didComplete() {
+        [leftArrow, rightArrow].forEach { $0.isEnabled = false }
         presentAnswer()
     }
 }
@@ -175,6 +193,8 @@ extension MainScene: AnswerViewDelegate {
     }
     
     private func updateArrows() {
+        [leftArrow, rightArrow].forEach { $0.isEnabled = true }
+
         // checks if there is next rebus
         let nextIndex = currentIndex + 1
         guard rebusProvider.rebuses.indices.contains(nextIndex) else {

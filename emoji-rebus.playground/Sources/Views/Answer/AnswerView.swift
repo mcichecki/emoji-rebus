@@ -28,6 +28,12 @@ final class AnswerView: NSView {
         textField.font = NSFont.systemFont(ofSize: 16.0)
     }
     
+    var closeButtonHidden = false {
+        didSet {
+            updateCloseButton()
+        }
+    }
+    
     private let textFieldConfig: (NSTextField) -> Void = { textField in
         textField.alignment = .center
         textField.isEditable = false
@@ -36,9 +42,6 @@ final class AnswerView: NSView {
         textField.backgroundColor = ColorStyle.white
         textField.wantsLayer = true
         textField.layer?.cornerRadius = 5.0
-        //        textField.allowsVibrancy = false
-        //        textField.backgroundColor = ColorStyle.green
-        //        textField.backgroundColor = .yellow
     }
     
     private lazy var visualEffectBackgroundView = NSVisualEffectView()
@@ -59,7 +62,6 @@ final class AnswerView: NSView {
     required init?(coder: NSCoder) { fatalError() }
     
     private func addSubviews() {
-        //        [titleTextField, descriptionTextField, closeButton].forEach(addSubview(_:))
         addSubviews(visualEffectBackgroundView)
         visualEffectBackgroundView.addSubviews(titleTextField, descriptionTextField, closeButton)
     }
@@ -95,12 +97,8 @@ final class AnswerView: NSView {
     }
     
     private func setUpViews() {
-        //        wantsLayer = true
-        //        layer?.backgroundColor = ColorStyle.green.cgColor
+        wantsLayer = true
         layer?.cornerRadius = 5.0
-        //        layer?.borderColor = ColorStyle.lightGreen.cgColor
-        //        layer?.borderWidth = 3.0
-        //        setBackgroundColor(.red)
         titleTextField.stringValue = "Answer"
         descriptionTextField.stringValue = "Some longer, multiline description..."
         
@@ -118,5 +116,9 @@ final class AnswerView: NSView {
     private func updateAnswer(_ answer: Answer) {
         titleTextField.stringValue = answer.title
         descriptionTextField.stringValue = answer.description
+    }
+    
+    private func updateCloseButton() {
+        closeButton.isHidden = closeButtonHidden
     }
 }
