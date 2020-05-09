@@ -16,21 +16,25 @@ enum ColorStyle {
     // MARK: - Background colors
     
     enum Background: CaseIterable {
+        case darkGreen
         case darkOcean
         case darkBlue
-        case darkGreen
         case darkPurple
-        case darkYellow
+        // case darkYellow
         case darkOrange
+        case darkRed
+        case darkGray
         
         var color: NSColor {
             switch self {
+            case .darkGreen: return .rgb(0, 184, 148) // Mint Leaf
             case .darkOcean: return .rgb(0, 206, 201) // Robin's Egg Blue
             case .darkBlue: return .rgb(9, 132, 227) // Electron Blue
-            case .darkGreen: return .rgb(0, 184, 148) // Mint Leaf
             case .darkPurple: return .rgb(108, 92, 231) // Exodus Fruit
-            case .darkYellow: return .rgb(253, 203, 110) // Bright Yarrow
+            // case .darkYellow: return .rgb(253, 203, 110) // Bright Yarrow
             case .darkOrange: return .rgb(225, 112, 85) // Orangeville
+            case .darkRed: return .rgb(214, 48, 49) // Chi Gong
+            case .darkGray: return .rgb(178, 190, 195) // Soothing Breeze
             }
         }
         
