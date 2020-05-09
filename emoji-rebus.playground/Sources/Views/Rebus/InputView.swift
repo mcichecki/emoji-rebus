@@ -7,9 +7,13 @@ protocol InputViewDelegate: AnyObject {
 }
 
 // TODO: Handle top bottom keys + backspace
-private enum Key: UInt16 {
+private enum ArrowKey: UInt16 {
     case left = 123
     case right = 124
+}
+
+private enum BackspaceKey: UInt16 {
+    case backspace = 51
 }
 
 private enum Direction {
@@ -50,8 +54,13 @@ final public class InputView: NSStackView {
     required init?(coder: NSCoder) { fatalError() }
     
     public override func keyUp(with event: NSEvent) {
-        guard let key = Key(rawValue: event.keyCode) else { return }
-        handleKey(key)
+        let keyCode = event.keyCode
+        if let arrowKey = ArrowKey(rawValue: keyCode) {
+            handleArrowKey(arrowKey)
+        }
+        if BackspaceKey(rawValue: keyCode) != nil {
+            handleBackspace()
+        }
     }
     
     // TODO: Bug with same letters
@@ -140,7 +149,14 @@ final public class InputView: NSStackView {
         inputDelegate?.didUpdateInputArr(arr)
     }
     
-    private func handleKey(_ key: Key) {
+    private func handleBackspace() {
+        guard let currentIndex = textFields.firstIndex(where: { $0.focused }) else { return }
+        if textFields[currentIndex].stringValue.isEmpty {
+            switchTextField(direction: .previous, currentIndex: currentIndex)
+        }
+    }
+    
+    private func handleArrowKey(_ key: ArrowKey) {
         guard let currentIndex = textFields.firstIndex(where: { $0.focused }) else { return }
         
         var direction: Direction
