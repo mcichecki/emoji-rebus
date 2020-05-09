@@ -3,7 +3,11 @@ import SpriteKit
 import Foundation
 
 public final class MainScene: SKScene, SizeableScene {
-    public let sceneSize = CGSize(width: 560, height: 500)
+    private enum AnswerState {
+        case center, bottom
+    }
+    
+    public let sceneSize = CGSize(width: 560, height: 540)
     
     private var currentIndex = 0 {
         didSet {
@@ -16,10 +20,9 @@ public final class MainScene: SKScene, SizeableScene {
     private var currentRebus: Rebus? {
         didSet {
             rebusView.updateRebus(currentRebus)
-            if let rebus = currentRebus {
-                answerView.answer = rebus.answer
-                difficultyView.difficulty = rebus.difficultyLevel
-            }
+            guard let rebus = currentRebus else { return }
+            answerView.answer = rebus.answer
+            difficultyView.difficulty = rebus.difficultyLevel
         }
     }
     
@@ -31,6 +34,7 @@ public final class MainScene: SKScene, SizeableScene {
     private lazy var leftArrow = ArrowButton(direction: .left)
     private lazy var rightArrow = ArrowButton(direction: .right)
     private var centerYConstraint: NSLayoutConstraint!
+    private var answerTopConstraint: NSLayoutConstraint!
     private let backgroundColors = ColorStyle.backgroundColors.shuffled()
     
     public override init() {
@@ -44,8 +48,8 @@ public final class MainScene: SKScene, SizeableScene {
     public override func didMove(to view: SKView) {
         super.didMove(to: view)
         
-        // TODO: randomize colors
-//        scene?.backgroundColor = ColorStyle.darkGray
+        // TODO: Add slider that switches quickly between completed rebuses?
+        
         currentIndex = 0
         
         rebusView.delegate = self
@@ -57,24 +61,23 @@ public final class MainScene: SKScene, SizeableScene {
         
         rebusView.activateConstraints {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-             $0.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-             $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+             $0.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -60.0),
+             $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.85),
              $0.heightAnchor.constraint(equalToConstant: 220.0)]
         }
         
         centerYConstraint = answerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: sceneSize.height)
+        answerTopConstraint = answerView.topAnchor.constraint(equalTo: rebusView.bottomAnchor, constant: 20.0)
         
         answerView.activateConstraints {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
              centerYConstraint,
-             $0.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
-             $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)]
+             $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)]
         }
         
         difficultyView.activateConstraints {
             [$0.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-             $0.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-             $0.heightAnchor.constraint(equalToConstant: 80.0),
+             $0.topAnchor.constraint(equalTo: view.topAnchor, constant: 5.0),
              $0.widthAnchor.constraint(equalToConstant: 100.0)]
         }
         
@@ -105,15 +108,28 @@ public final class MainScene: SKScene, SizeableScene {
         answerView.delegate = self
     }
     
-    private func presentAnswer() {
+    private func presentAnswer(state: AnswerState = .center) {
         answerView.alphaValue = 1.0
         
         let animations: (NSAnimationContext) -> Void = { context in
-            context.duration = 0.5
+            context.duration = 0.3
             context.allowsImplicitAnimation = true
             context.timingFunction = CAMediaTimingFunction(name: .easeOut)
             
-            self.centerYConstraint.constant = 0.0
+            let yConstraint: CGFloat
+            switch state {
+            case .center:
+                yConstraint = 0.0
+                NSLayoutConstraint.deactivate([self.answerTopConstraint])
+                NSLayoutConstraint.activate([self.centerYConstraint])
+            //                self.centerYConstraint.
+            case .bottom:
+                //                answerTopConstraint =
+                NSLayoutConstraint.deactivate([self.centerYConstraint])
+                NSLayoutConstraint.activate([self.answerTopConstraint])
+                yConstraint = 200.0
+            }
+            self.centerYConstraint.constant = yConstraint
             
             self.view?.layoutSubtreeIfNeeded()
         }
@@ -123,7 +139,7 @@ public final class MainScene: SKScene, SizeableScene {
     
     private func hideAnswer() {
         let animations: (NSAnimationContext) -> Void = { context in
-            context.duration = 0.3
+            context.duration = 0.2
             context.allowsImplicitAnimation = true
             context.timingFunction = CAMediaTimingFunction(name: .easeIn)
             
@@ -178,19 +194,16 @@ extension MainScene: AnswerViewDelegate {
 
 extension MainScene: ArrowButtonDelegate {
     func didTapArrowButton(direction: ArrowDirection) {
-        switch direction {
-        case .left: currentIndex -= 1
-        case .right: currentIndex += 1
-        }
+        currentIndex += direction.rawValue
         
         updateArrows()
-        fillLettersIfPossible()
-    }
-    
-    private func fillLettersIfPossible() {
-        guard rebusProvider.rebuses.indices.contains(currentIndex) else { return }
-        guard rebusProvider.rebuses[currentIndex].completed else { return }
-        
-        rebusView.fillLetters()
+        // TODO: Hide answer before showing new (not completed) rebus
+        if rebusProvider.rebuses.indices.contains(currentIndex),
+            rebusProvider.rebuses[currentIndex].completed {
+            presentAnswer(state: .bottom)
+            rebusView.fillLetters()
+        } else {
+            hideAnswer()
+        }
     }
 }

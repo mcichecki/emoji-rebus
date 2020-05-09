@@ -4,7 +4,7 @@ protocol AnswerViewDelegate: AnyObject {
     func didTapClose()
 }
 
-final class AnswerView: NSView {
+final class AnswerView: NSVisualEffectView {
     weak var delegate: AnswerViewDelegate?
     
     var answer: Answer! {
@@ -18,6 +18,7 @@ final class AnswerView: NSView {
         textField.font = NSFont.systemFont(ofSize: 24.0)
     }
     
+    // TODO: Bold word of title
     lazy var descriptionTextField: NSTextField = configure { textField in
         textFieldConfig(textField)
         textField.font = NSFont.systemFont(ofSize: 16.0)
@@ -28,7 +29,8 @@ final class AnswerView: NSView {
         textField.isEditable = false
         textField.isBezeled = false
         textField.textColor = ColorStyle.white
-        textField.backgroundColor = ColorStyle.green
+        //        textField.backgroundColor = ColorStyle.green
+        //        textField.backgroundColor = .yellow
     }
     
     private let closeButton: NSButton = configure { closeButton in
@@ -52,9 +54,9 @@ final class AnswerView: NSView {
     
     private func setUpConstraints() {
         titleTextField.activateConstraints {
-            [$0.topAnchor.constraint(equalTo: closeButton.centerYAnchor, constant: 10.0),
+            [$0.topAnchor.constraint(equalTo: closeButton.topAnchor),
              $0.centerXAnchor.constraint(equalTo: centerXAnchor),
-             $0.heightAnchor.constraint(equalToConstant: 40.0),
+             $0.heightAnchor.constraint(equalToConstant: 30.0),
              $0.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)]
         }
         
@@ -66,24 +68,27 @@ final class AnswerView: NSView {
         }
         
         descriptionTextField.activateConstraints {
-            [$0.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 20.0),
-             $0.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
-             $0.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20.0),
-             $0.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20.0)]
+            [$0.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 10.0),
+             $0.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
+             $0.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
+             $0.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5.0)]
         }
     }
     
     private func setUpViews() {
         wantsLayer = true
-        layer?.backgroundColor = ColorStyle.green.cgColor
+//        layer?.backgroundColor = ColorStyle.green.cgColor
         layer?.cornerRadius = 5.0
-        layer?.borderColor = ColorStyle.lightGreen.cgColor
-        layer?.borderWidth = 3.0
+//        layer?.borderColor = ColorStyle.lightGreen.cgColor
+//        layer?.borderWidth = 3.0
         titleTextField.stringValue = "Answer"
         descriptionTextField.stringValue = "Some longer, multiline description..."
         
         closeButton.target = self
         closeButton.action = #selector(closeButtonTapped)
+        
+        material = .popover
+        blendingMode = .withinWindow
     }
     
     @objc private func closeButtonTapped() {

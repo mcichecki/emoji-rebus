@@ -1,6 +1,6 @@
 import AppKit
 
-enum ArrowDirection { case left, right }
+enum ArrowDirection: Int { case left = -1, right = 1 }
 
 protocol ArrowButtonDelegate: AnyObject {
     func didTapArrowButton(direction: ArrowDirection)
