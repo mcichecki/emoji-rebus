@@ -51,6 +51,15 @@ public final class MainScene: SKScene, SizeableScene {
         view.alphaValue = 0.0
         view.setBackgroundColor(ColorStyle.black)
     }
+    private lazy var hintButton: NSButton = configure { button in
+        button.isBordered = false
+        button.title = "Hint"
+        button.font = .systemFont(ofSize: 20.0)
+        //     button.attributedTitle = NSAttributedString(string: "Title", attributes: [ NSForegroundColorAttributeName : NSColor.red, NSParagraphStyleAttributeName : pstyle ])
+        button.setButtonType(.momentaryChange)
+        button.target = self
+        button.action = #selector(didTapHintButton)
+    }
     private var answerTopConstraint: NSLayoutConstraint!
     private let backgroundColors = ColorStyle.backgroundColors.shuffled()
     
@@ -74,7 +83,7 @@ public final class MainScene: SKScene, SizeableScene {
             rebusView.updateRebus(rebus)
         }
         
-        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, answerView)
+        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, hintButton, answerView)
         
         rebusView.activateConstraints {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -124,6 +133,11 @@ public final class MainScene: SKScene, SizeableScene {
              $0.trailingAnchor.constraint(equalTo: view.trailingAnchor),
              $0.bottomAnchor.constraint(equalTo: view.bottomAnchor)]
         }
+        
+        hintButton.activateConstraints {
+            [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 5.0),
+             $0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5.0)]
+        }
                 
         answerView.alphaValue = 0.0
         fadeView.layer?.zPosition = (difficultyView.layer?.zPosition ?? 0) + 1
@@ -169,6 +183,10 @@ public final class MainScene: SKScene, SizeableScene {
         }
         
         NSAnimationContext.runAnimationGroup(animations, completionHandler: completion)
+    }
+    
+    @objc private func didTapHintButton() {
+        print("--- hint")
     }
 }
 

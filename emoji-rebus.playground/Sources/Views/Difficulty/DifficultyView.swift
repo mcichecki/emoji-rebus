@@ -12,7 +12,6 @@ final public class DifficultyView: NSView {
     private lazy var titleTextField: NSTextField = configure { textField in
         textFieldConfig(textField)
         textField.attributedStringValue = NSAttributedString(string: "Difficulty", attributes: commonAttrs)
-        textField.backgroundColor = .red
     }
     private lazy var difficultyTextField: NSTextField = configure { textField in
         textFieldConfig(textField)
