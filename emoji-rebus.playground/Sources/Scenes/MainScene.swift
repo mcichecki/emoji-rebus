@@ -69,8 +69,8 @@ public final class MainScene: SKScene, SizeableScene {
         difficultyView.activateConstraints {
             [$0.trailingAnchor.constraint(equalTo: view.trailingAnchor),
              $0.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-             $0.heightAnchor.constraint(equalToConstant: 40.0),
-             $0.widthAnchor.constraint(equalToConstant: 210.0)]
+             $0.heightAnchor.constraint(equalToConstant: 80.0),
+             $0.widthAnchor.constraint(equalToConstant: 100.0)]
         }
         
         let buttonSize: CGFloat = 30.0
@@ -172,5 +172,13 @@ extension MainScene: ArrowButtonDelegate {
         }
         
         updateArrows()
+        fillLettersIfPossible()
+    }
+    
+    private func fillLettersIfPossible() {
+        guard rebusProvider.rebuses.indices.contains(currentIndex) else { return }
+        guard rebusProvider.rebuses[currentIndex].completed else { return }
+        
+        rebusView.fillLetters()
     }
 }

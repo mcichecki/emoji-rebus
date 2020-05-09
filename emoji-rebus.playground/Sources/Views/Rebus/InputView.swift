@@ -26,6 +26,8 @@ final public class InputView: NSStackView {
         }
     }
     
+    var isDisabled = false
+    
     private(set) var input: String = "" {
         didSet {
             inputDelegate?.didUpdateInput(input)
@@ -47,6 +49,11 @@ final public class InputView: NSStackView {
     
     required init?(coder: NSCoder) { fatalError() }
     
+    public override func keyUp(with event: NSEvent) {
+        guard let key = Key(rawValue: event.keyCode) else { return }
+        handleKey(key)
+    }
+    
     // TODO: Bug with same letters
     func highlight(indexes: [Int]) {
         textFields.enumerated().forEach { offset, textField in
@@ -62,17 +69,25 @@ final public class InputView: NSStackView {
         }
     }
     
-    public override func keyUp(with event: NSEvent) {
-        guard let key = Key(rawValue: event.keyCode) else { return }
-        handleKey(key)
-    }
-    
     func focus() {
         _ = textFields.first?.becomeFirstResponder()
     }
     
     func unfocus() {
         window?.makeFirstResponder(nil)
+    }
+    
+    // TODO: Disable when completed
+    func fillLetters(rebus: Rebus) {
+        let answer = rebus.answer.title
+        guard rebus.answer.title.count == textFields.count else { return }
+        
+        answer.enumerated().forEach { offset, char in
+            textFields[offset].stringValue = String(char)
+        }
+        
+        unfocus()
+        isDisabled = true
     }
     
     private func setUp() {
@@ -85,8 +100,8 @@ final public class InputView: NSStackView {
         (0..<numberOfLetters)
             .forEach { index in
                 let inputView = configure { view in
-//                    view.wantsLayer = true
-//                    view.layer?.backgroundColor = view.layer?.backgroundColor // TODO: needed?
+                    //                    view.wantsLayer = true
+                    //                    view.layer?.backgroundColor = view.layer?.backgroundColor // TODO: needed?
                     
                 }
                 

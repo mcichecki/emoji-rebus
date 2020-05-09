@@ -37,6 +37,12 @@ final class RebusView: NSView {
         inputView.focus()
     }
     
+    func fillLetters() {
+        inputView.fillLetters(rebus: rebus)
+        
+//        inputView.
+    }
+    
     private func addSubviews() {
         addSubviews(rebusLabel, inputView)
         
@@ -59,7 +65,6 @@ final class RebusView: NSView {
     }
     
     private func setUpStyling() {
-//        setBackgroundColor(.red)
         setBackgroundColor(ColorStyle.Background.blue)
         layer?.cornerRadius = 8.0
     }
