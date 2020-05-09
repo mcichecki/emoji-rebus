@@ -21,8 +21,11 @@ public final class MainScene: SKScene, SizeableScene {
         didSet {
             rebusView.updateRebus(currentRebus)
             guard let rebus = currentRebus else { return }
-            answerView.answer = rebus.answer
             difficultyView.difficulty = rebus.difficultyLevel
+            answerView.answer = rebus.answer
+            if centerYConstraint != nil && !rebusProvider.rebuses[currentIndex].completed {
+                hideAnswer()
+            }
         }
     }
     
