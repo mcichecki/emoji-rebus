@@ -6,14 +6,10 @@ public final class MainScene: SKScene, SizeableScene {
     public let sceneSize = CGSize(width: 560, height: 500)
     
     private var currentIndex = 0 {
-        didSet { currentRebus = Parser.shared.getRebus(at: currentIndex) }
+        didSet { currentRebus = rebusProvider.getRebus(at: currentIndex) }
     }
     
-    //    private var currentRebus = RebusStorage.rebuses[0] {
-    //        didSet { rebusView.updateRebus(currentRebus) }
-    //    }
-    
-    private var currentRebus: Rebus? = Parser.shared.getRebus(at: 0) {
+    private var currentRebus: Rebus? {
         didSet {
             rebusView.updateRebus(currentRebus)
             if let rebus = currentRebus {
@@ -22,6 +18,8 @@ public final class MainScene: SKScene, SizeableScene {
             }
         }
     }
+    
+    private lazy var rebusProvider = RebusProvider.shared
     
     private lazy var rebusView = RebusView()
     private lazy var answerView = AnswerView()
@@ -32,6 +30,8 @@ public final class MainScene: SKScene, SizeableScene {
     
     public override init() {
         super.init(size: sceneSize)
+        
+        currentIndex = 0
     }
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
@@ -89,9 +89,10 @@ public final class MainScene: SKScene, SizeableScene {
              $0.widthAnchor.constraint(equalToConstant: buttonSize)]
         }
         
-        leftArrow.isHidden = true
-        
-        [leftArrow, rightArrow].forEach { $0.delegate = self }
+        [leftArrow, rightArrow].forEach {
+            $0.delegate = self
+            $0.isHidden = true
+        }
         
         answerView.alphaValue = 0.0
         
@@ -146,7 +147,18 @@ extension MainScene: RebusViewDelegate {
 extension MainScene: AnswerViewDelegate {
     func didTapClose() {
         hideAnswer()
+        rebusProvider.markAsComplete(index: currentIndex)
         currentIndex += 1
+        updateArrows()
+    }
+    
+    private func updateArrows() {
+        // checks if there is next rebus
+        let nextIndex = currentIndex + 1
+        guard rebusProvider.rebuses.indices.contains(nextIndex) else { return }
+        
+        leftArrow.isHidden = currentIndex == 0
+        rightArrow.isHidden = !(rebusProvider.rebuses[currentIndex].completed || rebusProvider.rebuses[nextIndex].completed)
     }
 }
 
@@ -159,7 +171,6 @@ extension MainScene: ArrowButtonDelegate {
         case .right: currentIndex += 1
         }
         
-        leftArrow.isHidden = currentIndex == 0
-        rightArrow.isHidden = currentIndex == Parser.shared.numberOfRebuses - 1
+        updateArrows()
     }
 }
