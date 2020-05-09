@@ -153,10 +153,10 @@ extension MainScene: AnswerViewDelegate {
     func didTapClose() {
         hideAnswer()
         rebusProvider.markAsComplete(index: currentIndex)
-        updateArrows()
         if currentIndex < rebusProvider.rebuses.count - 1 {
             currentIndex += 1
         }
+        updateArrows()
     }
     
     private func updateArrows() {

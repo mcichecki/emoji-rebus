@@ -82,9 +82,13 @@ final public class InputView: NSStackView {
         let answer = rebus.answer.title
         guard rebus.answer.title.count == textFields.count else { return }
         
-        answer.enumerated().forEach { offset, char in
+        let enumeratedAnswer = answer.enumerated()
+        enumeratedAnswer.forEach { offset, char in
             textFields[offset].stringValue = String(char)
+            textFields[offset].isEditable = false
         }
+        
+        highlight(indexes: enumeratedAnswer.map { $0.offset })
         
         unfocus()
         isDisabled = true
