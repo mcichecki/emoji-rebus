@@ -44,18 +44,11 @@ final public class DifficultyView: NSView {
     init() {
         super.init(frame: .zero)
         
-        setUp()
         addSubviews(titleTextField, difficultyTextField)
         setUpConstraints()
-        //        setUpTextField()
     }
     
     required init?(coder: NSCoder) { fatalError() }
-    
-    private func setUp() {
-        wantsLayer = true
-        layer?.backgroundColor = ColorStyle.darkGray.cgColor // TODO: Update
-    }
     
     private func setUpConstraints() {
         titleTextField.activateConstraints {

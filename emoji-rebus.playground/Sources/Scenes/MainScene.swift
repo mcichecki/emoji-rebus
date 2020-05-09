@@ -100,6 +100,7 @@ public final class MainScene: SKScene, SizeableScene {
         }
         
         answerView.alphaValue = 0.0
+        answerView.layer?.zPosition = (difficultyView.layer?.zPosition ?? 0) + 1
         
         answerView.delegate = self
     }
