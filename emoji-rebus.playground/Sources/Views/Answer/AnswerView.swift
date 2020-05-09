@@ -15,12 +15,12 @@ final class AnswerView: NSView {
     
     lazy var titleTextField: NSTextField = configure { textField in
         textFieldConfig(textField)
-        textField.font = NSFont.systemFont(ofSize: 30.0)
+        textField.font = NSFont.systemFont(ofSize: 24.0)
     }
     
     lazy var descriptionTextField: NSTextField = configure { textField in
         textFieldConfig(textField)
-        textField.font = NSFont.systemFont(ofSize: 20.0)
+        textField.font = NSFont.systemFont(ofSize: 16.0)
     }
     
     private let textFieldConfig: (NSTextField) -> Void = { textField in

@@ -1,5 +1,11 @@
 import Foundation
 
+/*
+Links
+ - https://www.myenglishpages.com/site_php_files/vocabulary-lesson-environment.php
+ - https://www.theworldcounts.com/stories/Facts-about-the-Environment
+ */
+
 public struct Rebus: Codable {
     // TODO: change raw value to int and generate number of stars
     enum Difficulty: String, CaseIterable {
@@ -97,8 +103,15 @@ public enum RebusStorage {
         // or
         // 🍈 + minus meon = l
         
-        .init(.text("a"), .plus, .minus("war"), .emoji("⚠️"), .minus("ng"), .plus, .minus("to"), .emoji("🍅"), .minus("to"), .plus, .text("l"),
-              ans: "animal", description: "..."),
+        .init(
+            .text("a"), .plus, .minus("war"), .emoji("⚠️"), .minus("ng"), .plus, .minus("to"), .emoji("🍅"), .minus("to"), .plus, .text("ls"),
+            ans: "animals",
+            description: """
+            Every day, 50 to 100 species of plants and animals become extinct as their habitat is impacted by human activities.
+
+            In order to slow or prevent the extinction of further animal species, private and public organizations are establishing programs to protect their numbers and habitat.
+            """
+        ),
         .init(.minus("ta"), .emoji("🌮"), .plus, .emoji("2️⃣"),
               ans: "co2", description: "..."),
         .init(.text("pla"), .plus, .minus("ham"), .emoji("🐹"), .minus("er"), .plus, .emoji("🧊"), .minus("e"),
@@ -113,7 +126,7 @@ public enum RebusStorage {
               ans: "apple", description: "..."),
         .init(.emoji("✂️"), .minus("ssors"), .plus, .text("ence"),
               ans: "science", description: "..."),
-        .init(.emoji("☁️"), .minus("oud"), .plus, .text("im"), .plus, .minus("c"), .emoji("🐱"), .text("e"),
+        .init(.emoji("☁️"), .minus("oud"), .plus, .text("im"), .plus, .minus("c"), .emoji("🐱"), .plus, .text("e"),
               ans: "climate", description: "..."),
         .init(.text("env"), .plus, .minus("f"), .emoji("🔥"), .minus("e"), .plus, .text("onm"), .plus, .minus("t"), .emoji("⛺️"),
               ans: "environment", description: "..."),
