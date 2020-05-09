@@ -4,7 +4,7 @@ protocol RebusViewDelegate: AnyObject {
     func didComplete()
 }
 
-final class RebusView: NSView {
+final class RebusView: NSVisualEffectView {
     weak var delegate: RebusViewDelegate?
     
     lazy var numberView: NumberView = configure()
@@ -71,8 +71,8 @@ final class RebusView: NSView {
     }
     
     private func setUpStyling() {
-        setBackgroundColor(ColorStyle.Background.blue)
-//        layer?.cornerRadius = 8.0
+        material = .sheet
+        blendingMode = .withinWindow
     }
 }
 

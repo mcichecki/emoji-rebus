@@ -7,6 +7,7 @@ public final class MainScene: SKScene, SizeableScene {
     
     private var currentIndex = 0 {
         didSet {
+            scene?.backgroundColor = backgroundColors[currentIndex % backgroundColors.count]
             rebusView.numberView.updateLabel(index: currentIndex + 1, numberOfItems: rebusProvider.rebuses.count)
             currentRebus = rebusProvider.getRebus(at: currentIndex)
         }
@@ -30,6 +31,7 @@ public final class MainScene: SKScene, SizeableScene {
     private lazy var leftArrow = ArrowButton(direction: .left)
     private lazy var rightArrow = ArrowButton(direction: .right)
     private var centerYConstraint: NSLayoutConstraint!
+    private let backgroundColors = ColorStyle.backgroundColors.shuffled()
     
     public override init() {
         super.init(size: sceneSize)
@@ -43,7 +45,7 @@ public final class MainScene: SKScene, SizeableScene {
         super.didMove(to: view)
         
         // TODO: randomize colors
-        scene?.backgroundColor = ColorStyle.darkGray
+//        scene?.backgroundColor = ColorStyle.darkGray
         currentIndex = 0
         
         rebusView.delegate = self
@@ -151,14 +153,20 @@ extension MainScene: AnswerViewDelegate {
     func didTapClose() {
         hideAnswer()
         rebusProvider.markAsComplete(index: currentIndex)
-        currentIndex += 1
         updateArrows()
+        if currentIndex < rebusProvider.rebuses.count - 1 {
+            currentIndex += 1
+        }
     }
     
     private func updateArrows() {
         // checks if there is next rebus
         let nextIndex = currentIndex + 1
-        guard rebusProvider.rebuses.indices.contains(nextIndex) else { return }
+        guard rebusProvider.rebuses.indices.contains(nextIndex) else {
+            leftArrow.isHidden = false
+            rightArrow.isHidden = true
+            return
+        }
         
         leftArrow.isHidden = currentIndex == 0
         rightArrow.isHidden = !(rebusProvider.rebuses[currentIndex].completed || rebusProvider.rebuses[nextIndex].completed)

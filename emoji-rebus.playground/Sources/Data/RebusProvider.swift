@@ -11,7 +11,7 @@ final class RebusProvider {
     private(set) var rebuses: [StoredRebus] = []
     
     init() {
-        rebuses = Parser.shared.rebuses.map { StoredRebus(rebus: $0, completed: false) }
+        rebuses = Array(Parser.shared.rebuses.map { StoredRebus(rebus: $0, completed: false) }[0...2])
     }
     
     func getRebus(at index: Int) -> Rebus? {
