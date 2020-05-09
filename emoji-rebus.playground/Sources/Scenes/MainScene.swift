@@ -4,7 +4,15 @@ import Foundation
 
 public final class MainScene: SKScene, SizeableScene {
     private enum AnswerState {
-        case center, bottom
+        case center, bottom, hidden
+        
+        var offset: CGFloat {
+            switch self {
+            case .center: return -100.0
+            case .bottom: return 20.0
+            case .hidden: return 200.0
+            }
+        }
     }
     
     public let sceneSize = CGSize(width: 560, height: 540)
@@ -22,9 +30,12 @@ public final class MainScene: SKScene, SizeableScene {
             rebusView.updateRebus(currentRebus)
             guard let rebus = currentRebus else { return }
             difficultyView.difficulty = rebus.difficultyLevel
-            answerView.answer = rebus.answer
-            if centerYConstraint != nil && !rebusProvider.rebuses[currentIndex].completed {
-                hideAnswer()
+            if answerTopConstraint != nil && !rebusProvider.rebuses[currentIndex].completed {
+                hideAnswer {
+                    self.answerView.answer = rebus.answer
+                }
+            } else {
+                self.answerView.answer = rebus.answer
             }
         }
     }
@@ -36,7 +47,6 @@ public final class MainScene: SKScene, SizeableScene {
     private lazy var difficultyView = DifficultyView()
     private lazy var leftArrow = ArrowButton(direction: .left)
     private lazy var rightArrow = ArrowButton(direction: .right)
-    private var centerYConstraint: NSLayoutConstraint!
     private var answerTopConstraint: NSLayoutConstraint!
     private let backgroundColors = ColorStyle.backgroundColors.shuffled()
     
@@ -69,12 +79,11 @@ public final class MainScene: SKScene, SizeableScene {
              $0.heightAnchor.constraint(equalToConstant: 220.0)]
         }
         
-        centerYConstraint = answerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: sceneSize.height)
-        answerTopConstraint = answerView.topAnchor.constraint(equalTo: rebusView.bottomAnchor, constant: 20.0)
+        answerTopConstraint = answerView.topAnchor.constraint(equalTo: rebusView.bottomAnchor, constant: AnswerState.hidden.offset)
         
         answerView.activateConstraints {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-             centerYConstraint,
+             answerTopConstraint,
              $0.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)]
         }
         
@@ -113,26 +122,12 @@ public final class MainScene: SKScene, SizeableScene {
     
     private func presentAnswer(state: AnswerState = .center) {
         answerView.alphaValue = 1.0
-        
         let animations: (NSAnimationContext) -> Void = { context in
             context.duration = 0.3
             context.allowsImplicitAnimation = true
             context.timingFunction = CAMediaTimingFunction(name: .easeOut)
             
-            let yConstraint: CGFloat
-            switch state {
-            case .center:
-                yConstraint = 0.0
-                NSLayoutConstraint.deactivate([self.answerTopConstraint])
-                NSLayoutConstraint.activate([self.centerYConstraint])
-            //                self.centerYConstraint.
-            case .bottom:
-                //                answerTopConstraint =
-                NSLayoutConstraint.deactivate([self.centerYConstraint])
-                NSLayoutConstraint.activate([self.answerTopConstraint])
-                yConstraint = 200.0
-            }
-            self.centerYConstraint.constant = yConstraint
+            self.answerTopConstraint.constant = state.offset
             
             self.view?.layoutSubtreeIfNeeded()
         }
@@ -140,19 +135,20 @@ public final class MainScene: SKScene, SizeableScene {
         NSAnimationContext.runAnimationGroup(animations)
     }
     
-    private func hideAnswer() {
+    private func hideAnswer(hideCompletion: (() -> Void)? = nil) {
         let animations: (NSAnimationContext) -> Void = { context in
             context.duration = 0.2
             context.allowsImplicitAnimation = true
             context.timingFunction = CAMediaTimingFunction(name: .easeIn)
             
-            self.centerYConstraint.constant = self.sceneSize.height
+            self.answerTopConstraint.constant = AnswerState.hidden.offset
             
             self.view?.layoutSubtreeIfNeeded()
         }
         
         let completion: () -> Void = {
             self.answerView.alphaValue = 0.0
+            hideCompletion?()
         }
         
         NSAnimationContext.runAnimationGroup(animations, completionHandler: completion)
@@ -171,7 +167,6 @@ extension MainScene: RebusViewDelegate {
 
 extension MainScene: AnswerViewDelegate {
     func didTapClose() {
-        hideAnswer()
         rebusProvider.markAsComplete(index: currentIndex)
         if currentIndex < rebusProvider.rebuses.count - 1 {
             currentIndex += 1
@@ -205,8 +200,6 @@ extension MainScene: ArrowButtonDelegate {
             rebusProvider.rebuses[currentIndex].completed {
             presentAnswer(state: .bottom)
             rebusView.fillLetters()
-        } else {
-            hideAnswer()
         }
     }
 }
