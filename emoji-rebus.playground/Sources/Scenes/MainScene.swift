@@ -144,9 +144,8 @@ public final class MainScene: SKScene, SizeableScene {
         }
         
         sliderView.activateConstraints {
-            [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 15.0),
+            [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 10.0),
              $0.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
-//             $0.widthAnchor.constraint(equalToConstant: 100.0)]
         }
         
         answerView.alphaValue = 0.0

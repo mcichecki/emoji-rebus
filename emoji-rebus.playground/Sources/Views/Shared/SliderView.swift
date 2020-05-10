@@ -21,13 +21,14 @@ final class SliderView: NSView {
         textField.isEditable = false
         textField.isBezeled = false
         textField.alignment = .right
-        textField.textColor = .white
+        textField.textColor = ColorStyle.darkGray
         textField.wantsLayer = true
         textField.layer?.cornerRadius = 5.0
         textField.alignment = .center
         textField.sizeToFit()
         textField.drawsBackground = true
-        textField.backgroundColor = ColorStyle.darkGray
+        textField.backgroundColor = ColorStyle.white
+        textField.font = .systemFont(ofSize: 14.0, weight: .semibold)
     }
     
     private lazy var stackView: NSStackView = configure { stackView in

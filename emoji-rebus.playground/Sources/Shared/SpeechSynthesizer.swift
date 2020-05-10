@@ -10,7 +10,7 @@ final class SpeechSynthesizer: NSObject {
         super.init()
         
         synthesizer.delegate = self
-        synthesizer.rate = 210.0
+        synthesizer.rate = 220.0
     }
     
     func speak(_ rebus: Rebus) {
