@@ -1,6 +1,5 @@
 import PlaygroundSupport
 
-//let mainScene = MainScene()
 let welcomeScene = WelcomeScene()
 PlaygroundPage.current.setUpScene(welcomeScene)
 
