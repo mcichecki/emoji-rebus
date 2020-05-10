@@ -41,6 +41,7 @@ public final class MainScene: SKScene, SizeableScene {
     }
     
     private lazy var rebusProvider = RebusProvider.shared
+    private let speechSynthesizer = SpeechSynthesizer()
     
     private lazy var rebusView = RebusView()
     private lazy var answerView = AnswerView()
@@ -63,6 +64,7 @@ public final class MainScene: SKScene, SizeableScene {
     private var answerTopConstraint: NSLayoutConstraint!
     private let backgroundColors = ColorStyle.backgroundColors.shuffled()
     
+    // TODO: Add colorblind palete
     public override init() {
         super.init(size: sceneSize)
         
@@ -186,7 +188,9 @@ public final class MainScene: SKScene, SizeableScene {
     }
     
     @objc private func didTapHintButton() {
-        print("--- hint")
+        guard let rebus = currentRebus else { return }
+//        print("--- rebus: \(rebus)")
+        speechSynthesizer.speak(rebus)
     }
 }
 
