@@ -19,7 +19,9 @@ public final class MainScene: SKScene, SizeableScene {
     
     private var currentIndex = 0 {
         didSet {
-            scene?.backgroundColor = backgroundColors[currentIndex % backgroundColors.count]
+            let color = backgroundColors[currentIndex % backgroundColors.count]
+            scene?.backgroundColor = color
+            hintButton.updateTextColor(color)
             rebusView.numberView.updateLabel(index: currentIndex + 1, numberOfItems: rebusProvider.rebuses.count)
             currentRebus = rebusProvider.getRebus(at: currentIndex)
         }
@@ -41,10 +43,10 @@ public final class MainScene: SKScene, SizeableScene {
     }
     
     private lazy var rebusProvider = RebusProvider.shared
-    private let speechSynthesizer = SpeechSynthesizer()
+    private lazy var speechSynthesizer = SpeechSynthesizer()
     
     private lazy var rebusView = RebusView()
-    private lazy var answerView = AnswerView()
+    private lazy var answerView = AnswerView(speechSynthesizer: speechSynthesizer)
     private lazy var difficultyView = DifficultyView()
     private lazy var leftArrow = ArrowButton(direction: .left)
     private lazy var rightArrow = ArrowButton(direction: .right)
@@ -52,14 +54,9 @@ public final class MainScene: SKScene, SizeableScene {
         view.alphaValue = 0.0
         view.setBackgroundColor(ColorStyle.black)
     }
-    private lazy var hintButton: NSButton = configure { button in
-        button.isBordered = false
-        button.title = "Hint"
-        button.font = .systemFont(ofSize: 20.0)
-        //     button.attributedTitle = NSAttributedString(string: "Title", attributes: [ NSForegroundColorAttributeName : NSColor.red, NSParagraphStyleAttributeName : pstyle ])
-        button.setButtonType(.momentaryChange)
-        button.target = self
-        button.action = #selector(didTapHintButton)
+    private lazy var hintButton: HintButton = configure { button in
+        button.buttonDelegate = self
+        button.updateTextColor(scene?.backgroundColor ?? ColorStyle.white)
     }
     private var answerTopConstraint: NSLayoutConstraint!
     private let backgroundColors = ColorStyle.backgroundColors.shuffled()
@@ -164,7 +161,9 @@ public final class MainScene: SKScene, SizeableScene {
             self.view?.layoutSubtreeIfNeeded()
         }
         
-        NSAnimationContext.runAnimationGroup(animations)
+        let completion = state == .center ? { self.answerView.readAnswer() } : nil
+        
+        NSAnimationContext.runAnimationGroup(animations, completionHandler: completion)
     }
     
     private func hideAnswer(hideCompletion: (() -> Void)? = nil) {
@@ -189,7 +188,6 @@ public final class MainScene: SKScene, SizeableScene {
     
     @objc private func didTapHintButton() {
         guard let rebus = currentRebus else { return }
-//        print("--- rebus: \(rebus)")
         speechSynthesizer.speak(rebus)
     }
 }
@@ -211,10 +209,10 @@ extension MainScene: AnswerViewDelegate {
         if currentIndex < rebusProvider.rebuses.count - 1 {
             currentIndex += 1
         }
-        updateArrows()
+        updateArrowsAndHint()
     }
     
-    private func updateArrows() {
+    private func updateArrowsAndHint() {
         [leftArrow, rightArrow].forEach { $0.isEnabled = true }
 
         // checks if there is next rebus
@@ -225,8 +223,10 @@ extension MainScene: AnswerViewDelegate {
             return
         }
         
+        let currentRebusCompleted = rebusProvider.rebuses[currentIndex].completed
+        hintButton.isHidden = currentRebusCompleted
         leftArrow.isHidden = currentIndex == 0
-        rightArrow.isHidden = !(rebusProvider.rebuses[currentIndex].completed || rebusProvider.rebuses[nextIndex].completed)
+        rightArrow.isHidden = !(currentRebusCompleted || rebusProvider.rebuses[nextIndex].completed)
     }
 }
 
@@ -236,12 +236,20 @@ extension MainScene: ArrowButtonDelegate {
     func didTapArrowButton(direction: ArrowDirection) {
         currentIndex += direction.rawValue
         
-        updateArrows()
+        updateArrowsAndHint()
         // TODO: Hide answer before showing new (not completed) rebus
         if rebusProvider.rebuses.indices.contains(currentIndex),
             rebusProvider.rebuses[currentIndex].completed {
             presentAnswer(state: .bottom)
             rebusView.fillLetters()
         }
+    }
+}
+
+// MARK: - HintButtonDelegate
+
+extension MainScene: HintButtonDelegate {
+    func didTap() {
+        didTapHintButton()
     }
 }
