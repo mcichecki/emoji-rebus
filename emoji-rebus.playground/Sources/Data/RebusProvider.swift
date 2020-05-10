@@ -10,6 +10,8 @@ final class RebusProvider {
     
     private(set) var rebuses: [StoredRebus] = []
     
+    var numberOfCompleted: Int { rebuses.filter { $0.completed }.count }
+    
     init() {
         rebuses = Parser.shared.rebuses.map { StoredRebus(rebus: $0, completed: false) }
     }
@@ -25,4 +27,5 @@ final class RebusProvider {
 
         rebuses[index] = StoredRebus(rebus: rebuses[index].rebus, completed: true)
     }
+    
 }

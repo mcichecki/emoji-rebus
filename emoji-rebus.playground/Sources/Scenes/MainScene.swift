@@ -58,6 +58,10 @@ public final class MainScene: SKScene, SizeableScene {
         button.buttonDelegate = self
         button.updateTextColor(scene?.backgroundColor ?? ColorStyle.white)
     }
+    private lazy var slider: Slider = configure { slider in
+        slider.isHidden = true
+        slider.delegate = self
+    }
     private var answerTopConstraint: NSLayoutConstraint!
     private let backgroundColors = ColorStyle.backgroundColors.shuffled()
     
@@ -70,6 +74,7 @@ public final class MainScene: SKScene, SizeableScene {
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
+    // TODO: split this func
     public override func didMove(to view: SKView) {
         super.didMove(to: view)
         
@@ -82,7 +87,7 @@ public final class MainScene: SKScene, SizeableScene {
             rebusView.updateRebus(rebus)
         }
         
-        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, hintButton, answerView)
+        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, hintButton, slider, answerView)
         
         rebusView.activateConstraints {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -137,7 +142,13 @@ public final class MainScene: SKScene, SizeableScene {
             [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 5.0),
              $0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5.0)]
         }
-                
+        
+        slider.activateConstraints {
+            [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 15.0),
+             $0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+             $0.widthAnchor.constraint(equalToConstant: 80.0)]
+        }
+        
         answerView.alphaValue = 0.0
         fadeView.layer?.zPosition = (difficultyView.layer?.zPosition ?? 0) + 1
         answerView.layer?.zPosition = (fadeView.layer?.zPosition ?? 0) + 1
@@ -209,12 +220,17 @@ extension MainScene: AnswerViewDelegate {
         if currentIndex < rebusProvider.rebuses.count - 1 {
             currentIndex += 1
         }
+        let numberOfCompleted = rebusProvider.numberOfCompleted
+        if numberOfCompleted >= 1 {
+            slider.isHidden = false
+            slider.update(numberOfRebuses: rebusProvider.numberOfCompleted + 1)
+        }
         updateArrowsAndHint()
     }
     
     private func updateArrowsAndHint() {
         [leftArrow, rightArrow].forEach { $0.isEnabled = true }
-
+        
         // checks if there is next rebus
         let nextIndex = currentIndex + 1
         guard rebusProvider.rebuses.indices.contains(nextIndex) else {
@@ -237,7 +253,10 @@ extension MainScene: ArrowButtonDelegate {
         currentIndex += direction.rawValue
         
         updateArrowsAndHint()
-        // TODO: Hide answer before showing new (not completed) rebus
+        showCompleted()
+    }
+    
+    private func showCompleted() {
         if rebusProvider.rebuses.indices.contains(currentIndex),
             rebusProvider.rebuses[currentIndex].completed {
             presentAnswer(state: .bottom)
@@ -251,5 +270,16 @@ extension MainScene: ArrowButtonDelegate {
 extension MainScene: HintButtonDelegate {
     func didTap() {
         didTapHintButton()
+    }
+}
+
+// MARK: - SliderDelegate
+
+extension MainScene: SliderDelegate {
+    func didMoveToIndex(_ index: Int) {
+        print("--- scene: \(index + 1), currentIndex: \(currentIndex)")
+        currentIndex = index
+        updateArrowsAndHint()
+        showCompleted()
     }
 }
