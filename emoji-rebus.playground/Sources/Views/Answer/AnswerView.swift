@@ -51,7 +51,10 @@ final class AnswerView: NSView {
         closeButton.bezelStyle = .inline
     }
     
-    init() {
+    private let speechSynthesizer: SpeechSynthesizer
+    
+    init(speechSynthesizer: SpeechSynthesizer) {
+        self.speechSynthesizer = speechSynthesizer
         super.init(frame: .zero)
         
         addSubviews()
@@ -60,6 +63,11 @@ final class AnswerView: NSView {
     }
     
     required init?(coder: NSCoder) { fatalError() }
+    
+    // TODO: Close answer once synthesizer stops speaking?
+    func readAnswer() {
+        speechSynthesizer.speak(answer)
+    }
     
     private func addSubviews() {
         addSubviews(visualEffectBackgroundView)
@@ -110,6 +118,7 @@ final class AnswerView: NSView {
     }
     
     @objc private func closeButtonTapped() {
+        speechSynthesizer.stop()
         delegate?.didTapClose()
     }
     

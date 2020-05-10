@@ -10,6 +10,7 @@ final class SpeechSynthesizer: NSObject {
         super.init()
         
         synthesizer.delegate = self
+        synthesizer.rate = 210.0
     }
     
     func speak(_ rebus: Rebus) {
@@ -17,17 +18,25 @@ final class SpeechSynthesizer: NSObject {
         synthesizer.startSpeaking(rebus.synthesizerDescription)
     }
     
+    func speak(_ answer: Answer) {
+        if synthesizer.isSpeaking {
+            stop()
+        }
+
+        synthesizer.startSpeaking(answer.description)
+    }
+    
     func stop() {
-        synthesizer.stopSpeaking(at: .immediateBoundary)
+        synthesizer.stopSpeaking(at: .wordBoundary)
     }
 }
 
 // MARK: - NSSpeechSynthesizerDelegate
 
 extension SpeechSynthesizer: NSSpeechSynthesizerDelegate {
-    func speechSynthesizer(_ sender: NSSpeechSynthesizer, willSpeakWord characterRange: NSRange, of string: String) {
-        print("--- willSpeakWord: \(string)")
-    }
+//    func speechSynthesizer(_ sender: NSSpeechSynthesizer, willSpeakWord characterRange: NSRange, of string: String) {
+//        print("--- willSpeakWord in range: \(characterRange)")
+//    }
     
     func speechSynthesizer(_ sender: NSSpeechSynthesizer, didFinishSpeaking finishedSpeaking: Bool) {
         print("--- didFinishSpeaking")
