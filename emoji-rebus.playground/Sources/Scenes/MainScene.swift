@@ -58,7 +58,7 @@ public final class MainScene: SKScene, SizeableScene {
         button.buttonDelegate = self
         button.updateTextColor(scene?.backgroundColor ?? ColorStyle.white)
     }
-    private lazy var slider: Slider = configure { slider in
+    private lazy var sliderView: SliderView = configure { slider in
         slider.isHidden = true
         slider.delegate = self
     }
@@ -87,7 +87,7 @@ public final class MainScene: SKScene, SizeableScene {
             rebusView.updateRebus(rebus)
         }
         
-        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, hintButton, slider, answerView)
+        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, hintButton, sliderView, answerView)
         
         rebusView.activateConstraints {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -143,10 +143,10 @@ public final class MainScene: SKScene, SizeableScene {
              $0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5.0)]
         }
         
-        slider.activateConstraints {
+        sliderView.activateConstraints {
             [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 15.0),
-             $0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-             $0.widthAnchor.constraint(equalToConstant: 80.0)]
+             $0.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
+//             $0.widthAnchor.constraint(equalToConstant: 100.0)]
         }
         
         answerView.alphaValue = 0.0
@@ -222,8 +222,8 @@ extension MainScene: AnswerViewDelegate {
         }
         let numberOfCompleted = rebusProvider.numberOfCompleted
         if numberOfCompleted >= 1 {
-            slider.isHidden = false
-            slider.update(numberOfRebuses: rebusProvider.numberOfCompleted + 1)
+            sliderView.isHidden = false
+            sliderView.update(numberOfRebuses: rebusProvider.numberOfCompleted + 1)
         }
         updateArrowsAndHint()
     }
@@ -254,6 +254,7 @@ extension MainScene: ArrowButtonDelegate {
         
         updateArrowsAndHint()
         showCompleted()
+        sliderView.updateValue(currentIndex)
     }
     
     private func showCompleted() {
@@ -277,7 +278,7 @@ extension MainScene: HintButtonDelegate {
 
 extension MainScene: SliderDelegate {
     func didMoveToIndex(_ index: Int) {
-        print("--- scene: \(index + 1), currentIndex: \(currentIndex)")
+        guard index != currentIndex else { return }
         currentIndex = index
         updateArrowsAndHint()
         showCompleted()
