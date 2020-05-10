@@ -77,9 +77,7 @@ public final class MainScene: SKScene, SizeableScene {
     // TODO: split this func
     public override func didMove(to view: SKView) {
         super.didMove(to: view)
-        
-        // TODO: Add slider that switches quickly between completed rebuses?
-        
+                
         currentIndex = 0
         
         rebusView.delegate = self

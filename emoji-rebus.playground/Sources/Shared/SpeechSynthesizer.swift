@@ -2,7 +2,13 @@ import Foundation
 import AppKit
 import AVFoundation
 
+protocol SpeechSynthesizerDelegate: AnyObject {
+    func didFinish()
+}
+
 final class SpeechSynthesizer: NSObject {
+    weak var speechSynthesizerDelegate: SpeechSynthesizerDelegate?
+    
     private let samanthaVoice = NSSpeechSynthesizer.VoiceName(rawValue: "com.apple.speech.synthesis.voice.samantha")
     private lazy var synthesizer = NSSpeechSynthesizer(voice: samanthaVoice) ?? NSSpeechSynthesizer()
     
@@ -26,6 +32,11 @@ final class SpeechSynthesizer: NSObject {
         synthesizer.startSpeaking(answer.description)
     }
     
+    func speak(text: String) {
+        let trimmed = text.withoutSpecialCharacters
+        synthesizer.startSpeaking(trimmed)
+    }
+    
     func stop() {
         synthesizer.stopSpeaking(at: .wordBoundary)
     }
@@ -40,6 +51,7 @@ extension SpeechSynthesizer: NSSpeechSynthesizerDelegate {
     
     func speechSynthesizer(_ sender: NSSpeechSynthesizer, didFinishSpeaking finishedSpeaking: Bool) {
         print("--- didFinishSpeaking")
+        speechSynthesizerDelegate?.didFinish()
     }
 }
 
@@ -49,5 +61,13 @@ private extension Rebus {
     var synthesizerDescription: String {
         if answer.title == "co2" { return "C O 2" }
         return answer.title
+    }
+}
+
+// MARK: - String Extension
+
+private extension String {
+    var withoutSpecialCharacters: String {
+        components(separatedBy: CharacterSet.symbols).joined(separator: "-")
     }
 }
