@@ -1,10 +1,10 @@
 import Foundation
+import AppKit
 import AVFoundation
 
 final class SpeechSynthesizer: NSObject {
-    private let synthesizer = AVSpeechSynthesizer()
-    
-//    private var isSpeaking = false
+    private let samanthaVoice = NSSpeechSynthesizer.VoiceName(rawValue: "com.apple.speech.synthesis.voice.samantha")
+    private lazy var synthesizer = NSSpeechSynthesizer(voice: samanthaVoice) ?? NSSpeechSynthesizer()
     
     override init() {
         super.init()
@@ -12,37 +12,25 @@ final class SpeechSynthesizer: NSObject {
         synthesizer.delegate = self
     }
     
-    deinit {
-        print("--- SpeechSynthesizer deinit")
-    }
-    
     func speak(_ rebus: Rebus) {
         guard !synthesizer.isSpeaking else { return }
-        print("--- \(!synthesizer.isSpeaking) | \(rebus.synthesizerDescription) | \(self)")
-        
-        let speechUtterance = AVSpeechUtterance(string: rebus.synthesizerDescription)
-        speechUtterance.voice = AVSpeechSynthesisVoice(language: "en")
-        speechUtterance.rate = 0.3
-        print("--- utterance: \(speechUtterance)")
-        synthesizer.speak(speechUtterance)
+        synthesizer.startSpeaking(rebus.synthesizerDescription)
     }
     
     func stop() {
-        synthesizer.stopSpeaking(at: .immediate)
+        synthesizer.stopSpeaking(at: .immediateBoundary)
     }
 }
 
-// MARK: - AVSpeechSynthesizerDelegate
+// MARK: - NSSpeechSynthesizerDelegate
 
-extension SpeechSynthesizer: AVSpeechSynthesizerDelegate {
-    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
-        print("--- didStart")
-//        isSpeaking = true
+extension SpeechSynthesizer: NSSpeechSynthesizerDelegate {
+    func speechSynthesizer(_ sender: NSSpeechSynthesizer, willSpeakWord characterRange: NSRange, of string: String) {
+        print("--- willSpeakWord: \(string)")
     }
     
-    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        print("--- didFinish")
-//        isSpeaking = false
+    func speechSynthesizer(_ sender: NSSpeechSynthesizer, didFinishSpeaking finishedSpeaking: Bool) {
+        print("--- didFinishSpeaking")
     }
 }
 
@@ -50,6 +38,7 @@ extension SpeechSynthesizer: AVSpeechSynthesizerDelegate {
 
 private extension Rebus {
     var synthesizerDescription: String {
+        if answer.title == "co2" { return "C O 2" }
         return answer.title
     }
 }
