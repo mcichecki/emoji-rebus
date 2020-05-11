@@ -75,6 +75,7 @@ public final class MainScene: SKScene, SizeableScene {
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     // TODO: split this func
+    // TODO: Counter with how much water/waste etc we produce/use/burn... (https://www.theworldcounts.com/stories/Facts-about-the-Environment)
     public override func didMove(to view: SKView) {
         super.didMove(to: view)
                 
@@ -214,11 +215,14 @@ extension MainScene: RebusViewDelegate {
 extension MainScene: AnswerViewDelegate {
     func didTapClose() {
         rebusProvider.markAsComplete(index: currentIndex)
+        let isLast = currentIndex == rebusProvider.rebuses.count - 1
         if currentIndex < rebusProvider.rebuses.count - 1 {
             currentIndex += 1
+        } else if isLast {
+            hideAnswer()
         }
         let numberOfCompleted = rebusProvider.numberOfCompleted
-        if numberOfCompleted >= 1 {
+        if numberOfCompleted >= 1 && !isLast {
             sliderView.isHidden = false
             sliderView.update(numberOfRebuses: rebusProvider.numberOfCompleted + 1)
         }
