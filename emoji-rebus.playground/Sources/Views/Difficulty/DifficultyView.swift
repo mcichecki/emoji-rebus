@@ -75,7 +75,7 @@ final public class DifficultyView: NSView {
         
         isHidden = false
         
-        let attributedString = NSMutableAttributedString(string: difficulty.rawValue, attributes: commonAttrs)
+        let attributedString = NSMutableAttributedString(string: difficulty.stars, attributes: commonAttrs)
         difficultyTextField.attributedStringValue = attributedString
     }
 }
