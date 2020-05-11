@@ -9,8 +9,9 @@ public final class WelcomeScene: SKScene, SizeableScene {
         textFieldConfig(textField)
         textField.stringValue = """
         Today you have a chance to solve rebuses and learn about ecology and our planet Earth.
-        Rebuses in this playground consist of letters and emojis.
+        You can have a look at example below. Combining letters R, E and bus emoji result in word rebus.
         """
+        // Rebuses in this playground consist of letters and emojis.
     }
     
     private lazy var welcomeRebusView: RebusView = configure { rebusView in
@@ -80,7 +81,7 @@ public final class WelcomeScene: SKScene, SizeableScene {
         welcomeTextField.activateConstraints {
             [$0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25.0),
              $0.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25.0),
-             $0.heightAnchor.constraint(equalToConstant: 65.0),
+             $0.heightAnchor.constraint(equalToConstant: 90.0),
              $0.bottomAnchor.constraint(equalTo: welcomeRebusView.topAnchor, constant: -20.0)]
         }
         

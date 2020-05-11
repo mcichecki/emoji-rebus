@@ -54,8 +54,8 @@ final class RebusLabel: NSTextField {
                 componentAttributedString = .init(string: " + ")
             case .minus(let removedText):
                 componentAttributedString = .init(string: removedText, attributes: [
-                    .strikethroughStyle: NSUnderlineStyle.single.rawValue,
-                    .strikethroughColor: ColorStyle.red.withAlphaComponent(0.5)
+                    .strikethroughStyle: NSUnderlineStyle.thick.rawValue,
+                    .strikethroughColor: ColorStyle.red.withAlphaComponent(0.4)
                 ])
             }
             

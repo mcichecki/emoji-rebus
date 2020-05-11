@@ -19,10 +19,9 @@ final class AnswerView: NSView {
     
     lazy var titleTextField: AnswerTextField = configure { textField in
         textFieldConfig(textField)
-        textField.font = NSFont.systemFont(ofSize: 24.0)
+        textField.font = NSFont.boldSystemFont(ofSize: 22.0)
     }
     
-    // TODO: Bold word of title
     lazy var descriptionTextField: AnswerTextField = configure { textField in
         textFieldConfig(textField)
         textField.font = NSFont.systemFont(ofSize: 16.0)
@@ -106,8 +105,8 @@ final class AnswerView: NSView {
     private func setUpViews() {
         wantsLayer = true
         layer?.cornerRadius = 5.0
-        titleTextField.stringValue = "Answer"
-        descriptionTextField.stringValue = "Some longer, multiline description..."
+        titleTextField.stringValue = ""
+        descriptionTextField.stringValue = ""
         
         closeButton.target = self
         closeButton.action = #selector(closeButtonTapped)
