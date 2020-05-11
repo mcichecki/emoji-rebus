@@ -48,7 +48,7 @@ final class SliderView: NSView {
         addSubview(stackView)
         
         valueLabel.activateConstraints {
-            [$0.widthAnchor.constraint(equalToConstant: 20.0)]
+            [$0.widthAnchor.constraint(equalToConstant: 25.0)]
         }
         
         slider.activateConstraints {

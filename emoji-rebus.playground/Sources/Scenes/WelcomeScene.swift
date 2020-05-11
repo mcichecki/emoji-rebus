@@ -29,6 +29,13 @@ public final class WelcomeScene: SKScene, SizeableScene {
         """
     }
     
+    private lazy var skipButton: FilledButton = configure { button in
+        button.alphaValue = 0.0
+        button.buttonTitle = "skip intro"
+        button.buttonDelegate = self
+        button.updateTextColor(scene?.backgroundColor ?? ColorStyle.black)
+    }
+    
     private let textFieldConfig: (NSTextField) -> Void = { textField in
         textField.isEditable = false
         textField.isBezeled = false
@@ -55,7 +62,7 @@ public final class WelcomeScene: SKScene, SizeableScene {
         setUpConstraints()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-            self.setViewsAlpha(views: [self.welcomeRebusView])
+            self.setViewsAlpha(views: [self.welcomeRebusView, self.skipButton])
         }
         
         speechSynthesizer.speechSynthesizerDelegate = self
@@ -64,7 +71,7 @@ public final class WelcomeScene: SKScene, SizeableScene {
     
     private func setUpViews() {
         guard let view = view else { return }
-        view.addSubviews(welcomeTextField, welcomeRebusView, completionTextField)
+        view.addSubviews(welcomeTextField, welcomeRebusView, completionTextField, skipButton)
     }
     
     private func setUpConstraints() {
@@ -89,6 +96,11 @@ public final class WelcomeScene: SKScene, SizeableScene {
              $0.leadingAnchor.constraint(equalTo: welcomeTextField.leadingAnchor),
              $0.trailingAnchor.constraint(equalTo: welcomeTextField.trailingAnchor),
              $0.heightAnchor.constraint(equalToConstant: 65.0)]
+        }
+        
+        skipButton.activateConstraints {
+            [$0.topAnchor.constraint(equalTo: completionTextField.bottomAnchor, constant: 15.0),
+             $0.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
         }
     }
     
@@ -141,5 +153,14 @@ extension WelcomeScene: SpeechSynthesizerDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
             self.view?.presentScene(scene, transition: transition)
         }
+    }
+}
+
+// MARK: - FilledButtonDelegate
+
+extension WelcomeScene: FilledButtonDelegate {
+    func didTap() {
+        speechSynthesizer.stop()
+        presentMainScene()
     }
 }

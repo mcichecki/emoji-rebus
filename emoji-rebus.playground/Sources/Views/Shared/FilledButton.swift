@@ -1,14 +1,18 @@
 import AppKit
 
-protocol HintButtonDelegate: AnyObject {
+protocol FilledButtonDelegate: AnyObject {
     func didTap()
 }
 
-final class HintButton: NSButton {
-    weak var buttonDelegate: HintButtonDelegate?
+final class FilledButton: NSButton {
+    weak var buttonDelegate: FilledButtonDelegate?
     
     private var textColor: NSColor = .white {
         didSet { contentTintColor = textColor }
+    }
+    
+    var buttonTitle: String = "" {
+        didSet { title = buttonTitle }
     }
     
     init() {
@@ -28,7 +32,7 @@ final class HintButton: NSButton {
     
     func setUp() {
         isBordered = false
-        title = "Hint"
+//        title = "Hint"
         font = .systemFont(ofSize: 20.0)
         contentTintColor = ColorStyle.white
         setButtonType(.momentaryChange)

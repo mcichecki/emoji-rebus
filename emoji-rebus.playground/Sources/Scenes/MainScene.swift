@@ -54,7 +54,8 @@ public final class MainScene: SKScene, SizeableScene {
         view.alphaValue = 0.0
         view.setBackgroundColor(ColorStyle.black)
     }
-    private lazy var hintButton: HintButton = configure { button in
+    private lazy var hintButton: FilledButton = configure { button in
+        button.buttonTitle = "Hint"
         button.buttonDelegate = self
         button.updateTextColor(scene?.backgroundColor ?? ColorStyle.white)
     }
@@ -192,7 +193,7 @@ public final class MainScene: SKScene, SizeableScene {
         NSAnimationContext.runAnimationGroup(animations, completionHandler: completion)
     }
     
-    @objc private func didTapHintButton() {
+    private func didTapHintButton() {
         guard let rebus = currentRebus else { return }
         speechSynthesizer.speak(rebus)
     }
@@ -264,9 +265,9 @@ extension MainScene: ArrowButtonDelegate {
     }
 }
 
-// MARK: - HintButtonDelegate
+// MARK: - FilledButtonDelegate
 
-extension MainScene: HintButtonDelegate {
+extension MainScene: FilledButtonDelegate {
     func didTap() {
         didTapHintButton()
     }
