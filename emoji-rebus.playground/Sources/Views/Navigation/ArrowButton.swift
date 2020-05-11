@@ -16,7 +16,6 @@ final class ArrowButton: NSButton {
         self.direction = direction
         super.init(frame: .zero)
         
-        setUpImage()
         setUpStyling()
         
         target = self
@@ -25,11 +24,26 @@ final class ArrowButton: NSButton {
     
     required init?(coder: NSCoder) { fatalError() }
     
-    private func setUpImage() {
-        switch direction {
-        case .left: image = NSImage(named: "left_arrow")
-        case .right: image = NSImage(named: "right_arrow.png")
+    override func draw(_ dirtyRect: NSRect) {
+        let width = bounds.width
+        let height = bounds.height
+        
+        NSColor.white.set()
+        
+        var points: [(x: CGFloat, y: CGFloat)] = [(0.8, 0.9), (0.4, 0.5), (0.8, 0.1)]
+        if direction == .right {
+            points = points.map { (1 - $0, $1) }
         }
+        
+        let path = NSBezierPath()
+        guard let firstPoint = points.first else { return }
+        path.move(to: CGPoint(x: width * firstPoint.x, y: height * firstPoint.y))
+        Array(points.dropFirst()).forEach { point in
+            path.line(to: CGPoint(x: width * point.0, y: height * point.1))
+        }
+        
+        path.lineWidth = 6
+        path.stroke()
     }
     
     private func setUpStyling() {
