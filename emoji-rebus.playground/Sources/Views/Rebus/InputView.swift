@@ -2,7 +2,7 @@ import AppKit
 import Foundation
 
 protocol InputViewDelegate: AnyObject {
-    func didUpdateInput(_ input: String) // TODO: Remove?
+    func didUpdateInput(_ input: String)
     func didUpdateInputArr(_ input: [Character?])
 }
 

@@ -8,7 +8,6 @@ protocol SpeechSynthesizerDelegate: AnyObject {
 
 final class SpeechSynthesizer: NSObject {
     weak var speechSynthesizerDelegate: SpeechSynthesizerDelegate?
-    
     private let samanthaVoice = NSSpeechSynthesizer.VoiceName(rawValue: "com.apple.speech.synthesis.voice.samantha")
     private lazy var synthesizer = NSSpeechSynthesizer(voice: samanthaVoice) ?? NSSpeechSynthesizer()
     
@@ -28,7 +27,7 @@ final class SpeechSynthesizer: NSObject {
         if synthesizer.isSpeaking {
             stop()
         }
-
+        
         synthesizer.startSpeaking(answer.description)
     }
     
@@ -45,12 +44,7 @@ final class SpeechSynthesizer: NSObject {
 // MARK: - NSSpeechSynthesizerDelegate
 
 extension SpeechSynthesizer: NSSpeechSynthesizerDelegate {
-//    func speechSynthesizer(_ sender: NSSpeechSynthesizer, willSpeakWord characterRange: NSRange, of string: String) {
-//        print("--- willSpeakWord in range: \(characterRange)")
-//    }
-    
     func speechSynthesizer(_ sender: NSSpeechSynthesizer, didFinishSpeaking finishedSpeaking: Bool) {
-        print("--- didFinishSpeaking")
         speechSynthesizerDelegate?.didFinish()
     }
 }

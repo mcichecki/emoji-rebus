@@ -113,7 +113,7 @@ public enum RebusStorage {
             description: """
             The gas formed when carbon is burned, or when people or animals breathe out.
 
-            Increasing levels of carbon dioxide in the atmosphere, though, are linked to global warming.
+            Increasing levels of carbon dioxide in the atmosphere are linked to global warming.
             """
         ),
         .init(
@@ -216,7 +216,7 @@ public enum RebusStorage {
         )
     ]
     
-    
+    // TODO: Remove
     public static let testRebuses: [Rebus] = [
         (.init(.emoji("🍏"), .minus("le"), ans: "app")),
         (.init(.emoji("🐺"), .minus("olf"), .plus, .minus("ki"), .emoji("🥝"), .minus("i"), .plus, .emoji("🎲"), .minus("ie"), ans: "wwdc")),

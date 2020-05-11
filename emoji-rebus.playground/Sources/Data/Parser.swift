@@ -6,7 +6,6 @@ enum ParserError: Error {
 
 final class Parser {
     static let shared = Parser()
-    
     var numberOfRebuses: Int { rebuses.count }
     private(set) var rebuses: [Rebus] = []
         
@@ -46,7 +45,6 @@ final class Parser {
 
 public final class RebusEncoder {
     public static let shared = RebusEncoder()
-    
     private lazy var encoder = JSONEncoder()
     
     public func encode(rebuses: [Rebus]) -> String {
@@ -56,6 +54,7 @@ public final class RebusEncoder {
         return text
     }
     
+    // TODO: Remove?
     public func printStats(rebuses: [Rebus]) {
         let count = rebuses.count
         let sortedByNumberOfComponents = rebuses.sorted { r1, r2 in r1.components.count < r2.components.count }

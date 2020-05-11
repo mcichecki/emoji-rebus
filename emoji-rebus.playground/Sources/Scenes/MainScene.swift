@@ -65,7 +65,6 @@ public final class MainScene: SKScene, SizeableScene {
     private var answerTopConstraint: NSLayoutConstraint!
     private let backgroundColors = ColorStyle.backgroundColors.shuffled()
     
-    // TODO: Add colorblind palete
     public override init() {
         super.init(size: sceneSize)
         
@@ -74,8 +73,6 @@ public final class MainScene: SKScene, SizeableScene {
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
-    // TODO: split this func
-    // TODO: Counter with how much water/waste etc we produce/use/burn... (https://www.theworldcounts.com/stories/Facts-about-the-Environment)
     public override func didMove(to view: SKView) {
         super.didMove(to: view)
                 

@@ -64,7 +64,6 @@ final class AnswerView: NSView {
     
     required init?(coder: NSCoder) { fatalError() }
     
-    // TODO: Close answer once synthesizer stops speaking?
     func readAnswer() {
         speechSynthesizer.speak(answer)
     }

@@ -40,8 +40,6 @@ final class RebusView: NSVisualEffectView {
     
     func fillLetters() {
         inputView.fillLetters(rebus: rebus)
-        
-//        inputView.
     }
     
     private func addSubviews() {
@@ -80,13 +78,9 @@ final class RebusView: NSVisualEffectView {
 
 extension RebusView: InputViewDelegate {
     func didUpdateInput(_ input: String) {
-        guard let rebus = rebus else { return }
-        if rebus.valid(input: input) {
-            delegate?.didComplete()
-            inputView.unfocus()
-        } else {
-            // print("--- No match ‼️")
-        }
+        guard let rebus = rebus, rebus.valid(input: input) else { return }
+        delegate?.didComplete()
+        inputView.unfocus()
     }
     
     func didUpdateInputArr(_ input: [Character?]) {
