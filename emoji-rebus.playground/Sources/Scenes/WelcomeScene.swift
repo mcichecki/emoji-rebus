@@ -137,13 +137,13 @@ extension WelcomeScene: SpeechSynthesizerDelegate {
         indexOfFinish += 1
         
         if indexOfFinish > 1 {
-            presentMainScene()
+            presentRebusScene()
         }
     }
     
-    private func presentMainScene() {
+    private func presentRebusScene() {
         let transition = SKTransition.moveIn(with: .up, duration: 0.5)
-        let scene = MainScene()
+        let scene = RebusScene()
         
         if let subviews = view?.subviews {
             setViewsAlpha(views: subviews, hidden: true) {
@@ -162,6 +162,6 @@ extension WelcomeScene: SpeechSynthesizerDelegate {
 extension WelcomeScene: FilledButtonDelegate {
     func didTap() {
         speechSynthesizer.stop()
-        presentMainScene()
+        presentRebusScene()
     }
 }

@@ -2,7 +2,7 @@ import AppKit
 import SpriteKit
 import Foundation
 
-public final class MainScene: SKScene, SizeableScene {
+public final class RebusScene: SKScene, SizeableScene {
     private enum AnswerState {
         case center, bottom, hidden
         
@@ -201,7 +201,7 @@ public final class MainScene: SKScene, SizeableScene {
 
 // MARK: - RebusViewDelegate
 
-extension MainScene: RebusViewDelegate {
+extension RebusScene: RebusViewDelegate {
     func didComplete() {
         [leftArrow, rightArrow].forEach { $0.isEnabled = false }
         presentAnswer()
@@ -210,7 +210,7 @@ extension MainScene: RebusViewDelegate {
 
 // MARK: - AnswerViewDelegate
 
-extension MainScene: AnswerViewDelegate {
+extension RebusScene: AnswerViewDelegate {
     func didTapClose() {
         rebusProvider.markAsComplete(index: currentIndex)
         let isLast = currentIndex == rebusProvider.rebuses.count - 1
@@ -247,7 +247,7 @@ extension MainScene: AnswerViewDelegate {
 
 // MARK: - ArrowButtonDelegate
 
-extension MainScene: ArrowButtonDelegate {
+extension RebusScene: ArrowButtonDelegate {
     func didTapArrowButton(direction: ArrowDirection) {
         currentIndex += direction.rawValue
         
@@ -267,7 +267,7 @@ extension MainScene: ArrowButtonDelegate {
 
 // MARK: - FilledButtonDelegate
 
-extension MainScene: FilledButtonDelegate {
+extension RebusScene: FilledButtonDelegate {
     func didTap() {
         didTapHintButton()
     }
@@ -275,7 +275,7 @@ extension MainScene: FilledButtonDelegate {
 
 // MARK: - SliderDelegate
 
-extension MainScene: SliderDelegate {
+extension RebusScene: SliderDelegate {
     func didMoveToIndex(_ index: Int) {
         guard index != currentIndex else { return }
         currentIndex = index
