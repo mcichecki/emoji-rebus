@@ -84,8 +84,26 @@ public final class RebusScene: SKScene, SizeableScene {
             rebusView.updateRebus(rebus)
         }
         
-        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, hintButton, sliderView, answerView)
+        setUpViews(in: view)
+        setUpConstraints(in: view)
         
+        [leftArrow, rightArrow].forEach {
+            $0.delegate = self
+            $0.isHidden = true
+        }
+        
+        answerView.alphaValue = 0.0
+        fadeView.layer?.zPosition = (difficultyView.layer?.zPosition ?? 0) + 1
+        answerView.layer?.zPosition = (fadeView.layer?.zPosition ?? 0) + 1
+        
+        answerView.delegate = self
+    }
+    
+    private func setUpViews(in view: SKView) {
+        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, hintButton, sliderView, answerView)
+    }
+    
+    private func setUpConstraints(in view: SKView) {
         rebusView.activateConstraints {
             [$0.centerXAnchor.constraint(equalTo: view.centerXAnchor),
              $0.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -85.0),
@@ -123,11 +141,6 @@ public final class RebusScene: SKScene, SizeableScene {
              $0.widthAnchor.constraint(equalToConstant: buttonSize)]
         }
         
-        [leftArrow, rightArrow].forEach {
-            $0.delegate = self
-            $0.isHidden = true
-        }
-        
         fadeView.activateConstraints {
             [$0.topAnchor.constraint(equalTo: view.topAnchor),
              $0.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -144,12 +157,6 @@ public final class RebusScene: SKScene, SizeableScene {
             [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 10.0),
              $0.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
         }
-        
-        answerView.alphaValue = 0.0
-        fadeView.layer?.zPosition = (difficultyView.layer?.zPosition ?? 0) + 1
-        answerView.layer?.zPosition = (fadeView.layer?.zPosition ?? 0) + 1
-        
-        answerView.delegate = self
     }
     
     private func presentAnswer(state: AnswerState = .center) {
