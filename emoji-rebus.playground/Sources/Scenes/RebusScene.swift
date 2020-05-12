@@ -65,7 +65,9 @@ public final class RebusScene: SKScene, SizeableScene {
     }
     private var answerTopConstraint: NSLayoutConstraint!
     private let backgroundColors = ColorStyle.backgroundColors.shuffled()
-    
+    private var noteEmitter: SKEmitterNode?
+    private var emitter = CAEmitterLayer()
+
     public override init() {
         super.init(size: sceneSize)
         
@@ -97,6 +99,9 @@ public final class RebusScene: SKScene, SizeableScene {
         answerView.layer?.zPosition = (fadeView.layer?.zPosition ?? 0) + 1
         
         answerView.delegate = self
+        
+//        setupNoteEmitter()
+        setUpEmitter(in: view)
     }
     
     private func setUpViews(in view: SKView) {
@@ -157,6 +162,19 @@ public final class RebusScene: SKScene, SizeableScene {
             [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 10.0),
              $0.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
         }
+    }
+    
+    private func setupNoteEmitter() {
+        guard let emitterNode = SKEmitterNode(fileNamed: "NoteParticle") else { return }
+        emitterNode.position = CGPoint(x: self.view!.frame.maxX, y: 0)
+        emitterNode.zPosition = -1.0
+        noteEmitter = emitterNode
+        self.addChild(emitterNode)
+    }
+    
+    private func setUpEmitter(in view: SKView) {
+        let emitter = EmojiEmitterLayer(frameSize: view.frame)
+        view.layer?.addSublayer(emitter)
     }
     
     private func presentAnswer(state: AnswerState = .center) {
