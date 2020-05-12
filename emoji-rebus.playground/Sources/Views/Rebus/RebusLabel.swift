@@ -47,15 +47,15 @@ final class RebusLabel: NSTextField {
             var componentAttributedString: NSMutableAttributedString
             switch component {
             case .text(let text):
-                componentAttributedString = .init(string: text)
+                componentAttributedString = .init(string: text.uppercased())
             case .emoji(let emoji):
                 componentAttributedString = .init(string: String(emoji))
             case .plus: // TODO: Add different color of plus sign?
                 componentAttributedString = .init(string: " + ")
             case .minus(let removedText):
-                componentAttributedString = .init(string: removedText, attributes: [
+                componentAttributedString = .init(string: removedText.uppercased(), attributes: [
                     .strikethroughStyle: NSUnderlineStyle.thick.rawValue,
-                    .strikethroughColor: ColorStyle.red.withAlphaComponent(0.4)
+                    .strikethroughColor: ColorStyle.red.withAlphaComponent(0.5)
                 ])
             }
             

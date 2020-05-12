@@ -93,7 +93,7 @@ final public class InputView: NSStackView {
         
         let enumeratedAnswer = answer.enumerated()
         enumeratedAnswer.forEach { offset, char in
-            textFields[offset].stringValue = String(char)
+            textFields[offset].stringValue = String(char).uppercased()
             textFields[offset].isEditable = false
         }
         
@@ -180,7 +180,6 @@ final public class InputView: NSStackView {
     }
 }
 
-// TODO: move to next textfield when space is typed?
 extension InputView: NSTextFieldDelegate {
     public func controlTextDidChange(_ obj: Notification) {
         guard let textField = obj.object as? NSTextField else { return }
@@ -212,6 +211,7 @@ extension InputView: NSTextFieldDelegate {
             _ = textFields.first(where: { $0.tag == textField.tag + 1 })?.becomeFirstResponder()
         }
         
+        textField.stringValue = textField.stringValue.uppercased()
         updateInput()
     }
 }
