@@ -2,7 +2,7 @@ import Foundation
 import AppKit
 
 extension String {
-    func emojiImage(width: Int = 70, height: Int = 70) -> NSImage? {
+    func emojiImage(width: Int = 70, height: Int = 70, imageAlpha alpha: CGFloat = 0.2) -> NSImage? {
         let size = 24
         let context = CGContext(
             data: nil,
@@ -13,7 +13,7 @@ extension String {
             space: CGColorSpaceCreateDeviceRGB(),
             bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue
         )
-        context?.setAlpha(0.3)
+        context?.setAlpha(alpha)
         
         guard width > size, !self.isEmpty, let drawingContext = context, let firstLetter = first else { return nil }
         

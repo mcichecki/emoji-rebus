@@ -125,7 +125,7 @@ final public class InputView: NSStackView {
                 inputView.addSubviews(letterInputTextField)
                 
                 inputView.activateConstraints {
-                    [$0.widthAnchor.constraint(equalToConstant: 35.0),
+                    [$0.widthAnchor.constraint(equalToConstant: 40.0),
                      $0.heightAnchor.constraint(equalToConstant: 90.0)]
                 }
                 

@@ -2,12 +2,12 @@ import Foundation
 import AppKit
 
 final class EmojiEmitterLayer: CAEmitterLayer {
-    var emojis = ["🏀", "✅", "🙄"] {
+    var emojis: [String] = [] {
         didSet { regenerateCells() }
     }
     
     private var images: [NSImage] { emojis.compactMap { $0.emojiImage() } }
-    private var velocities: [CGFloat] { emojis.map { _ in CGFloat.random(in: 20...80) } }
+    private var velocities: [CGFloat] { emojis.map { _ in CGFloat.random(in: 40...80) } }
     private var numberOfEmojis: Int { emojis.count }
     private var randomNumber: Int { .random(in: 0 ..< numberOfEmojis) }
     private var randomVelocity: CGFloat { velocities[randomNumber] }
@@ -33,11 +33,11 @@ final class EmojiEmitterLayer: CAEmitterLayer {
             .map { index in
                 let cell = CAEmitterCell()
                 
-                cell.birthRate = 6.0
+                cell.birthRate = 3.0
                 cell.lifetime = 15.0
                 cell.lifetimeRange = 5.0
                 cell.velocity = randomVelocity
-                cell.velocityRange = 0
+                cell.velocityRange = 20
                 cell.emissionLongitude = randomNumber % 2 == 0 ? .pi : -.pi
                 cell.emissionRange = 0.5
                 cell.spin = randomNumber % 2 == 0 ? 1 : -1
