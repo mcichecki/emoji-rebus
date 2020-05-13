@@ -29,10 +29,7 @@ final class RebusView: NSVisualEffectView {
     required init?(coder: NSCoder) { fatalError() }
     
     func updateRebus(_ rebus: Rebus?) {
-        guard let rebus = rebus else {
-            print("--- no new rebus")
-            return
-        }
+        guard let rebus = rebus else { return }
         
         self.rebus = rebus
         inputView.focus()

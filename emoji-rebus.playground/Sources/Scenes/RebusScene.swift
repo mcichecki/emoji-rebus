@@ -235,6 +235,7 @@ extension RebusScene: AnswerViewDelegate {
             currentIndex += 1
         } else if isLast {
             hideAnswer()
+            hintButton.isHidden = true
         }
         let numberOfCompleted = rebusProvider.numberOfCompleted
         if numberOfCompleted >= 1 && !isLast {

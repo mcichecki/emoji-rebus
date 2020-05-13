@@ -64,7 +64,6 @@ enum RebusComponent: Codable {
         let type = try container.decode(String.self, forKey: .type)
         let value = try container.decodeIfPresent(String.self, forKey: .value) ?? ""
         
-        // print("--- type: \(type), value: \(value)")
         if type == "text" {
             self = .text(value)
         } else if type == "emoji" {

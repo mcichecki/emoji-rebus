@@ -50,7 +50,7 @@ final class RebusLabel: NSTextField {
                 componentAttributedString = .init(string: text.uppercased())
             case .emoji(let emoji):
                 componentAttributedString = .init(string: String(emoji))
-            case .plus: // TODO: Add different color of plus sign?
+            case .plus:
                 componentAttributedString = .init(string: " + ")
             case .minus(let removedText):
                 componentAttributedString = .init(string: removedText.uppercased(), attributes: [

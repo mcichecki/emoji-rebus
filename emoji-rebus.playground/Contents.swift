@@ -1,7 +1,8 @@
 import PlaygroundSupport
 
-let welcomeScene = WelcomeScene()
-PlaygroundPage.current.setUpScene(welcomeScene)
+let scene = WelcomeScene()
+//let scene = RebusScene()
+PlaygroundPage.current.setUpScene(scene)
 
 //let rebuses = RebusStorage.rebuses
 //let encoder = RebusEncoder.shared

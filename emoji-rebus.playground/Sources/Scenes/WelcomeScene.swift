@@ -48,7 +48,7 @@ public final class WelcomeScene: SKScene, SizeableScene {
     }
     
     private lazy var speechSynthesizer = SpeechSynthesizer()
-    private var indexOfFinish = 0
+    private var state: SceneState = .initial
     
     public override init() {
         super.init(size: sceneSize)
@@ -134,10 +134,12 @@ extension WelcomeScene: RebusViewDelegate {
 
 extension WelcomeScene: SpeechSynthesizerDelegate {
     func didFinish() {
-        indexOfFinish += 1
-        
-        if indexOfFinish > 1 {
+        switch state {
+        case .initial: state = .isSpeaking
+        case .isSpeaking:
+            state = .finished
             presentRebusScene()
+        default: return
         }
     }
     
@@ -161,7 +163,18 @@ extension WelcomeScene: SpeechSynthesizerDelegate {
 
 extension WelcomeScene: FilledButtonDelegate {
     func didTap() {
+        guard state != .finished else { return }
+
+        state = .finished
         speechSynthesizer.stop()
         presentRebusScene()
     }
+}
+
+// MARK - State
+
+private enum SceneState {
+    case initial
+    case isSpeaking
+    case finished
 }
