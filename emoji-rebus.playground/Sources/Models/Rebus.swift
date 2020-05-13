@@ -20,6 +20,14 @@ public struct Rebus: Codable {
     
     var numberOfLetters: Int { answer.title.count }
     
+    var emojis: [String] {
+        components
+            .compactMap {
+                guard case let .emoji(emojiCharacter) = $0 else { return nil }
+                return String(emojiCharacter)
+        }
+    }
+    
     var difficultyLevel: Difficulty {
         let numberOfComponents = components.count
         switch numberOfComponents {
