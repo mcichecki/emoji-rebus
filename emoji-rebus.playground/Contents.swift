@@ -2,8 +2,7 @@ import PlaygroundSupport
 
 // TODO: Add markup description
 
-let scene = WelcomeScene()
-//let scene = RebusScene()
+let scene = RebusScene()
 PlaygroundPage.current.setUpScene(scene)
 
 //let rebuses = RebusStorage.rebuses

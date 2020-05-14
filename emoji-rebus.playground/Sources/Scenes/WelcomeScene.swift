@@ -162,7 +162,7 @@ extension WelcomeScene: SpeechSynthesizerDelegate {
 // MARK: - FilledButtonDelegate
 
 extension WelcomeScene: FilledButtonDelegate {
-    func didTap() {
+    func didTap(_ buttonType: ButtonActionType?) {
         guard state != .finished else { return }
 
         state = .finished

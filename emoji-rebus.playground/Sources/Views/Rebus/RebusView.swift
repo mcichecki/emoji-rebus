@@ -2,6 +2,11 @@ import AppKit
 
 protocol RebusViewDelegate: AnyObject {
     func didComplete()
+    func didUpdateInput(hintEnabled: Bool)
+}
+
+extension RebusViewDelegate {
+    func didUpdateInput(hintEnabled: Bool) { }
 }
 
 final class RebusView: NSVisualEffectView {
@@ -39,6 +44,10 @@ final class RebusView: NSVisualEffectView {
         inputView.fillLetters(rebus: rebus)
     }
     
+    func fillRandomLetters() {
+        inputView.fillRandomLetter(rebus: rebus)
+    }
+    
     private func addSubviews() {
         addSubviews(numberView, rebusLabel, inputView)
         
@@ -74,7 +83,8 @@ final class RebusView: NSVisualEffectView {
 // MARK: - InputViewDelegate
 
 extension RebusView: InputViewDelegate {
-    func didUpdateInput(_ input: String) {
+    func didUpdateInput(_ input: String, hintEnabled: Bool) {
+        delegate?.didUpdateInput(hintEnabled: hintEnabled)
         guard let rebus = rebus, rebus.valid(input: input) else { return }
         delegate?.didComplete()
         inputView.unfocus()

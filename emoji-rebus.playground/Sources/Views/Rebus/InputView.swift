@@ -2,7 +2,7 @@ import AppKit
 import Foundation
 
 protocol InputViewDelegate: AnyObject {
-    func didUpdateInput(_ input: String)
+    func didUpdateInput(_ input: String, hintEnabled: Bool)
     func didUpdateInputArr(_ input: [Character?])
 }
 
@@ -34,7 +34,7 @@ final public class InputView: NSStackView {
     
     private(set) var input: String = "" {
         didSet {
-            inputDelegate?.didUpdateInput(input)
+            inputDelegate?.didUpdateInput(input, hintEnabled: isBelowThreshold().1)
         }
     }
     
@@ -43,6 +43,8 @@ final public class InputView: NSStackView {
     private var lastIndex: Int { textFields.map { $0.tag }.max() ?? 0 }
     
     private let regex: String = "^[a-zA-Z0-9]$"
+    
+    private var isHintEnabled = true
     
     init() {
         super.init(frame: .zero)
@@ -74,12 +76,13 @@ final public class InputView: NSStackView {
                 textField.layer?.borderColor = color
                 textField.layer?.borderWidth = indexes.contains(offset) ? 3.0 : 2.0
             }
-            
         }
     }
     
     func focus() {
-        _ = textFields.first?.becomeFirstResponder()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+            _ = self.textFields.first?.becomeFirstResponder()
+        }
     }
     
     func unfocus() {
@@ -101,6 +104,32 @@ final public class InputView: NSStackView {
         
         unfocus()
         isDisabled = true
+    }
+    
+    func fillRandomLetter(rebus: Rebus) {
+        let answer = rebus.answer.title
+        guard rebus.answer.title.count == textFields.count else { return }
+        
+        guard let answerLetterIndex = isBelowThreshold().0.randomElement() else { return }
+        let answerLetter = Array(answer)[answerLetterIndex]
+        
+        if isBelowThreshold().1 {
+            textFields[answerLetterIndex].stringValue = String(answerLetter).uppercased()
+        }
+        
+        updateInput()
+    }
+    
+    private func isBelowThreshold() -> ([Int], Bool) {
+        let indexesOfEmptyInputs = textFields.enumerated()
+            .filter { $0.1.stringValue.isEmpty }
+            .map { $0.0 }
+        
+        let threshold = 0.5
+        let numberOfFilledLetter = textFields.count - indexesOfEmptyInputs.count
+        let belowThreshold = numberOfFilledLetter < Int((Double(textFields.count) * threshold))
+
+        return (indexesOfEmptyInputs, belowThreshold)
     }
     
     private func setUp() {

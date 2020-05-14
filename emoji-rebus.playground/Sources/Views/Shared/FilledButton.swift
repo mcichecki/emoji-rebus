@@ -1,7 +1,11 @@
 import AppKit
 
+enum ButtonActionType {
+    case hint, listen
+}
+
 protocol FilledButtonDelegate: AnyObject {
-    func didTap()
+    func didTap(_ type: ButtonActionType?)
 }
 
 final class FilledButton: NSButton {
@@ -14,6 +18,8 @@ final class FilledButton: NSButton {
     var buttonTitle: String = "" {
         didSet { title = buttonTitle }
     }
+    
+    var actionType: ButtonActionType?
     
     init() {
         super.init(frame: .zero)
@@ -30,9 +36,13 @@ final class FilledButton: NSButton {
         return size
     }
     
+    func setState(enabled: Bool) {
+        isEnabled = enabled
+        setBackground()
+    }
+    
     func setUp() {
         isBordered = false
-//        title = "Hint"
         font = .systemFont(ofSize: 20.0)
         contentTintColor = ColorStyle.white
         setButtonType(.momentaryChange)
@@ -46,11 +56,16 @@ final class FilledButton: NSButton {
     }
     
     override func mouseDown(with event: NSEvent) {
-        buttonDelegate?.didTap()
-        setBackgroundColor(NSColor.white.withAlphaComponent(0.8))
+        guard isEnabled else { return }
+        buttonDelegate?.didTap(actionType)
+        setBackgroundColor(ColorStyle.white.withAlphaComponent(0.8))
     }
     
     override func mouseUp(with event: NSEvent) {
-        setBackgroundColor(.white)
+        setBackground()
+    }
+    
+    private func setBackground() {
+        setBackgroundColor(ColorStyle.white.withAlphaComponent(isEnabled ? 1.0 : 0.5))
     }
 }

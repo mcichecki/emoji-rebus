@@ -21,7 +21,7 @@ public final class RebusScene: SKScene, SizeableScene {
         didSet {
             let color = backgroundColors[currentIndex % backgroundColors.count]
             scene?.backgroundColor = color
-            hintButton.updateTextColor(color)
+            [hintButton, listenButton].forEach { $0.updateTextColor(color) }
             rebusView.numberView.updateLabel(index: currentIndex + 1, numberOfItems: rebusProvider.rebuses.count)
             currentRebus = rebusProvider.getRebus(at: currentIndex)
             emitter.emojis = currentRebus?.emojis ?? []
@@ -57,6 +57,13 @@ public final class RebusScene: SKScene, SizeableScene {
     }
     private lazy var hintButton: FilledButton = configure { button in
         button.buttonTitle = "Hint"
+        button.actionType = .hint
+        button.buttonDelegate = self
+        button.updateTextColor(scene?.backgroundColor ?? ColorStyle.white)
+    }
+    private lazy var listenButton: FilledButton = configure { button in
+        button.buttonTitle = "Listen"
+        button.actionType = .listen
         button.buttonDelegate = self
         button.updateTextColor(scene?.backgroundColor ?? ColorStyle.white)
     }
@@ -104,7 +111,7 @@ public final class RebusScene: SKScene, SizeableScene {
     }
     
     private func setUpViews(in view: SKView) {
-        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, hintButton, sliderView, answerView)
+        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, hintButton, listenButton, sliderView, answerView)
     }
     
     private func setUpConstraints(in view: SKView) {
@@ -155,6 +162,11 @@ public final class RebusScene: SKScene, SizeableScene {
         hintButton.activateConstraints {
             [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 5.0),
              $0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5.0)]
+        }
+        
+        listenButton.activateConstraints {
+            [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 5.0),
+             $0.leadingAnchor.constraint(equalTo: hintButton.trailingAnchor, constant: 10.0)]
         }
         
         sliderView.activateConstraints {
@@ -211,6 +223,10 @@ public final class RebusScene: SKScene, SizeableScene {
     }
     
     private func didTapHintButton() {
+        rebusView.fillRandomLetters()
+    }
+    
+    private func didTapListenButton() {
         guard let rebus = currentRebus else { return }
         speechSynthesizer.speak(rebus)
     }
@@ -222,6 +238,10 @@ extension RebusScene: RebusViewDelegate {
     func didComplete() {
         [leftArrow, rightArrow].forEach { $0.isEnabled = false }
         presentAnswer()
+    }
+    
+    func didUpdateInput(hintEnabled: Bool) {
+        hintButton.setState(enabled: hintEnabled)
     }
 }
 
@@ -242,6 +262,7 @@ extension RebusScene: AnswerViewDelegate {
             sliderView.isHidden = false
             sliderView.update(numberOfRebuses: rebusProvider.numberOfCompleted + 1)
         }
+        hintButton.setState(enabled: true)
         updateArrowsAndHint()
     }
     
@@ -286,8 +307,12 @@ extension RebusScene: ArrowButtonDelegate {
 // MARK: - FilledButtonDelegate
 
 extension RebusScene: FilledButtonDelegate {
-    func didTap() {
-        didTapHintButton()
+    func didTap(_ type: ButtonActionType?) {
+        guard let type = type else { return }
+        switch type {
+        case .listen: didTapListenButton()
+        case .hint: didTapHintButton()
+        }
     }
 }
 
