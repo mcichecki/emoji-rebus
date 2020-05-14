@@ -1,12 +1,5 @@
 import Foundation
 
-/*
- Links
- - https://www.myenglishpages.com/site_php_files/vocabulary-lesson-environment.php
- - https://www.theworldcounts.com/stories/Facts-about-the-Environment
- - https://www.fastweb.com/student-life/articles/eight-simple-ways-to-help-the-environment
- */
-
 public struct Rebus: Codable {
     enum Difficulty: Int, CaseIterable {
         case easy = 1, medium, hard
@@ -48,60 +41,6 @@ public struct Rebus: Codable {
     }
 }
 
-enum RebusComponent: Codable {
-    case text(String)
-    case emoji(Character)
-    case plus
-    case minus(String)
-    
-    enum CodingKeys: String, CodingKey {
-        case type
-        case value
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let type = try container.decode(String.self, forKey: .type)
-        let value = try container.decodeIfPresent(String.self, forKey: .value) ?? ""
-        
-        if type == "text" {
-            self = .text(value)
-        } else if type == "emoji" {
-            guard let emojiCharacter = [Character](value).first else { fatalError("Could not get character") }
-            self = .emoji(emojiCharacter)
-        } else if type == "plus" {
-            self = .plus
-        } else if type == "minus" {
-            self = .minus(value)
-        } else {
-            fatalError("Unrecognized type")
-        }
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        let value: String?
-        let type: String
-        switch self {
-        case .text(let text):
-            value = text
-            type = "text"
-        case .emoji(let emoji):
-            value = String(emoji)
-            type = "emoji"
-        case .plus:
-            value = nil
-            type = "plus"
-        case .minus(let text):
-            value = text
-            type = "minus"
-        }
-        try container.encodeIfPresent(value, forKey: .value)
-        try container.encode(type, forKey: .type)
-    }
-}
-
 public enum RebusStorage {
     // https://gist.github.com/rxaviers/7360908
     public static let rebuses: [Rebus] = [
@@ -119,7 +58,7 @@ public enum RebusStorage {
             .minus("ta"), .emoji("🌮"), .plus, .emoji("2️⃣"),
             ans: "co2",
             description: """
-            The gas formed when carbon is burned, or when people or animals breathe out.
+            The gas formed when carbon is burned or when people and animals breathe out.
 
             Increasing levels of carbon dioxide in the atmosphere are linked to global warming.
             """
@@ -158,7 +97,7 @@ public enum RebusStorage {
             description: """
             Solid waste affects climate change through landfill methane emission.
 
-            The manufacturing, distribution and use of products as well as waste generation result in GHG emissions and affect the Earth’s climate.
+            The manufacturing, distribution and use of products as well as waste, affect the Earth’s climate.
             """
         ),
         .init(
@@ -168,13 +107,6 @@ public enum RebusStorage {
             Apple is a company which greatly focuses on environment.
 
             As part of its commitment to combat climate change and create a healthier environment, 100% of its global facilties are powered with clean energy and their newest products are made from 100% recycled aluminum.
-            """
-        ),
-        .init(
-            .emoji("✂️"), .minus("ssors"), .plus, .text("ence"),
-            ans: "science",
-            description: """
-
             """
         ),
         .init(
@@ -197,11 +129,11 @@ public enum RebusStorage {
         ),
         .init(
             .text("e"), .plus, .emoji("🐄"), .minus("w"), .plus, .emoji("🔒"), .minus("ck"), .plus, .text("gy"),
-            ans: "ecology", // TODO:
+            ans: "ecology",
             description: """
             The branch of biology that deals with the relations of organisms and their physical surroundings.
 
-            
+            Ecologists examine how living things depend on one another.
             """
         ),
         .init(
@@ -214,12 +146,35 @@ public enum RebusStorage {
             """
         ),
         .init(
-            .minus("fi"), .emoji("🔥"), .plus, .minus("motor"), .emoji("🏍"), .minus("le"), .plus, .minus("turt"), .emoji("🐢"),
-            ans: "recycle",
+            .minus("fi"), .emoji("🔥"), .plus, .minus("motor"), .emoji("🏍"), .minus("e"), .plus, .text("ing"),
+            ans: "recycling",
             description: """
             Conversion of waste into reusable material is very important.
 
             Make sure you’re putting the right materials in your recycling container.
+            """
+        ),
+        .init(
+            .emoji("🚲"), .minus("ke"), .plus, .text("odeg"), .plus, .emoji("📻"), .minus("io"), .plus, .text("able"),
+            ans: "biodegradable",
+            description: """
+            For example biodegradable packaging is capable of being decomposed by bacteria which help avoid pollution.
+            """
+        ),
+        .init(
+            .text("p"), .plus, .minus("l"), .emoji("🍭"), .minus("ipop"), .plus, .text("u"), .plus, .minus("sta"), .emoji("🚉"),
+            ans: "pollution",
+            description: """
+            The presence of a substance in the environment which is harmful and has posonous effect on the environment.
+            """
+        ),
+        .init(
+            .text("oz"), .plus, .emoji("1️⃣"),
+            ans: "ozone",
+            description: """
+            Ozone molecules in the atmosphere provide us with protection from the sun rays.
+
+            Banning the chemicals is constantly decreasing the ozone hole.
             """
         )
     ]

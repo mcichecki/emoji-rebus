@@ -15,7 +15,7 @@ public final class RebusScene: SKScene, SizeableScene {
         }
     }
     
-    public let sceneSize = CGSize(width: 560, height: 540)
+    public let sceneSize = CGSize(width: 680, height: 540)
     
     private var currentIndex = 0 {
         didSet {
@@ -71,7 +71,7 @@ public final class RebusScene: SKScene, SizeableScene {
 
     public override init() {
         super.init(size: sceneSize)
-        
+
         currentIndex = 0
     }
     

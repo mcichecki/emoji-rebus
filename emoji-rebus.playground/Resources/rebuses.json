@@ -51,7 +51,7 @@
    {
       "answer":{
          "title":"co2",
-         "description":"The gas formed when carbon is burned, or when people or animals breathe out.\n\nIncreasing levels of carbon dioxide in the atmosphere, though, are linked to global warming."
+         "description":"The gas formed when carbon is burned or when people and animals breathe out.\n\nIncreasing levels of carbon dioxide in the atmosphere are linked to global warming."
       },
       "components":[
          {
@@ -176,7 +176,7 @@
    {
       "answer":{
          "title":"waste",
-         "description":"Solid waste affects climate change through landfill methane emission.\n\nThe manufacturing, distribution and use of products as well as waste generation result in GHG emissions and affect the Earth’s climate."
+         "description":"Solid waste affects climate change through landfill methane emission.\n\nThe manufacturing, distribution and use of products as well as waste, affect the Earth’s climate."
       },
       "components":[
          {
@@ -242,29 +242,6 @@
          {
             "value":"🐋",
             "type":"emoji"
-         }
-      ]
-   },
-   {
-      "answer":{
-         "title":"science",
-         "description":""
-      },
-      "components":[
-         {
-            "value":"✂️",
-            "type":"emoji"
-         },
-         {
-            "value":"ssors",
-            "type":"minus"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"ence",
-            "type":"text"
          }
       ]
    },
@@ -357,7 +334,7 @@
    {
       "answer":{
          "title":"ecology",
-         "description":"The branch of biology that deals with the relations of organisms and their physical surroundings.\n\n"
+         "description":"The branch of biology that deals with the relations of organisms and their physical surroundings.\n\nEcologists examine how living things depend on one another."
       },
       "components":[
          {
@@ -438,7 +415,7 @@
    },
    {
       "answer":{
-         "title":"recycle",
+         "title":"recycling",
          "description":"Conversion of waste into reusable material is very important.\n\nMake sure you’re putting the right materials in your recycling container."
       },
       "components":[
@@ -462,18 +439,119 @@
             "type":"emoji"
          },
          {
-            "value":"le",
+            "value":"e",
             "type":"minus"
          },
          {
             "type":"plus"
          },
          {
-            "value":"turt",
+            "value":"ing",
+            "type":"text"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"biodegradable",
+         "description":"For example biodegradable packaging is capable of being decomposed by bacteria which help avoid pollution."
+      },
+      "components":[
+         {
+            "value":"🚲",
+            "type":"emoji"
+         },
+         {
+            "value":"ke",
             "type":"minus"
          },
          {
-            "value":"🐢",
+            "type":"plus"
+         },
+         {
+            "value":"odeg",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"📻",
+            "type":"emoji"
+         },
+         {
+            "value":"io",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"able",
+            "type":"text"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"pollution",
+         "description":"The presence of a substance in the environment which is harmful and has posonous effect on the environment."
+      },
+      "components":[
+         {
+            "value":"p",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"l",
+            "type":"minus"
+         },
+         {
+            "value":"🍭",
+            "type":"emoji"
+         },
+         {
+            "value":"ipop",
+            "type":"minus"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"u",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"sta",
+            "type":"minus"
+         },
+         {
+            "value":"🚉",
+            "type":"emoji"
+         }
+      ]
+   },
+   {
+      "answer":{
+         "title":"ozone",
+         "description":"Ozone molecules in the atmosphere provide us with protection from the sun rays.\n\nBanning the chemicals is constantly decreasing the ozone hole."
+      },
+      "components":[
+         {
+            "value":"oz",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"1️⃣",
             "type":"emoji"
          }
       ]

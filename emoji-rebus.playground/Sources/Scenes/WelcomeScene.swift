@@ -3,7 +3,7 @@ import SpriteKit
 import Foundation
 
 public final class WelcomeScene: SKScene, SizeableScene {
-    public let sceneSize = CGSize(width: 560, height: 540)
+    public let sceneSize = CGSize(width: 680, height: 540)
     
     private lazy var welcomeTextField: NSTextField = configure { textField in
         textFieldConfig(textField)

@@ -25,9 +25,7 @@ final class Parser {
             let jsonData = try getJsonData()
             let parsedData = try parseData(jsonData)
             rebuses = parsedData
-        } catch {
-            print("--- error: \(error)")
-        }
+        } catch { }
     }
     
     private func getJsonData() throws -> Data {
