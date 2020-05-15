@@ -76,6 +76,10 @@ final class SliderView: NSView {
         slider.intValue = Int32(value)
     }
     
+    func setState(enabled: Bool) {
+        slider.isEnabled = enabled
+    }
+    
     @objc private func sliderDidMove() {
         if !tracking {
             delegate?.didMoveToIndex(slider.integerValue)

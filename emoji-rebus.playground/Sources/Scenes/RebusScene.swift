@@ -205,6 +205,8 @@ public final class RebusScene: SKScene, SizeableScene {
             self.answerTopConstraint.constant = state.offset
             if state == .center {
                 self.fadeView.alphaValue = 0.5
+                [self.listenButton, self.hintButton].forEach { $0.setState(enabled: false) }
+                self.sliderView.setState(enabled: false)
             } else if state == .bottom {
                 self.answerView.closeButtonHidden = true
             }
@@ -223,6 +225,8 @@ public final class RebusScene: SKScene, SizeableScene {
             context.timingFunction = CAMediaTimingFunction(name: .easeOut)
             
             self.answerTopConstraint.constant = AnswerState.hidden.offset
+            [self.listenButton, self.hintButton].forEach { $0.setState(enabled: true) }
+            self.sliderView.setState(enabled: true)
             self.fadeView.alphaValue = 0.0
             self.view?.layoutSubtreeIfNeeded()
         }

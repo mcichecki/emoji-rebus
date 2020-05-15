@@ -9,9 +9,8 @@ public final class WelcomeScene: SKScene, SizeableScene {
         textFieldConfig(textField)
         textField.stringValue = """
         Today you have a chance to solve rebuses and learn about ecology and our planet Earth.
-        You can have a look at example below. Combining letters R, E and bus emoji result in word rebus.
+        Use a keyboard to enter letters and solve the rebus. For example, combining letters R, E and bus emoji result in word rebus.
         """
-        // Rebuses in this playground consist of letters and emojis.
     }
     
     private lazy var welcomeRebusView: RebusView = configure { rebusView in
@@ -25,7 +24,7 @@ public final class WelcomeScene: SKScene, SizeableScene {
         textField.alphaValue = 0.0
         textField.stringValue = """
         Good job 🎉
-        In case of any problems, you can use hint in the top left corner.
+        In case of any problems, you can use a hint button in the top left corner.
         Good luck!
         """
     }
@@ -153,7 +152,7 @@ extension WelcomeScene: SpeechSynthesizerDelegate {
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
             self.view?.presentScene(scene, transition: transition)
         }
     }
