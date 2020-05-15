@@ -21,7 +21,7 @@ public final class RebusScene: SKScene, SizeableScene {
         didSet {
             let color = backgroundColors[currentIndex % backgroundColors.count]
             scene?.backgroundColor = color
-            [hintButton, listenButton].forEach { $0.updateTextColor(color) }
+            [hintButton, listenButton, readAnswerButton].forEach { $0.updateTextColor(color) }
             rebusView.numberView.updateLabel(index: currentIndex + 1, numberOfItems: rebusProvider.rebuses.count)
             currentRebus = rebusProvider.getRebus(at: currentIndex)
             emitter.emojis = currentRebus?.emojis ?? []
@@ -46,6 +46,12 @@ public final class RebusScene: SKScene, SizeableScene {
     private lazy var rebusProvider = RebusProvider.shared
     private lazy var speechSynthesizer = SpeechSynthesizer()
     
+    private let filledButtonConfig: (FilledButton, ButtonActionType, FilledButtonDelegate) -> Void = { button, type, delegate in
+        button.actionType = type
+        button.buttonTitle = type.title
+        button.buttonDelegate = delegate
+    }
+    
     private lazy var rebusView = RebusView()
     private lazy var answerView = AnswerView(speechSynthesizer: speechSynthesizer)
     private lazy var difficultyView = DifficultyView()
@@ -55,18 +61,21 @@ public final class RebusScene: SKScene, SizeableScene {
         view.alphaValue = 0.0
         view.setBackgroundColor(ColorStyle.black)
     }
+    
     private lazy var hintButton: FilledButton = configure { button in
-        button.buttonTitle = "Hint"
-        button.actionType = .hint
-        button.buttonDelegate = self
+        filledButtonConfig(button, .hint, self)
         button.updateTextColor(scene?.backgroundColor ?? ColorStyle.white)
     }
     private lazy var listenButton: FilledButton = configure { button in
-        button.buttonTitle = "Listen"
-        button.actionType = .listen
-        button.buttonDelegate = self
+        filledButtonConfig(button, .listen, self)
         button.updateTextColor(scene?.backgroundColor ?? ColorStyle.white)
     }
+    private lazy var readAnswerButton: FilledButton = configure { button in
+        filledButtonConfig(button, .readAnswer, self)
+        button.isHidden = true
+        button.updateTextColor(scene?.backgroundColor ?? ColorStyle.white)
+    }
+    
     private lazy var sliderView: SliderView = configure { slider in
         slider.isHidden = true
         slider.delegate = self
@@ -111,7 +120,7 @@ public final class RebusScene: SKScene, SizeableScene {
     }
     
     private func setUpViews(in view: SKView) {
-        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, hintButton, listenButton, sliderView, answerView)
+        view.addSubviews(rebusView, fadeView, difficultyView, leftArrow, rightArrow, hintButton, listenButton, readAnswerButton, sliderView, answerView)
     }
     
     private func setUpConstraints(in view: SKView) {
@@ -167,6 +176,11 @@ public final class RebusScene: SKScene, SizeableScene {
         listenButton.activateConstraints {
             [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 5.0),
              $0.leadingAnchor.constraint(equalTo: hintButton.trailingAnchor, constant: 10.0)]
+        }
+        
+        readAnswerButton.activateConstraints {
+            [$0.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10.0),
+             $0.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
         }
         
         sliderView.activateConstraints {
@@ -230,6 +244,11 @@ public final class RebusScene: SKScene, SizeableScene {
         guard let rebus = currentRebus else { return }
         speechSynthesizer.speak(rebus)
     }
+    
+    private func didTapReadAnswerButton() {
+        guard let answer = currentRebus?.answer else { return }
+        speechSynthesizer.speak(answer)
+    }
 }
 
 // MARK: - RebusViewDelegate
@@ -256,6 +275,7 @@ extension RebusScene: AnswerViewDelegate {
         } else if isLast {
             hideAnswer()
             hintButton.isHidden = true
+            listenButton.isHidden = true
         }
         let numberOfCompleted = rebusProvider.numberOfCompleted
         if numberOfCompleted >= 1 && !isLast {
@@ -279,6 +299,8 @@ extension RebusScene: AnswerViewDelegate {
         
         let currentRebusCompleted = rebusProvider.rebuses[currentIndex].completed
         hintButton.isHidden = currentRebusCompleted
+        listenButton.isHidden = currentRebusCompleted
+        readAnswerButton.isHidden = !currentRebusCompleted
         leftArrow.isHidden = currentIndex == 0
         rightArrow.isHidden = !(currentRebusCompleted || rebusProvider.rebuses[nextIndex].completed)
     }
@@ -293,6 +315,7 @@ extension RebusScene: ArrowButtonDelegate {
         updateArrowsAndHint()
         showCompleted()
         sliderView.updateValue(currentIndex)
+        speechSynthesizer.stop()
     }
     
     private func showCompleted() {
@@ -312,6 +335,7 @@ extension RebusScene: FilledButtonDelegate {
         switch type {
         case .listen: didTapListenButton()
         case .hint: didTapHintButton()
+        case .readAnswer: didTapReadAnswerButton()
         }
     }
 }

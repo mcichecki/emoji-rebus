@@ -1,7 +1,11 @@
 import AppKit
 
-enum ButtonActionType {
-    case hint, listen
+enum ButtonActionType: String {
+    case hint = "Hint"
+    case listen = "Listen"
+    case readAnswer = "Read answer"
+    
+    var title: String { rawValue }
 }
 
 protocol FilledButtonDelegate: AnyObject {
