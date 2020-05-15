@@ -13,8 +13,10 @@ final class RebusProvider {
     var numberOfCompleted: Int { rebuses.filter { $0.completed }.count }
     
     init() {
-        rebuses = Parser.shared.rebuses.shuffled().map { StoredRebus(rebus: $0, completed: false) }
-//        rebuses = Array(rebuses[0...3]) // TODO: Remove
+        rebuses = Parser.shared.rebuses
+            .shuffled()
+            .sorted { $0.difficultyLevel.rawValue < $1.difficultyLevel.rawValue }
+            .map { StoredRebus(rebus: $0, completed: false) }
     }
     
     func getRebus(at index: Int) -> Rebus? {
@@ -25,7 +27,7 @@ final class RebusProvider {
     
     func markAsComplete(index: Int) {
         guard rebuses.indices.contains(index) else { return }
-
+        
         rebuses[index] = StoredRebus(rebus: rebuses[index].rebus, completed: true)
     }
     

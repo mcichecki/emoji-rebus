@@ -6,7 +6,6 @@ protocol InputViewDelegate: AnyObject {
     func didUpdateInputArr(_ input: [Character?])
 }
 
-// TODO: Handle top bottom keys + backspace
 private enum ArrowKey: UInt16 {
     case left = 123
     case right = 124
@@ -65,7 +64,6 @@ final public class InputView: NSStackView {
         }
     }
     
-    // TODO: Bug with same letters
     func highlight(indexes: [Int]) {
         textFields.enumerated().forEach { offset, textField in
             NSAnimationContext.runAnimationGroup { context in
@@ -89,7 +87,6 @@ final public class InputView: NSStackView {
         window?.makeFirstResponder(nil)
     }
     
-    // TODO: Disable when completed
     func fillLetters(rebus: Rebus) {
         let answer = rebus.answer.title
         guard rebus.answer.title.count == textFields.count else { return }

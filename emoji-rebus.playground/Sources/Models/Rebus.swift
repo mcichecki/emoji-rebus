@@ -24,8 +24,8 @@ public struct Rebus: Codable {
     var difficultyLevel: Difficulty {
         let numberOfComponents = components.count
         switch numberOfComponents {
-        case 0...6: return .easy
-        case 6...8: return .medium
+        case 0...7: return .easy
+        case 7...9: return .medium
         default: return .hard
         }
     }
@@ -41,6 +41,7 @@ public struct Rebus: Codable {
     }
 }
 
+// TODO: Remove
 public enum RebusStorage {
     // https://gist.github.com/rxaviers/7360908
     public static let rebuses: [Rebus] = [
@@ -101,7 +102,7 @@ public enum RebusStorage {
             """
         ),
         .init(
-            .minus("gr"), .emoji("🍇"), .minus("es"), .plus, .text("p"), .plus, .minus("wha"), .emoji("🐋"),
+            .minus("c"), .emoji("🧢"), .plus, .text("p"), .plus, .minus("turt"), .emoji("🐢"),
             ans: "apple",
             description: """
             Apple is a company which greatly focuses on environment.
