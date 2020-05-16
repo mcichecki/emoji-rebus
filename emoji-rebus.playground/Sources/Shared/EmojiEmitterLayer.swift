@@ -2,10 +2,27 @@ import Foundation
 import AppKit
 
 final class EmojiEmitterLayer: CAEmitterLayer {
-    var emojis: [String] = [] {
-        didSet { regenerateCells() }
+    enum State {
+        case welcome, rebus
+        
+        var scale: CGFloat {
+            switch self {
+            case .welcome: return 0.4
+            case .rebus: return 0.7
+            }
+        }
+        
+        var scaleRange: CGFloat {
+            switch self {
+            case .welcome: return 0.2
+            case .rebus: return 0.9
+            }
+        }
+        
+        
     }
     
+    private var emojis: [String] = []
     private var images: [NSImage] { emojis.compactMap { $0.emojiImage() } }
     private var velocities: [CGFloat] { emojis.map { _ in CGFloat.random(in: 40...80) } }
     private var numberOfEmojis: Int { emojis.count }
@@ -20,20 +37,26 @@ final class EmojiEmitterLayer: CAEmitterLayer {
         emitterSize = CGSize(width: frameSize.width, height: 2.0)
     }
     
+    func updateEmojis(_ emojis: [String], state: State = .rebus) {
+        self.emojis = emojis
+        emitterCells = generateEmitterCells(state: state)
+    }
+    
+    func reset() {
+        self.emojis = []
+        emitterCells = generateEmitterCells(state: .rebus)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func regenerateCells() {
-        emitterCells = generateEmitterCells()
-    }
-    
-    private func generateEmitterCells() -> [CAEmitterCell] {
+    private func generateEmitterCells(state: State) -> [CAEmitterCell] {
         (0 ..< numberOfEmojis)
             .map { index in
                 let cell = CAEmitterCell()
                 
-                cell.birthRate = 3.0
+                cell.birthRate = 2.5
                 cell.lifetime = 15.0
                 cell.lifetimeRange = 5.0
                 cell.velocity = randomVelocity
@@ -43,8 +66,8 @@ final class EmojiEmitterLayer: CAEmitterLayer {
                 cell.spin = randomNumber % 2 == 0 ? 1 : -1
                 cell.spinRange = 2.0
                 cell.contents = getNextImage(i: index)
-                cell.scale = 0.8
-                cell.scaleRange = 0.8
+                cell.scale = state.scale
+                cell.scaleRange = state.scaleRange
                 cell.alphaRange = 0.5
                 
                 return cell

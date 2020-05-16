@@ -25,7 +25,7 @@ public final class RebusScene: SKScene, SizeableScene {
             [hintButton, listenButton, readAnswerButton].forEach { $0.updateTextColor(color) }
             rebusView.numberView.updateLabel(index: currentIndex + 1, numberOfItems: rebusProvider.rebuses.count)
             currentRebus = rebusProvider.getRebus(at: currentIndex)
-            emitter.emojis = currentRebus?.emojis ?? []
+            emitter.updateEmojis(currentRebus?.emojis ?? [])
         }
     }
     

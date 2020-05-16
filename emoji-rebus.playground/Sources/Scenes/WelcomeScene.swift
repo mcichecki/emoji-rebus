@@ -48,6 +48,7 @@ public final class WelcomeScene: SKScene, SizeableScene {
     
     private lazy var speechSynthesizer = SpeechSynthesizer()
     private var state: SceneState = .initial
+    private var emitter: EmojiEmitterLayer!
     
     public override init() {
         super.init(size: sceneSize)
@@ -58,6 +59,7 @@ public final class WelcomeScene: SKScene, SizeableScene {
     public override func didMove(to view: SKView) {
         super.didMove(to: view)
         
+        setUpEmitter(in: view)
         setUpViews()
         setUpConstraints()
         
@@ -67,6 +69,15 @@ public final class WelcomeScene: SKScene, SizeableScene {
         
         speechSynthesizer.speechSynthesizerDelegate = self
         speechSynthesizer.speak(text: welcomeTextField.stringValue)
+    }
+    
+    private func setUpEmitter(in view: SKView) {
+        let emitter = EmojiEmitterLayer(frameSize: view.frame)
+        view.layer?.addSublayer(emitter)
+        self.emitter = emitter
+        
+        let emojis = ["🌱", "🍁", "🌍", "🌊", "🌸", "☀️", "🐠", "🦆", "🦁"]
+        emitter.updateEmojis(emojis, state: .welcome)
     }
     
     private func setUpViews() {
@@ -151,6 +162,8 @@ extension WelcomeScene: SpeechSynthesizerDelegate {
                 subviews.forEach { $0.removeFromSuperview() }
             }
         }
+        
+        emitter.reset()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
             self.view?.presentScene(scene, transition: transition)
