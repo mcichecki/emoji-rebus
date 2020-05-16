@@ -19,6 +19,7 @@ public final class RebusScene: SKScene, SizeableScene {
     
     private var currentIndex = 0 {
         didSet {
+            speechSynthesizer.stop()
             let color = backgroundColors[currentIndex % backgroundColors.count]
             scene?.backgroundColor = color
             [hintButton, listenButton, readAnswerButton].forEach { $0.updateTextColor(color) }
