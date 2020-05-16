@@ -1,7 +1,5 @@
 import AppKit
 
-// https://flatuicolors.com/palette/us
-
 enum ColorStyle {
     static let darkGray: NSColor = .rgb(83, 92, 104)
     static let red: NSColor = .rgb(214, 48, 49)
