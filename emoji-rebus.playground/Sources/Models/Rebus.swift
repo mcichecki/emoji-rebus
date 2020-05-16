@@ -177,6 +177,43 @@ public enum RebusStorage {
 
             Banning the chemicals is constantly decreasing the ozone hole.
             """
+        ),
+        .init(
+            .text("com"), .plus, .emoji("📮"), .minus("box"),
+            ans: "compost",
+            description: """
+            A decayed mixture of organinc material that is used to improve the soil in a garden.
+            """
+        ),
+        .init(
+            .text("re"), .plus, .emoji("📰"), .minus("spaper"), .plus, .text("ab"), .plus, .minus("eag"), .emoji("🦅"),
+            ans: "renewable",
+            description: """
+            Renewable energy is an energy from a source that is not depleted when used, such as wind, solar power or biomass.
+            """
+        ),
+        .init(
+            .text("s"), .plus, .emoji("🐒"), .minus("nkey"), .plus, .minus("do"), .emoji("🐕"),
+            ans: "smog",
+            description: """
+            Smoke or other atmospheric pollutants combine with fog.
+
+            Occurs in large urband and industrial areas and is harmful for citizens.
+            """
+        ),
+        .init(
+            .text("ha"), .plus, .minus("rab"), .emoji("🐇"), .plus, .minus("go"), .emoji("🐐"),
+            ans: "habitat",
+            description: """
+            The natural home of an animal, plant or other organism, such as desert or sea shore.
+            """
+        ),
+        .init(
+            .emoji("🦷"), .minus("ooth"), .plus, .minus("ta"), .emoji("🚕"), .plus, .emoji("🐄"), .minus("ow"),
+            ans: "toxic",
+            description: """
+            Poisonous and harmful to living creatures, such as people, animals, or the environment.
+            """
         )
     ]
     
