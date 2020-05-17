@@ -145,36 +145,6 @@
    },
    {
       "answer":{
-         "title":"water",
-         "description":"Water is essential to life but only 3% of our planet’s water is drinkable, the rest is salt water.\n\nPolluted water is a major problem to the aquatic organism, plants and humans."
-      },
-      "components":[
-         {
-            "value":"w",
-            "type":"text"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"🏧",
-            "type":"emoji"
-         },
-         {
-            "value":"m",
-            "type":"minus"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"er",
-            "type":"text"
-         }
-      ]
-   },
-   {
-      "answer":{
          "title":"waste",
          "description":"Solid waste negatively affects Earth's climate through landfill methane emission."
       },
@@ -324,47 +294,6 @@
          {
             "value":"⛺️",
             "type":"emoji"
-         }
-      ]
-   },
-   {
-      "answer":{
-         "title":"ecology",
-         "description":"The branch of biology that deals with the relations of organisms and their physical surroundings."
-      },
-      "components":[
-         {
-            "value":"e",
-            "type":"text"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"🐄",
-            "type":"emoji"
-         },
-         {
-            "value":"w",
-            "type":"minus"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"🔒",
-            "type":"emoji"
-         },
-         {
-            "value":"ck",
-            "type":"minus"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"gy",
-            "type":"text"
          }
       ]
    },
@@ -528,59 +457,6 @@
    },
    {
       "answer":{
-         "title":"antibodies",
-         "description":"A blood protein that the immune system makes as a response to foreign substances in the blood such as bacteria or viruses."
-      },
-      "components":[
-         {
-            "value":"🐜",
-            "type":"emoji"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"ibod",
-            "type":"text"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"fr",
-            "type":"minus"
-         },
-         {
-            "value":"🍟",
-            "type":"emoji"
-         }
-      ]
-   },
-   {
-      "answer":{
-         "title":"compost",
-         "description":"A decayed mixture of organic material that is used to improve the soil in a garden."
-      },
-      "components":[
-         {
-            "value":"com",
-            "type":"text"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"📮",
-            "type":"emoji"
-         },
-         {
-            "value":"box",
-            "type":"minus"
-         }
-      ]
-   },
-   {
-      "answer":{
          "title":"renewable",
          "description":"Renewable energy is energy from a source that is not depleted when used, such as wind, solar power or biomass."
       },
@@ -650,40 +526,6 @@
          },
          {
             "value":"🐕",
-            "type":"emoji"
-         }
-      ]
-   },
-   {
-      "answer":{
-         "title":"habitat",
-         "description":"The natural home of an animal, plant or other organisms, such as desert or seashore."
-      },
-      "components":[
-         {
-            "value":"ha",
-            "type":"text"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"rab",
-            "type":"minus"
-         },
-         {
-            "value":"🐇",
-            "type":"emoji"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"go",
-            "type":"minus"
-         },
-         {
-            "value":"🐐",
             "type":"emoji"
          }
       ]
