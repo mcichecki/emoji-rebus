@@ -76,7 +76,7 @@ public final class WelcomeScene: SKScene, SizeableScene {
         view.layer?.addSublayer(emitter)
         self.emitter = emitter
         
-        let emojis = ["🌱", "🍁", "🌍", "🌊", "🌸", "☀️", "🐠", "🦆", "🦁"]
+        let emojis = ["🦠", "🍁", "🌍", "🌊", "🌸", "☀️", "🐠", "🦆", "🦁"]
         emitter.updateEmojis(emojis, state: .welcome)
     }
     

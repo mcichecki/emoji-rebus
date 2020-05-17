@@ -18,8 +18,6 @@ final class EmojiEmitterLayer: CAEmitterLayer {
             case .rebus: return 0.9
             }
         }
-        
-        
     }
     
     private var emojis: [String] = []

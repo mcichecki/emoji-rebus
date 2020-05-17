@@ -370,41 +370,34 @@
    },
    {
       "answer":{
-         "title":"ecosystem",
-         "description":"A biological community of interacting organisms and their physical environment.\n\nFuture climate change is expected to further affect many ecosystems."
+         "title":"virus",
+         "description":"A piece of an organic material that is able to multiply within the living cell of a host and causes disease.\n\nTo protect yourself remember to wash your hands often and avoid close contact with people who are sick."
       },
       "components":[
          {
-            "value":"e",
-            "type":"text"
-         },
-         {
-            "type":"plus"
-         },
-         {
-            "value":"🌽",
+            "value":"🎻",
             "type":"emoji"
          },
          {
-            "value":"rn",
+            "value":"olin",
             "type":"minus"
          },
          {
             "type":"plus"
          },
          {
-            "value":"syst",
+            "value":"r",
             "type":"text"
          },
          {
             "type":"plus"
          },
          {
-            "value":"g",
+            "value":"cact",
             "type":"minus"
          },
          {
-            "value":"💎",
+            "value":"🌵",
             "type":"emoji"
          }
       ]
@@ -535,19 +528,30 @@
    },
    {
       "answer":{
-         "title":"ozone",
-         "description":"Ozone molecules in the atmosphere provide us with protection from the sun rays.\n\nBanning the chemicals is constantly decreasing the ozone hole."
+         "title":"antibodies",
+         "description":"A blood protein that the immune system makes as a response to foreign substance in a blood such as bacteria or virus."
       },
       "components":[
          {
-            "value":"oz",
+            "value":"🐜",
+            "type":"emoji"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"ibod",
             "type":"text"
          },
          {
             "type":"plus"
          },
          {
-            "value":"1️⃣",
+            "value":"fr",
+            "type":"minus"
+         },
+         {
+            "value":"🍟",
             "type":"emoji"
          }
       ]
@@ -686,38 +690,41 @@
    },
    {
       "answer":{
-         "title":"toxic",
-         "description":"Poisonous and harmful to living creatures, such as people, animals, or the environment."
+         "title":"pandemic",
+         "description":"A widespread occurence of a diseas that has spread across a large region.\n\nExamples: malaria, HIV, COVID-19."
       },
       "components":[
          {
-            "value":"🦷",
-            "type":"emoji"
-         },
-         {
-            "value":"oth",
-            "type":"minus"
+            "value":"p",
+            "type":"text"
          },
          {
             "type":"plus"
          },
          {
-            "value":"ta",
+            "value":"h",
             "type":"minus"
          },
          {
-            "value":"🚕",
+            "value":"🤚",
             "type":"emoji"
          },
          {
             "type":"plus"
          },
          {
-            "value":"🐄",
+            "value":"e",
+            "type":"text"
+         },
+         {
+            "type":"plus"
+         },
+         {
+            "value":"🔬",
             "type":"emoji"
          },
          {
-            "value":"ow",
+            "value":"roscope",
             "type":"minus"
          }
       ]
