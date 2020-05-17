@@ -2,7 +2,7 @@
    {
       "answer":{
          "title":"animals",
-         "description":"Every day, 50 to 100 species of plants and animals become extinct because of human activities.\n\nIn order to slow or prevent the extinction of further animal species, organizations are establishing programs to protect their habitat."
+         "description":"The rapid loss of species is estimated to be more than 1000 times higher than the natural extinction rate.\n\nTo slow or prevent the extinction, organizations are establishing programs to protect their habitat."
       },
       "components":[
          {
@@ -112,7 +112,7 @@
    {
       "answer":{
          "title":"forest",
-         "description":"Forests around the world are cut and burned but a lot of living creatures depend on them.\n\nThey absorb carbon and provide habitat for wildlife."
+         "description":"Forests around the world are cut and burned but a lot of living creatures depend on them.\n\nThey absorb carbon dioxide and provide habitat for wildlife."
       },
       "components":[
          {
@@ -146,7 +146,7 @@
    {
       "answer":{
          "title":"water",
-         "description":"Water is essential to life but only 3% of our planet’s water is drinkable, rest is salt water.\n\n\nPolluted water is of great concern to the aquatic organism, plants, humans and climate."
+         "description":"Water is essential to life but only 3% of our planet’s water is drinkable, the rest is salt water.\n\nPolluted water is a major problem to the aquatic organism, plants and humans."
       },
       "components":[
          {
@@ -176,7 +176,7 @@
    {
       "answer":{
          "title":"waste",
-         "description":"Solid waste affects climate change through landfill methane emission.\n\nThe manufacturing, distribution and use of products as well as waste, affect the Earth’s climate."
+         "description":"Solid waste affects climate change through landfill methane emission which affects the Earth's climate."
       },
       "components":[
          {
@@ -210,7 +210,7 @@
    {
       "answer":{
          "title":"apple",
-         "description":"Apple is a company which greatly focuses on environment.\n\nAs part of its commitment to combat climate change and create a healthier environment, 100% of its global facilties are powered with clean energy and their newest products are made from 100% recycled aluminum."
+         "description":"Apple is a company that greatly focuses on environment.\n\nAs part of its commitment to combat climate change and create a healthier environment their newest products are made from 100% recycled aluminum."
       },
       "components":[
          {
@@ -244,7 +244,7 @@
    {
       "answer":{
          "title":"climate",
-         "description":"Global climate change has already had observable effects on the environment.\n\nGlaciers have shrunk, ice on rivers and lakes is breaking up earlier, plant and animal ranges have shifted and trees are flowering sooner."
+         "description":"Global climate change results in the extinction of species, extreme weather phenomena and rising sea level."
       },
       "components":[
          {
@@ -285,7 +285,7 @@
    {
       "answer":{
          "title":"environment",
-         "description":"The surroundings or conditions in which people, animals and plants live.\n\nThere are many ways that we can protect out planet - use reusable bags, recycle, save water and many more."
+         "description":"The surroundings or conditions in which people, animals and plants live.\n\nThere are many ways that we can protect our planet - use reusable bags, recycle, save water and many more."
       },
       "components":[
          {
@@ -330,7 +330,7 @@
    {
       "answer":{
          "title":"ecology",
-         "description":"The branch of biology that deals with the relations of organisms and their physical surroundings.\n\nEcologists examine how living things depend on one another."
+         "description":"The branch of biology that deals with the relations of organisms and their physical surroundings."
       },
       "components":[
          {
@@ -405,7 +405,7 @@
    {
       "answer":{
          "title":"recycling",
-         "description":"Conversion of waste into reusable material is very important.\n\nMake sure you’re putting the right materials in your recycling container."
+         "description":"The action of converting waste into reusable material.\n\nMake sure you’re putting the right materials in your recycling container."
       },
       "components":[
          {
@@ -443,7 +443,7 @@
    {
       "answer":{
          "title":"biodegradable",
-         "description":"For example biodegradable packaging is capable of being decomposed by bacteria which help avoid pollution."
+         "description":"Biodegradable packaging is capable of being decomposed by bacteria which helps avoid pollution."
       },
       "components":[
          {
@@ -484,7 +484,7 @@
    {
       "answer":{
          "title":"pollution",
-         "description":"The presence of a substance in the environment which is harmful and has posonous effect on the environment."
+         "description":"The presence of a substance in the environment which is harmful and has a poisonous effect on it."
       },
       "components":[
          {
@@ -529,7 +529,7 @@
    {
       "answer":{
          "title":"antibodies",
-         "description":"A blood protein that the immune system makes as a response to foreign substance in a blood such as bacteria or virus."
+         "description":"A blood protein that the immune system makes as a response to foreign substances in the blood such as bacteria or viruses."
       },
       "components":[
          {
@@ -559,7 +559,7 @@
    {
       "answer":{
          "title":"compost",
-         "description":"A decayed mixture of organinc material that is used to improve the soil in a garden."
+         "description":"A decayed mixture of organic material that is used to improve the soil in a garden."
       },
       "components":[
          {
@@ -582,7 +582,7 @@
    {
       "answer":{
          "title":"renewable",
-         "description":"Renewable energy is an energy from a source that is not depleted when used, such as wind, solar power or biomass."
+         "description":"Renewable energy is energy from a source that is not depleted when used, such as wind, solar power or biomass."
       },
       "components":[
          {
@@ -623,7 +623,7 @@
    {
       "answer":{
          "title":"smog",
-         "description":"Smoke or other atmospheric pollutants combine with fog.\n\nOccurs in large urband and industrial areas and is harmful for citizens."
+         "description":"Smoke or other atmospheric pollutants combine with fog.\n\nIt occurs in large urban and industrial areas and is harmful to citizens."
       },
       "components":[
          {
@@ -657,7 +657,7 @@
    {
       "answer":{
          "title":"habitat",
-         "description":"The natural home of an animal, plant or other organism, such as desert or sea shore."
+         "description":"The natural home of an animal, plant or other organisms, such as desert or seashore."
       },
       "components":[
          {
@@ -691,7 +691,7 @@
    {
       "answer":{
          "title":"pandemic",
-         "description":"A widespread occurence of a diseas that has spread across a large region.\n\nExamples: malaria, HIV, COVID-19."
+         "description":"A widespread occurrence of a disease that has spread across a large region.\n\nExamples: malaria, HIV, COVID-19."
       },
       "components":[
          {

@@ -121,7 +121,7 @@ final class AnswerView: NSView {
     }
     
     private func updateAnswer(_ answer: Answer) {
-        titleTextField.stringValue = answer.title
+        titleTextField.stringValue = answer.title.uppercased()
         descriptionTextField.stringValue = answer.description
     }
     

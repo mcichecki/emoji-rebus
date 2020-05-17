@@ -188,7 +188,7 @@ public final class RebusScene: SKScene, SizeableScene {
         sliderView.activateConstraints {
             [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 10.0),
              $0.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 50.0),
-             $0.widthAnchor.constraint(equalToConstant: 250.0)]
+             $0.widthAnchor.constraint(equalToConstant: 270.0)]
         }
     }
     
