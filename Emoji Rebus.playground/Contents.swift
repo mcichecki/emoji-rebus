@@ -17,7 +17,8 @@ import PlaygroundSupport
  
  Every time you manage to solve the rebus you will see the answer with a short explanation.
  
- If you don't know the answer you can use **hint** button to listen to the answer.
+ If you don't know the answer you can use **hint** button to insert correct letters at random position.
+ There is also a **listen** button that lets you head the answer.
  
  ##### How to solve rebus
  
