@@ -7,6 +7,8 @@ protocol SliderDelegate: AnyObject {
 final class SliderView: NSView {
     weak var delegate: SliderDelegate?
     
+    var answers: [String] = []
+    
     private lazy var slider: NSSlider = configure { slider in
         slider.cell = SliderCell()
         
@@ -47,10 +49,6 @@ final class SliderView: NSView {
         [slider, valueLabel].forEach(stackView.addArrangedSubview(_:))
         addSubview(stackView)
         
-        valueLabel.activateConstraints {
-            [$0.widthAnchor.constraint(equalToConstant: 28.0)]
-        }
-        
         slider.activateConstraints {
             [$0.widthAnchor.constraint(equalToConstant: 100.0)]
         }
@@ -84,7 +82,13 @@ final class SliderView: NSView {
         if !tracking {
             delegate?.didMoveToIndex(slider.integerValue)
         } else {
-            valueLabel.stringValue = String(slider.intValue + 1)
+            let sliderValue = slider.intValue
+            let labelString = String(sliderValue + 1)
+            if answers.indices.contains(Int(sliderValue)) {
+                valueLabel.stringValue = labelString + ": " + answers[Int(sliderValue)].uppercased()
+            } else {
+                valueLabel.stringValue = labelString
+            }
         }
     }
     

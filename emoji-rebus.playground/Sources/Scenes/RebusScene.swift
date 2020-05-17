@@ -26,6 +26,7 @@ public final class RebusScene: SKScene, SizeableScene {
             rebusView.numberView.updateLabel(index: currentIndex + 1, numberOfItems: rebusProvider.rebuses.count)
             currentRebus = rebusProvider.getRebus(at: currentIndex)
             emitter.updateEmojis(currentRebus?.emojis ?? [])
+            sliderView.answers = rebusProvider.completedRebuses.map { $0.answer.title }
         }
     }
     
@@ -186,7 +187,8 @@ public final class RebusScene: SKScene, SizeableScene {
         
         sliderView.activateConstraints {
             [$0.topAnchor.constraint(equalTo: view.topAnchor, constant: 10.0),
-             $0.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
+             $0.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 50.0),
+             $0.widthAnchor.constraint(equalToConstant: 250.0)]
         }
     }
     
