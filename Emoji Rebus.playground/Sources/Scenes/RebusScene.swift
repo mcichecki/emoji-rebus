@@ -283,6 +283,7 @@ extension RebusScene: AnswerViewDelegate {
             hideAnswer()
             hintButton.isHidden = true
             listenButton.isHidden = true
+            rebusView.fillLetters()
         }
         let numberOfCompleted = rebusProvider.numberOfCompleted
         if numberOfCompleted >= 1 && !isLast {
