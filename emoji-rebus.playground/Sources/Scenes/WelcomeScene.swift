@@ -8,7 +8,7 @@ public final class WelcomeScene: SKScene, SizeableScene {
     private lazy var welcomeTextField: NSTextField = configure { textField in
         textFieldConfig(textField)
         textField.stringValue = """
-        Today you have a chance to solve rebuses and learn about ecology and our planet Earth.
+        Today you have a chance to solve rebuses and learn about ecology, health and planet Earth.
         Use a keyboard to enter letters and solve the rebus. For example, combining letters R, E and bus emoji result in word rebus.
         """
     }
