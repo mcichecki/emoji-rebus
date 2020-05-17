@@ -8,14 +8,17 @@ protocol SpeechSynthesizerDelegate: AnyObject {
 
 final class SpeechSynthesizer: NSObject {
     weak var speechSynthesizerDelegate: SpeechSynthesizerDelegate?
-    private let samanthaVoice = NSSpeechSynthesizer.VoiceName(rawValue: "com.apple.speech.synthesis.voice.samantha")
-    private lazy var synthesizer = NSSpeechSynthesizer(voice: samanthaVoice) ?? NSSpeechSynthesizer()
+    private let voice: NSSpeechSynthesizer.VoiceName = {
+        let filteredVoice = NSSpeechSynthesizer.availableVoices.filter { $0.rawValue.lowercased().contains("samantha") }.first
+        return filteredVoice ?? NSSpeechSynthesizer.VoiceName(rawValue: "com.apple.speech.synthesis.voice.samantha")
+    }()
+    private lazy var synthesizer = NSSpeechSynthesizer(voice: voice) ?? NSSpeechSynthesizer()
     
     override init() {
         super.init()
         
         synthesizer.delegate = self
-        synthesizer.rate = 220.0
+        synthesizer.rate = 250.0
     }
     
     func speak(_ rebus: Rebus) {
